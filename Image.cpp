@@ -106,7 +106,7 @@ void Image::Export(const char* path)
 
     if(!f.is_open())
     {
-        std::cout<<"FIle could not be open\n";
+        std::cout<<"File could not be open\n";
         return;
     }
 
