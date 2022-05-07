@@ -4,28 +4,31 @@
 
 
 
+
 int main(){
-    const int width = 640;
-    const int height = 480;
+    const int width = 200;
+    const int height = 200;
 
-    Image image(width,height);
+    imageMatrix *matrix = new imageMatrix(width, height);
 
-    for(int y = 0; y < height ; y++)
+
+    for(int i = 0; i < height ; i++)
     {
-        for(int x = 0; x<width ; x++){
-            image.setColor(Color(0,102,255), x , y);
-            // image.setColor(Color((float)x / (float)width, 1.0f - ((float)x/(float)width),(float)y/(float)height), x , y);
+        for(int j = 0; j < width; j++){
+            matrix->setColor(Color(0,102,255), i , j);
+            // std::cout<<"("<<i<<", "<<j<<")"<<" "<<matrix->getColor(i,j).b<<std::endl;
         }
     }
-    image.Export("imageprueba.bmp");
+
+    int n = 55;
+    for(int m = 10; m < 35; m++ ){
+        matrix->setColor(Color(0,0,0), m, n);
+    }
 
 
+    Image image(width, height, matrix);
+    image.Export("image.bmp");
 
-    Image copy(0,0);
-
-    copy.Read("imageprueba.bmp");
-
-    copy.Export("copy.bmp");
 
     return 0;
 }
