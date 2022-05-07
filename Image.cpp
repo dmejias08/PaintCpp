@@ -1,32 +1,10 @@
 #include "Image.h"
-
+#include "imageMatrix.cpp"
 #include <iostream>
 #include <fstream>
 
-Color::Color()
-    : r(0), g(0), b(0)
-{
-
-}
-
-Color::Color(float r, float g, float b)
-    : r(r), g(g), b(b)
-{
-
-}
-Color::~Color()
-{
-
-}
-
-Image::Image()
-    :mWidth(0) , mHeight(0)
-{
-
-}
-
-Image::Image(int mWidth, int mHeight)
-    :mWidth(mWidth), mHeight(mHeight), mColor(std::vector<Color>(mWidth * mHeight))
+Image::Image(int width, int height, imageMatrix *matrix)
+    :mWidth(width), mHeight(height), mColor(matrix)
 {
 
 }
@@ -35,70 +13,59 @@ Image::~Image()
 
 }
 
-Color Image::getColor(int x, int y) const
-{
-    return mColor[y*mWidth + x ]; // add x to jump rows 
-}
-void Image::setColor(const Color& color, int x, int y)
-{
-    mColor[y * mWidth + x].r = color.r;
-    mColor[y * mWidth + x].g = color.g;
-    mColor[y * mWidth + x].b = color.b;
-}
+// void Image::Read(const char* path)
+// {
+//     std::ifstream f;
+//     f.open(path, std::ios::in | std::ios::binary);
 
-void Image::Read(const char* path)
-{
-    std::ifstream f;
-    f.open(path, std::ios::in | std::ios::binary);
+//     if(!f.is_open()){
+//         std::cout<<"File could not be open\n";
+//         return;
+//     }
 
-    if(!f.is_open()){
-        std::cout<<"File could not be open\n";
-        return;
-    }
+//     const int fileHeaderSize = 14;
+//     const int informationHeaderSize = 40;
 
-    const int fileHeaderSize = 14;
-    const int informationHeaderSize = 40;
+//     unsigned char fileHeader[fileHeaderSize];
+//     f.read(reinterpret_cast<char*>(fileHeader),fileHeaderSize);
 
-    unsigned char fileHeader[fileHeaderSize];
-    f.read(reinterpret_cast<char*>(fileHeader),fileHeaderSize);
+//     if(fileHeader[0] != 'B' || fileHeader[1] != 'M')
+//     {
+//         std::cout<< "The specified path is not a bitmap image"<< std::endl;
+//         f.close();
+//         return;
+//     }
 
-    if(fileHeader[0] != 'B' || fileHeader[1] != 'M')
-    {
-        std::cout<< "The specified path is not a bitmap image"<< std::endl;
-        f.close();
-        return;
-    }
+//     unsigned char informationHeader[informationHeaderSize];
+//     f.read(reinterpret_cast<char*>(informationHeader),informationHeaderSize);
 
-    unsigned char informationHeader[informationHeaderSize];
-    f.read(reinterpret_cast<char*>(informationHeader),informationHeaderSize);
+//     int fileSize = fileHeader[2] + (fileHeader[3] << 8) + (fileHeader[4] << 16) +(fileHeader[5] << 24);
 
-    int fileSize = fileHeader[2] + (fileHeader[3] << 8) + (fileHeader[4] << 16) +(fileHeader[5] << 24);
+//     mWidth = informationHeader[4] + (informationHeader[5] << 8) + (informationHeader[6] << 16) + (informationHeader[7] << 24);
+//     mHeight = informationHeader[8] + (informationHeader[9] << 8) + (informationHeader[10] << 16) + (informationHeader[11] << 24);
 
-    mWidth = informationHeader[4] + (informationHeader[5] << 8) + (informationHeader[6] << 16) + (informationHeader[7] << 24);
-    mHeight = informationHeader[8] + (informationHeader[9] << 8) + (informationHeader[10] << 16) + (informationHeader[11] << 24);
+//     mColor.resize(mWidth * mHeight);
 
-    mColor.resize(mWidth * mHeight);
-
-    const int paddingAmount = ((4 - (mWidth * 3) % 4) % 4);
+//     const int paddingAmount = ((4 - (mWidth * 3) % 4) % 4);
 
 
-    for (int y = 0; y < mHeight; y++)
-    {
-        for (int x = 0 ; x < mWidth ; x++)
-        {
-            unsigned char color[3]; 
-            f.read(reinterpret_cast<char*>(color),3);
-            mColor[y*mWidth + x].r = static_cast<float>(color[2])/255.0f;
-            mColor[y*mWidth + x].g = static_cast<float>(color[1])/255.0f;
-            mColor[y*mWidth + x].b = static_cast<float>(color[0])/255.0f;
+//     for (int y = 0; y < mHeight; y++)
+//     {
+//         for (int x = 0 ; x < mWidth ; x++)
+//         {
+//             unsigned char color[3]; 
+//             f.read(reinterpret_cast<char*>(color),3);
+//             mColor[y*mWidth + x].r = static_cast<float>(color[2])/255.0f;
+//             mColor[y*mWidth + x].g = static_cast<float>(color[1])/255.0f;
+//             mColor[y*mWidth + x].b = static_cast<float>(color[0])/255.0f;
 
-        }
-        f.ignore(paddingAmount);
-    }
+//         }
+//         f.ignore(paddingAmount);
+//     }
 
-    f.close();
-    std::cout << "File read "<< std::endl;
-}
+//     f.close();
+//     std::cout << "File read "<< std::endl;
+// }
 void Image::Export(const char* path)
 {
     std::ofstream f;
@@ -201,9 +168,9 @@ void Image::Export(const char* path)
     for( int y = 0; y < mHeight; y++){
 
         for ( int x = 0; x < mWidth; x++){
-            unsigned char r = static_cast<unsigned char>(getColor(x,y).r*255.0f); 
-            unsigned char g = static_cast<unsigned char>(getColor(x,y).g*255.0f); 
-            unsigned char b = static_cast<unsigned char>(getColor(x,y).b*255.0f); 
+            unsigned char r = static_cast<unsigned char>(mColor->getColor(x,y).r*255.0f); 
+            unsigned char g = static_cast<unsigned char>(mColor->getColor(x,y).g*255.0f); 
+            unsigned char b = static_cast<unsigned char>(mColor->getColor(x,y).b*255.0f); 
 
             unsigned char color[] = {b,g,r};
             f.write(reinterpret_cast<char*>(color),3);
