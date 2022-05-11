@@ -19,11 +19,9 @@ imageMatrix::imageMatrix(int width, int height)
 
     imgHeight = height;
     imgWidth = width;
-    this->pixelMatrix = new Color *[imgHeight];
-    for (int i = 0; i < imgHeight; i++)
-    {
-        this->pixelMatrix[i] = new Color[imgWidth];
-    }
+    // imgHeight = getHeight();
+    // imgWidth = getWidth();
+    this->createMatrix();
 }
 
 imageMatrix::~imageMatrix()
@@ -135,4 +133,53 @@ y así define el grosor  */
             pencil(color, i, j, lineWidth);
         }
     }
+}
+
+void imageMatrix::rotate()
+{
+    Color **oldMatrix = new Color *[imgHeight];
+    for (int i = 0; i < imgHeight; i++)
+    {
+        oldMatrix[i] = new Color[imgWidth];
+        for(int j = 0; j < imgWidth; j++)
+        {
+            oldMatrix[i][j]=this->pixelMatrix[i][j];
+        }
+    }
+    this->deleteMatrix();
+    this->switchDimensions();
+    this->createMatrix();
+    for (int i = 0; i < imgHeight; i++)
+    {
+        for(int j = 0; j < imgWidth; j++)
+        {
+            this->pixelMatrix[i][j] = oldMatrix[j][imgHeight-i-1];
+        }
+    }
+
+}
+
+void imageMatrix::deleteMatrix()
+{
+    for (int i = 0; i < imgHeight; i++)
+    {
+        delete[] pixelMatrix[i];
+    }
+    delete[] pixelMatrix;
+}
+
+void imageMatrix::createMatrix()
+{
+    this->pixelMatrix = new Color *[imgHeight];
+    for (int i = 0; i < imgHeight; i++)
+    {
+        this->pixelMatrix[i] = new Color[imgWidth];
+    }
+}
+
+void imageMatrix::switchDimensions()
+{
+    int temp = imgWidth;
+    imgWidth = imgHeight;
+    imgHeight = temp;
 }

@@ -22,6 +22,14 @@ private:
 public:
     imageMatrix(int width, int height);
     ~imageMatrix();
+    // static imageMatrix* getInstance();
+    // static int getHeight();
+    // static int getWidth();
+    // static void setSize(int width, int height);
+    void deleteMatrix();
+    void createMatrix();
+    void switchDimensions();
+    void rotate();
     void generatePixelArray();
     unsigned char* getPixelArray();
     int getPixelArraySize();
