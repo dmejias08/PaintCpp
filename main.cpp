@@ -49,7 +49,7 @@ int main()
     
     int size = matrix->getPixelArraySize();
 
-    Bitmap Bitmap(width, height, matrix->getPixelArray(), size);
+    Bitmap Bitmap(matrix->getWidth(), matrix->getHeight(), matrix->getPixelArray(), size);
 
     // Image image(width, height, matrix);
     // image.Export("default.bmp");

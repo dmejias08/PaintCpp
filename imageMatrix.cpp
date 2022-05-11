@@ -183,3 +183,13 @@ void imageMatrix::switchDimensions()
     imgWidth = imgHeight;
     imgHeight = temp;
 }
+
+int imageMatrix::getHeight()
+{
+    return imgHeight;
+}
+
+int imageMatrix::getWidth()
+{
+    return imgWidth;
+}
