@@ -11,7 +11,6 @@ int main()
     int width = 100;
     int height = 200;
 
-    // imageMatrix::setSize(width, height);
 
     imageMatrix *matrix = new imageMatrix(width,height);
 
@@ -25,7 +24,8 @@ int main()
     // matrix->setColor(Color(123,213,1),50,57);
     // matrix->setColor(Color(123,213,1),50,58);
 
-    matrix->pen(Color(0,192,255), 10,1,50,1,1);
+    matrix->pen(Color(0,192,255), 25,20,80,90,1);
+
 
     matrix->pencil(Color(45, 87, 90), 1, 2, 1);
     matrix->pencil(Color(10, 40, 55), 27, 20, 2);

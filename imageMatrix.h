@@ -14,13 +14,10 @@ class imageMatrix
 {
 private:
     int pixelArraySize;
-    // static int imgWidth;
-    // static int imgHeight;
     int imgWidth;
     int imgHeight;
     Color **pixelMatrix;
     unsigned char* pixelArray;
-    // static imageMatrix *matrixInstance;
 
 public:
     imageMatrix(int width, int height);

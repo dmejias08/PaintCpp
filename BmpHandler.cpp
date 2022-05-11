@@ -2,7 +2,7 @@
 
 using namespace std;
 
-Bitmap::Bitmap(int height, int width, unsigned char *pixelArray, int pixelArraySize)
+Bitmap::Bitmap(int width, int height, unsigned char *pixelArray, int pixelArraySize)
 {
     this->height = height;
     this->width = width;
