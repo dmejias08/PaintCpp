@@ -31,6 +31,8 @@ int main()
     matrix->pencil(Color(10, 40, 55), 27, 20, 2);
     matrix->pencil(Color(10, 40, 55), 80, 20, 2);
     matrix->pencil(Color(14,74,239), 20,20,2);
+
+
     // matrix->pencil(Color(14,74,239), 400,100,1);
     // matrix->pencil(Color(14,74,239), 400,150,2);
     // matrix->pencil(Color(14,74,239), 400,10,3);
@@ -39,6 +41,7 @@ int main()
     // matrix->rotate();
     // matrix->rotate();
     // matrix->rotate();
+
 
 
     matrix->generatePixelArray();
@@ -51,9 +54,6 @@ int main()
 
     Bitmap Bitmap(width, height, matrix->getPixelArray(), size);
 
-    // Image image(width, height, matrix);
-    // image.Export("default.bmp");
 
-    // matrix->~imageMatrix();
     return 0;
 }
