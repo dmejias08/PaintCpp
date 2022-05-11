@@ -5,6 +5,7 @@
 #include <string>
 #include <fstream>
 #include <cstdlib>
+#include <string>
 
 #define FILE_HEADER_SIZE 14
 #define INFO_HEADER_SIZE 40
@@ -13,8 +14,8 @@
 class Bitmap
 {
 public:
-    Bitmap(int height, int width, unsigned char *pixelArray, int pixelArraySize);
-    void generateBitmapImage(int pixelArraySize);
+    Bitmap(std::string imgName, int height, int width, unsigned char *pixelArray, int pixelArraySize);
+    void generateBitmapImage(std::string imgName, int pixelArraySize);
     unsigned char* createBitmapFileHeader();
     unsigned char* createBitmapInfoHeader();
     void fillFourBytes(unsigned char *array, int value, int init_byte);
