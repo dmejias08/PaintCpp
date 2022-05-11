@@ -35,6 +35,7 @@ public:
     int getPixelArraySize();
     void generateDefaultImage();
     void printMatrix();
+    void erase(int i, int j, int eraserWidth);
     Color getColor(int i, int j) const;
     void setColor(const Color &color, int i, int j);
     void pencil(const Color &color, int i, int j, int lineWidth);

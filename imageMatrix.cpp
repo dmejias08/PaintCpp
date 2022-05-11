@@ -19,8 +19,6 @@ imageMatrix::imageMatrix(int width, int height)
 
     imgHeight = height;
     imgWidth = width;
-    // imgHeight = getHeight();
-    // imgWidth = getWidth();
     this->createMatrix();
 }
 
@@ -34,6 +32,7 @@ imageMatrix::~imageMatrix()
 }
 
 void imageMatrix::generatePixelArray()
+/*Genera un array de cada color de cada pixel para que se pueda leer en bmpHandler*/
 {
     pixelArraySize = imgHeight * imgWidth * (BITS_PER_PIXEL / 8);
     pixelArray = (unsigned char *)malloc(pixelArraySize);
@@ -47,7 +46,7 @@ void imageMatrix::generatePixelArray()
             pixelArray[c] = pixelMatrix[i][j].b;
             pixelArray[c + 1] = pixelMatrix[i][j].g;
             pixelArray[c + 2] = pixelMatrix[i][j].r;
-            std::cout << "Generate pixelArray "<<c<< pixelArray[c] << " " << pixelArray[c + 1] << " " << pixelArray[c + 2] << std::endl;
+            std::cout << "Generate pixelArray " << c << pixelArray[c] << " " << pixelArray[c + 1] << " " << pixelArray[c + 2] << std::endl;
             c = c + 3;
         }
     }
@@ -56,7 +55,7 @@ int imageMatrix::getPixelArraySize()
 {
     for (int i = 0; i < pixelArraySize; i++)
     {
-        std::cout << i <<" "<< pixelArray[i] << std::endl;
+        std::cout << i << " " << pixelArray[i] << std::endl;
     }
     return pixelArraySize;
 }
@@ -86,6 +85,13 @@ void imageMatrix::generateDefaultImage()
         }
     }
 }
+
+void imageMatrix::erase(int i, int j, int eraserWidth)
+/*El método para borrar lo que va hacer es dibujar en blanco usando el metodo pencil*/
+{
+    pencil(Color(),i,j,eraserWidth);
+
+}
 Color imageMatrix::getColor(int i, int j) const
 {
     return pixelMatrix[i][j];
@@ -96,7 +102,8 @@ void imageMatrix::setColor(const Color &color, int i, int j)
     pixelMatrix[i][j].r = color.r;
     pixelMatrix[i][j].g = color.g;
     pixelMatrix[i][j].b = color.b;
-    std::cout << "(" << i << "," << j << ")"<< " R " << pixelMatrix[i][j].r << " G " << pixelMatrix[i][j].g << " B " << pixelMatrix[i][j].b << std::endl;
+    std::cout << "(" << i << "," << j << ")"
+              << " R " << pixelMatrix[i][j].r << " G " << pixelMatrix[i][j].g << " B " << pixelMatrix[i][j].b << std::endl;
 }
 
 void imageMatrix::pencil(const Color &color, int i, int j, int lineWidth)
@@ -124,7 +131,6 @@ y así define el grosor  */
     // int slope = (jFinal - jInitial)/(iFinal - iFinal);
     // int b = jFinal - slope*iFinal;
 
-
     // j = mi + b
     for (int i = iInitial; i <= iFinal; i++)
     {
@@ -141,9 +147,9 @@ void imageMatrix::rotate()
     for (int i = 0; i < imgHeight; i++)
     {
         oldMatrix[i] = new Color[imgWidth];
-        for(int j = 0; j < imgWidth; j++)
+        for (int j = 0; j < imgWidth; j++)
         {
-            oldMatrix[i][j]=this->pixelMatrix[i][j];
+            oldMatrix[i][j] = this->pixelMatrix[i][j];
         }
     }
     this->deleteMatrix();
@@ -151,12 +157,11 @@ void imageMatrix::rotate()
     this->createMatrix();
     for (int i = 0; i < imgHeight; i++)
     {
-        for(int j = 0; j < imgWidth; j++)
+        for (int j = 0; j < imgWidth; j++)
         {
-            this->pixelMatrix[i][j] = oldMatrix[j][imgHeight-i-1];
+            this->pixelMatrix[i][j] = oldMatrix[j][imgHeight - i - 1];
         }
     }
-
 }
 
 void imageMatrix::deleteMatrix()
