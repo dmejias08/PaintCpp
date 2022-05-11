@@ -9,8 +9,8 @@
 
 int main()
 {
-    int width = 50;
-    int height = 50;
+    int width = 100;
+    int height = 200;
 
 
     imageMatrix *matrix = new imageMatrix(width,height);
