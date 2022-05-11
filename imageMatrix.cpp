@@ -13,7 +13,7 @@ Color::~Color()
 {
 }
 
-imageMatrix::imageMatrix(int width, int height)
+imageMatrix::imageMatrix(int width, int     height)
 /*El contructor genera la matriz relacionada a la imagen de la instancia de clase*/
 {
 
@@ -35,6 +35,7 @@ void imageMatrix::generatePixelArray()
 /*Genera un array de cada color de cada pixel para que se pueda leer en bmpHandler*/
 {
     pixelArraySize = imgHeight * imgWidth * (BITS_PER_PIXEL / 8);
+    paddingBytes = 4 - (imgWidth * BITS_PER_PIXEL / 8) % 4;
     pixelArray = (unsigned char *)malloc(pixelArraySize);
     int c = 0;
     for (int i = imgHeight - 1; i >= 0; i--)
@@ -49,6 +50,7 @@ void imageMatrix::generatePixelArray()
             std::cout << "Generate pixelArray " << c << pixelArray[c] << " " << pixelArray[c + 1] << " " << pixelArray[c + 2] << std::endl;
             c = c + 3;
         }
+        c += paddingBytes;
     }
 }
 int imageMatrix::getPixelArraySize()
@@ -57,6 +59,7 @@ int imageMatrix::getPixelArraySize()
     {
         std::cout << i << " " << pixelArray[i] << std::endl;
     }
+    int size = pixelArraySize + paddingBytes * imgHeight;
     return pixelArraySize;
 }
 unsigned char *imageMatrix::getPixelArray()
@@ -137,6 +140,64 @@ y así define el grosor  */
         for (int j = jInitial; j <= jFinal; j++)
         {
             pencil(color, i, j, lineWidth);
+        }
+    }
+}
+
+void imageMatrix::line(int x1, int y1, int x2, int y2)
+{
+
+    if (x2 - x1 == 0)
+    {
+        if (y2 < y1)
+        {
+            int temp = y1;
+            y1 = y2;
+            y2 = temp;
+        }
+        for (int i = y1; i <= y2; i++)
+        {
+            pixelMatrix[i][x1]->setColor(255, 0, 0);
+        }
+    }   
+    else
+    {
+
+        float m = (float)(y2 - y1) / (float)(x2 - x1);
+        printf("m: %f\n", m);
+        float b = y1 - (m * x1);
+        if (x2 < x1)
+        {
+            int temp = x1;
+            x1 = x2;
+            x2 = temp;
+        }
+        int old_y = round(m * x1 + b);
+        for (int i = x1; i <= x2; i++)
+        {
+            int new_y = round(m * i + b);
+            if (new_y == old_y)
+            {
+                pixelMatrix[new_y][i]->setColor(255, 0, 0);
+            }
+            else
+            {
+                if (m >= 0)
+                {
+                    for (int j = old_y+1; j <= new_y; j++)
+                    {
+                        pixelMatrix[j][i]->setColor(255, 0, 0);
+                    }
+                }
+                else
+                {
+                    for (int j = old_y-1; j >= new_y; j--)
+                    {
+                        pixelMatrix[j][i]->setColor(255, 0, 0);
+                    }
+                }
+            }
+            old_y = new_y;
         }
     }
 }

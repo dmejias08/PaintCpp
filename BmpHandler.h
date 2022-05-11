@@ -23,5 +23,6 @@ private:
     unsigned char *bmpPixelArray;
     int height;
     int width;
+    int paddingBytes;
 };
 #endif

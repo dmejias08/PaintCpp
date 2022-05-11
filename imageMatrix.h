@@ -2,6 +2,11 @@
 #define ImageMatrix_h
 
 #define BITS_PER_PIXEL 24
+
+#include <cstdlib>
+#include <iostream>
+#include <cmath>
+
 struct Color
 {
     float r, g, b;
@@ -14,6 +19,7 @@ class imageMatrix
 {
 private:
     int pixelArraySize;
+    int paddingBytes;
     int imgWidth;
     int imgHeight;
     Color **pixelMatrix;
