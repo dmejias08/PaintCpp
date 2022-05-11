@@ -21,11 +21,7 @@ imageMatrix::imageMatrix(int width, int height)
     imgWidth = width;
     // imgHeight = getHeight();
     // imgWidth = getWidth();
-    this->pixelMatrix = new Color *[imgHeight];
-    for (int i = 0; i < imgHeight; i++)
-    {
-        this->pixelMatrix[i] = new Color[imgWidth];
-    }
+    this->createMatrix();
 }
 
 imageMatrix::~imageMatrix()
@@ -152,4 +148,33 @@ y así define el grosor  */
             pencil(color, i, j, lineWidth);
         }
     }
+}
+
+void imageMatrix::rotate()
+{
+    this->deleteMatrix();
+
+}
+
+void imageMatrix::deleteMatrix()
+{
+    for (int i = 0; i < imgHeight; i++)
+    {
+        delete[] pixelMatrix[i];
+    }
+    delete[] pixelMatrix;
+}
+
+void imageMatrix::createMatrix()
+{
+    this->pixelMatrix = new Color *[imgHeight];
+    for (int i = 0; i < imgHeight; i++)
+    {
+        this->pixelMatrix[i] = new Color[imgWidth];
+    }
+}
+
+void imageMatrix::switchDimensions()
+{
+    
 }
