@@ -7,6 +7,7 @@ Bitmap::Bitmap(std::string imgName,int width, int height, unsigned char *pixelAr
     this->height = height;
     this->width = width;
     bmpPixelArray = pixelArray;
+
     generateBitmapImage(imgName, pixelArraySize);
 }
 
