@@ -1,7 +1,7 @@
 #ifndef Image_h
 #define Image_h
 
-#include "imageMatrix.h"
+
 #include <iostream>
 #include <vector>
 
@@ -9,7 +9,7 @@ class Image
 {
     public:
 
-        Image(int width, int height, imageMatrix *matrix);
+        Image(int width, int height, unsigned char *pixelArray);
         ~Image();
 
 

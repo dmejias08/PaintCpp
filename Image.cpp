@@ -165,12 +165,12 @@ void Image::Export(const char* path)
     f.write(reinterpret_cast<char*>(informationHeader), informationHeaderSize);
 
 
-    for( int y = 0; y < mHeight; y++){
+    for( int j = 0; j < mWidth; j++){
 
-        for ( int x = 0; x < mWidth; x++){
-            unsigned char r = static_cast<unsigned char>(mColor->getColor(x,y).r*255.0f); 
-            unsigned char g = static_cast<unsigned char>(mColor->getColor(x,y).g*255.0f); 
-            unsigned char b = static_cast<unsigned char>(mColor->getColor(x,y).b*255.0f); 
+        for (int i = 0; i < mHeight; i++){
+            unsigned char r = static_cast<unsigned char>(mColor->getColor(j,i).r*255.0f); 
+            unsigned char g = static_cast<unsigned char>(mColor->getColor(j,i).g*255.0f); 
+            unsigned char b = static_cast<unsigned char>(mColor->getColor(j,i).b*255.0f); 
 
             unsigned char color[] = {b,g,r};
             f.write(reinterpret_cast<char*>(color),3);
