@@ -21,13 +21,13 @@ void Bitmap::generateBitmapImage(std::string imgName, int pixelArraySize)
     unsigned char *fileHeader = createBitmapFileHeader();
     unsigned char *infoHeader = createBitmapInfoHeader();
 
-    for(int i = 0; i < FILE_HEADER_SIZE ; i++){
-        int number = fileHeader[i];
-        std::cout<<"file header "<<i<<" "<<number<<std::endl;
-    }
-    for(int j = 0; j < INFO_HEADER_SIZE ; j++){
-        std::cout<<"info header "<<j<<" "<<infoHeader[j]<<std::endl;
-    }
+    // for(int i = 0; i < FILE_HEADER_SIZE ; i++){
+    //     int number = fileHeader[i];
+    //     std::cout<<"file header "<<i<<" "<<number<<std::endl;
+    // }
+    // for(int j = 0; j < INFO_HEADER_SIZE ; j++){
+    //     std::cout<<"info header "<<j<<" "<<infoHeader[j]<<std::endl;
+    // }
 
 
 

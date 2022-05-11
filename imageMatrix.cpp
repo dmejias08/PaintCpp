@@ -35,8 +35,9 @@ void imageMatrix::generatePixelArray()
 /*Genera un array de cada color de cada pixel para que se pueda leer en bmpHandler*/
 {
     pixelArraySize = imgHeight * imgWidth * (BITS_PER_PIXEL / 8);
-    paddingBytes = 4 - (imgWidth * BITS_PER_PIXEL / 8) % 4;
-    pixelArray = (unsigned char *)malloc(pixelArraySize);
+    paddingBytes = (4 - (imgWidth * BITS_PER_PIXEL / 8) % 4)%4;
+    std::cout<<"Padding bytes: "<<paddingBytes<<std::endl;
+    pixelArray = (unsigned char *)malloc(pixelArraySize + paddingBytes * imgHeight);
     int c = 0;
     for (int i = imgHeight - 1; i >= 0; i--)
     {
@@ -47,7 +48,7 @@ void imageMatrix::generatePixelArray()
             pixelArray[c] = pixelMatrix[i][j].b;
             pixelArray[c + 1] = pixelMatrix[i][j].g;
             pixelArray[c + 2] = pixelMatrix[i][j].r;
-            std::cout << "Generate pixelArray " << c << pixelArray[c] << " " << pixelArray[c + 1] << " " << pixelArray[c + 2] << std::endl;
+            // std::cout << "Generate pixelArray " << c << pixelArray[c] << " " << pixelArray[c + 1] << " " << pixelArray[c + 2] << std::endl;
             c = c + 3;
         }
         c += paddingBytes;
@@ -55,12 +56,12 @@ void imageMatrix::generatePixelArray()
 }
 int imageMatrix::getPixelArraySize()
 {
-    for (int i = 0; i < pixelArraySize; i++)
-    {
-        std::cout << i << " " << pixelArray[i] << std::endl;
-    }
+    // for (int i = 0; i < pixelArraySize; i++)
+    // {
+    //     std::cout << i << " " << pixelArray[i] << std::endl;
+    // }
     int size = pixelArraySize + paddingBytes * imgHeight;
-    return pixelArraySize;
+    return size;
 }
 unsigned char *imageMatrix::getPixelArray()
 {
@@ -143,7 +144,8 @@ y así define el grosor  */
     }
 }
 
-void imageMatrix::line(const Color &color, int x1, int y1, int x2, int y2)
+void imageMatrix::line(const Color &color, int y1, int x1, int y2, int x2)
+/* Función matemática para generar line, note que "y" corresponde a i y  "x" corresponde a j*/
 {
 
     if (x2 - x1 == 0)
