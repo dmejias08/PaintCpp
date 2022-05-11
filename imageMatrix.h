@@ -44,6 +44,7 @@ public:
     void erase(int i, int j, int eraserWidth);
     Color getColor(int i, int j) const;
     void setColor(const Color &color, int i, int j);
+    void line(int x1, int y1, int x2, int y2);
     void pencil(const Color &color, int i, int j, int lineWidth);
     void pen(const Color &color, int iInitial, int jInitial, int iFinal, int jFinal, int lineWidth);
     int getHeight();

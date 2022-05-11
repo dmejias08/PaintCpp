@@ -13,7 +13,7 @@ Color::~Color()
 {
 }
 
-imageMatrix::imageMatrix(int width, int     height)
+imageMatrix::imageMatrix(int width, int height)
 /*El contructor genera la matriz relacionada a la imagen de la instancia de clase*/
 {
 
@@ -92,8 +92,7 @@ void imageMatrix::generateDefaultImage()
 void imageMatrix::erase(int i, int j, int eraserWidth)
 /*El método para borrar lo que va hacer es dibujar en blanco usando el metodo pencil*/
 {
-    pencil(Color(),i,j,eraserWidth);
-
+    pencil(Color(), i, j, eraserWidth);
 }
 Color imageMatrix::getColor(int i, int j) const
 {
@@ -144,7 +143,7 @@ y así define el grosor  */
     }
 }
 
-void imageMatrix::line(int x1, int y1, int x2, int y2)
+void imageMatrix::line(const Color &color, int x1, int y1, int x2, int y2)
 {
 
     if (x2 - x1 == 0)
@@ -157,9 +156,9 @@ void imageMatrix::line(int x1, int y1, int x2, int y2)
         }
         for (int i = y1; i <= y2; i++)
         {
-            pixelMatrix[i][x1]->setColor(255, 0, 0);
+            setColor(color, i, x1);
         }
-    }   
+    }
     else
     {
 
@@ -178,22 +177,22 @@ void imageMatrix::line(int x1, int y1, int x2, int y2)
             int new_y = round(m * i + b);
             if (new_y == old_y)
             {
-                pixelMatrix[new_y][i]->setColor(255, 0, 0);
+                setColor(color, new_y, i);
             }
             else
             {
                 if (m >= 0)
                 {
-                    for (int j = old_y+1; j <= new_y; j++)
+                    for (int j = old_y + 1; j <= new_y; j++)
                     {
-                        pixelMatrix[j][i]->setColor(255, 0, 0);
+                        setColor(color, j, i);
                     }
                 }
                 else
                 {
-                    for (int j = old_y-1; j >= new_y; j--)
+                    for (int j = old_y - 1; j >= new_y; j--)
                     {
-                        pixelMatrix[j][i]->setColor(255, 0, 0);
+                        setColor(color, j, i);
                     }
                 }
             }
