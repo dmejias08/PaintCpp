@@ -53,7 +53,7 @@ int main()
     
     int size = matrix->getPixelArraySize();
 
-    Bitmap Bitmap("hola", width, height, matrix->getPixelArray(), size);
+    Bitmap Bitmap("hola", matrix->getWidth(), matrix->getHeight(), matrix->getPixelArray(), size);
 
 
     return 0;
