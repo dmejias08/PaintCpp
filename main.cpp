@@ -8,8 +8,8 @@
 
 int main()
 {
-    int width = 4;
-    int height = 4;
+    int width = 100;
+    int height = 100;
 
     // imageMatrix::setSize(width, height);
 
@@ -28,9 +28,9 @@ int main()
     // matrix->pen(Color(0,192,255), 10,1,450,1,1);
 
     matrix->pencil(Color(45, 87, 90), 1, 2, 1);
-    // matrix->pencil(Color(10, 40, 55), 27, 20, 2);
-    // matrix->pencil(Color(10, 40, 55), 80, 20, 2);
-    // matrix->pencil(Color(14,74,239), 20,20,2);
+    matrix->pencil(Color(10, 40, 55), 27, 20, 2);
+    matrix->pencil(Color(10, 40, 55), 80, 20, 2);
+    matrix->pencil(Color(14,74,239), 20,20,2);
     // matrix->pencil(Color(14,74,239), 400,100,1);
     // matrix->pencil(Color(14,74,239), 400,150,2);
     // matrix->pencil(Color(14,74,239), 400,10,3);
