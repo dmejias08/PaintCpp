@@ -2,17 +2,19 @@
 
 using namespace std;
 
-Bitmap::Bitmap(int width, int height, unsigned char *pixelArray, int pixelArraySize)
+Bitmap::Bitmap(std::string imgName,int width, int height, unsigned char *pixelArray, int pixelArraySize)
 {
     this->height = height;
     this->width = width;
     bmpPixelArray = pixelArray;
-    generateBitmapImage(pixelArraySize);
+    generateBitmapImage(imgName, pixelArraySize);
 }
 
-void Bitmap::generateBitmapImage(int pixelArraySize)
+void Bitmap::generateBitmapImage(std::string imgName, int pixelArraySize)
 {
-    FILE *imageFile = fopen("canvas.bmp", "wb");
+    std::string fileName = imgName + ".bmp";
+
+    FILE *imageFile = fopen( fileName.c_str(), "wb");
 
 
     unsigned char *fileHeader = createBitmapFileHeader();
