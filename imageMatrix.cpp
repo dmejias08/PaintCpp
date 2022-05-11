@@ -1,7 +1,7 @@
 #include "imageMatrix.h"
 
 Color::Color()
-    : r(0), g(0), b(0)
+    : r(255), g(255), b(255)
 {
 }
 
@@ -19,8 +19,6 @@ imageMatrix::imageMatrix(int width, int height)
 
     imgHeight = height;
     imgWidth = width;
-    // imgHeight = getHeight();
-    // imgWidth = getWidth();
     this->pixelMatrix = new Color *[imgHeight];
     for (int i = 0; i < imgHeight; i++)
     {
@@ -37,27 +35,6 @@ imageMatrix::~imageMatrix()
     delete[] pixelMatrix;
 }
 
-// static imageMatrix* imageMatrix::getInstance()
-// {
-//     if(matrixInstance ==  NULL){
-//         matrixInstance = new imageMatrix();
-//     }
-//     return matrixInstance;
-
-// }
-// static int imageMatrix::getHeight()
-// {
-//     return imgHeight;
-// }
-// static int imageMatrix::getWidth()
-// {
-//     return imgWidth;
-// }
-// static void imageMatrix::setSize(int width, int height)
-// {
-//     imgHeight = height;
-//     imgWidth = width;
-// }
 void imageMatrix::generatePixelArray()
 {
     pixelArraySize = imgHeight * imgWidth * (BITS_PER_PIXEL / 8);
@@ -107,7 +84,7 @@ void imageMatrix::generateDefaultImage()
     {
         for (int j = 0; j < imgWidth; j++)
         {
-            setColor(Color(34, 42, 87), i, j);
+            setColor(Color(), i, j);
         }
     }
 }
@@ -145,6 +122,12 @@ void imageMatrix::pen(const Color &color, int iInitial, int jInitial, int iFinal
 y así define el grosor  */
 {
     std::cout << "Estoy en pen" << std::endl;
+
+    // int slope = (jFinal - jInitial)/(iFinal - iFinal);
+    // int b = jFinal - slope*iFinal;
+
+
+    // j = mi + b
     for (int i = iInitial; i <= iFinal; i++)
     {
         for (int j = jInitial; j <= jFinal; j++)
