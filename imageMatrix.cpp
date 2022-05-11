@@ -152,7 +152,25 @@ y así define el grosor  */
 
 void imageMatrix::rotate()
 {
+    Color **oldMatrix = new Color *[imgHeight];
+    for (int i = 0; i < imgHeight; i++)
+    {
+        oldMatrix[i] = new Color[imgWidth];
+        for(int j = 0; j < imgWidth; j++)
+        {
+            oldMatrix[i][j]=this->pixelMatrix[i][j];
+        }
+    }
     this->deleteMatrix();
+    this->switchDimensions();
+    this->createMatrix();
+    for (int i = 0; i < imgHeight; i++)
+    {
+        for(int j = 0; j < imgWidth; j++)
+        {
+            this->pixelMatrix[i][j] = oldMatrix[j][imgHeight-i-1];
+        }
+    }
 
 }
 
@@ -176,5 +194,7 @@ void imageMatrix::createMatrix()
 
 void imageMatrix::switchDimensions()
 {
-    
+    int temp = imgWidth;
+    imgWidth = imgHeight;
+    imgHeight = temp;
 }

@@ -9,7 +9,7 @@
 int main()
 {
     int width = 100;
-    int height = 100;
+    int height = 200;
 
     // imageMatrix::setSize(width, height);
 
@@ -25,7 +25,7 @@ int main()
     // matrix->setColor(Color(123,213,1),50,57);
     // matrix->setColor(Color(123,213,1),50,58);
 
-    // matrix->pen(Color(0,192,255), 10,1,450,1,1);
+    matrix->pen(Color(0,192,255), 10,1,50,1,1);
 
     matrix->pencil(Color(45, 87, 90), 1, 2, 1);
     matrix->pencil(Color(10, 40, 55), 27, 20, 2);
@@ -34,6 +34,12 @@ int main()
     // matrix->pencil(Color(14,74,239), 400,100,1);
     // matrix->pencil(Color(14,74,239), 400,150,2);
     // matrix->pencil(Color(14,74,239), 400,10,3);
+    matrix->printMatrix();
+
+    // matrix->rotate();
+    // matrix->rotate();
+    // matrix->rotate();
+
 
     matrix->generatePixelArray();
 
