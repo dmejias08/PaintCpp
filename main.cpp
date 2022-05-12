@@ -33,13 +33,13 @@ int main()
 
     matrix->rectangle(Color(0, 0, 0), 10, 10, 50, 60, 2);
     matrix->square(Color(0, 0, 0), 190, 190, 10, 10,2);
-    matrix->triangleIso(Color(0, 0, 0), 20, 20, 70, 80,1);
-    // matrix->triangleEsc(Color(0, 0, 0), 30, 100, 70, 150, 80, 60, 1);
-    matrix->triangleRec(Color(0, 0, 0), 150, 150, 190, 170, 1);
-    matrix->rhombus(Color(0, 0, 0), 7   0, 70, 110, 150, 1);
+    matrix->triangleIso(Color(0, 0, 0), 20, 20, 70, 80,2);
+    matrix->triangleEsc(Color(0, 0, 0), 30, 100, 70, 150, 80, 60, 2);
+    matrix->triangleRec(Color(0, 0, 0), 150, 150, 190, 170, 2);
+    matrix->rhombus(Color(0, 0, 0), 70, 70, 110, 150, 2);
 
     matrix->erase(4, 10, 2);
-    matrix->erase(20, 20, 1);
+    matrix->erase(20, 20, 1);   
     matrix->erase(2, 4, 2);
     // matrix->printMatrix();
 

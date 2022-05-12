@@ -176,7 +176,8 @@ void imageMatrix::line(const Color &color, int y1, int x1, int y2, int x2, int l
                 {
                     for (int j = old_y - 1; j >= new_y; j--)
                     {
-                        pencil(color, i, j, lineWidth);
+                        // pencil(color, i, j, lineWidth);
+                        pencil(color, j, i, lineWidth);
                     }
                 }
             }
