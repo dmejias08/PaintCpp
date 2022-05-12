@@ -30,10 +30,6 @@ private:
 public:
     imageMatrix(int width, int height);
     ~imageMatrix();
-    // static imageMatrix* getInstance();
-    // static int getHeight();
-    // static int getWidth();
-    // static void setSize(int width, int height);
     void deleteMatrix();
     void createMatrix();
     void switchDimensions();
@@ -44,22 +40,26 @@ public:
     void generateDefaultImage();
     void printMatrix();
     void erase(int i, int j, int eraserWidth);
-    Color getColor(int i, int j) const;
+    Color getColor(int i, int j);
     void setColor(const Color &color, int i, int j);
     void pencil(const Color &color, int i, int j, int lineWidth);
-    void pen(const Color &color, int iInitial, int jInitial, int iFinal, int jFinal, int lineWidth);
     int getHeight();
     int getWidth();
-    void line(const Color &color, int x1, int y1, int x2, int y2);
-    void square(const Color &color, int x1, int y1, int x2, int y2);
-    void rhombus(const Color &color, int x1, int y1, int x2, int y2);
-    void triangleIso(const Color &color, int x1, int y1, int x2, int y2);
-    void triangleRec(const Color &color, int x1, int y1, int x2, int y2);
-    void triangleEsc(const Color &color, int x1, int y1, int x2, int y2, int x3, int y3);
-    void rectangle(const Color &color, int x1, int y1, int x2, int y2);
+    void line(const Color &color, int x1, int y1, int x2, int y2, int lineWidth);
+    void square(const Color &color, int x1, int y1, int x2, int y2, int lineWidth);
+    void rhombus(const Color &color, int x1, int y1, int x2, int y2, int lineWidth);
+    void triangleIso(const Color &color, int x1, int y1, int x2, int y2, int lineWidth);
+    void triangleRec(const Color &color, int x1, int y1, int x2, int y2, int lineWidth);
+    void triangleEsc(const Color &color, int x1, int y1, int x2, int y2, int x3, int y3, int lineWidth);
+    void rectangle(const Color &color, int x1, int y1, int x2, int y2, int lineWidth);
     void circle(const Color &color, int x1, int y1, int x2, int y2);
     void elipse(const Color &color, int x1, int y1, int x2, int y2);
     void paintFill(const Color &colorPicked, const Color &newColor, int x1, int y1);
+    void bayerFilter();
+    void sepiaFilter();
+    void grayScaleFilter();
+    void negativeFilter();
+
 };
 
 

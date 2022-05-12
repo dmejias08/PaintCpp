@@ -37,8 +37,8 @@ void imageMatrix::generatePixelArray()
 /*Genera un array de cada color de cada pixel para que se pueda leer en bmpHandler*/
 {
     pixelArraySize = imgHeight * imgWidth * (BITS_PER_PIXEL / 8);
-    paddingBytes = (4 - (imgWidth * BITS_PER_PIXEL / 8) % 4)%4;
-    std::cout<<"Padding bytes: "<<paddingBytes<<std::endl;
+    paddingBytes = (4 - (imgWidth * BITS_PER_PIXEL / 8) % 4) % 4;
+    std::cout << "Padding bytes: " << paddingBytes << std::endl;
     pixelArray = (unsigned char *)malloc(pixelArraySize + paddingBytes * imgHeight);
     int c = 0;
     for (int i = imgHeight - 1; i >= 0; i--)
@@ -56,12 +56,9 @@ void imageMatrix::generatePixelArray()
         c += paddingBytes;
     }
 }
+
 int imageMatrix::getPixelArraySize()
 {
-    // for (int i = 0; i < pixelArraySize; i++)
-    // {
-    //     std::cout << i << " " << pixelArray[i] << std::endl;
-    // }
     int size = pixelArraySize + paddingBytes * imgHeight;
     return size;
 }
@@ -97,7 +94,7 @@ void imageMatrix::erase(int i, int j, int eraserWidth)
 {
     pencil(Color(), i, j, eraserWidth);
 }
-Color imageMatrix::getColor(int i, int j) const
+Color imageMatrix::getColor(int i, int j)
 {
     return pixelMatrix[i][j];
 }
@@ -127,26 +124,8 @@ Se deben elegir el grosor, van a ver tres tipos de grosor*/
         }
     }
 }
-void imageMatrix::pen(const Color &color, int iInitial, int jInitial, int iFinal, int jFinal, int lineWidth)
-/*Toma una posición inicial y una posción final y le cambia el color formando una linea. Note que llama a la función punto
-y así define el grosor  */
-{
-    std::cout << "Estoy en pen" << std::endl;
 
-    // int slope = (jFinal - jInitial)/(iFinal - iFinal);
-    // int b = jFinal - slope*iFinal;
-
-    // j = mi + b
-    for (int i = iInitial; i <= iFinal; i++)
-    {
-        for (int j = jInitial; j <= jFinal; j++)
-        {
-            pencil(color, i, j, lineWidth);
-        }
-    }
-}
-
-void imageMatrix::line(const Color &color, int y1, int x1, int y2, int x2)
+void imageMatrix::line(const Color &color, int y1, int x1, int y2, int x2, int lineWidth)
 /* Función matemática para generar line, note que "y" corresponde a i y  "x" corresponde a j*/
 {
 
@@ -160,14 +139,14 @@ void imageMatrix::line(const Color &color, int y1, int x1, int y2, int x2)
         }
         for (int i = y1; i <= y2; i++)
         {
-            setColor(color, i, x1);
+            pencil(color, i, x1, lineWidth);
         }
     }
     else
     {
 
         float m = (float)(y2 - y1) / (float)(x2 - x1);
-        printf("m: %f\n", m);
+        // printf("m: %f\n", m);
         float b = y1 - (m * x1);
         if (x2 < x1)
         {
@@ -181,7 +160,7 @@ void imageMatrix::line(const Color &color, int y1, int x1, int y2, int x2)
             int new_y = round(m * i + b);
             if (new_y == old_y)
             {
-                setColor(color, new_y, i);
+                pencil(color, new_y, i, lineWidth);
             }
             else
             {
@@ -189,14 +168,15 @@ void imageMatrix::line(const Color &color, int y1, int x1, int y2, int x2)
                 {
                     for (int j = old_y + 1; j <= new_y; j++)
                     {
-                        setColor(color, j, i);
+                        pencil(color, j, i, lineWidth);
                     }
                 }
                 else
                 {
                     for (int j = old_y - 1; j >= new_y; j--)
                     {
-                        setColor(color, j, i);
+                        // pencil(color, i, j, lineWidth);
+                        pencil(color, j, i, lineWidth);
                     }
                 }
             }
@@ -263,61 +243,112 @@ int imageMatrix::getWidth()
     return imgWidth;
 }
 
-void imageMatrix::square(const Color &color, int x1, int y1, int x2, int y2)
+void imageMatrix::bayerFilter()
 {
-    int diferentialx = x2-x1;
-    int diferentialy = y2-y1;
-    int lenghtx = min(abs(diferentialx),abs(diferentialy));
+    for (int i = 0; i < imgHeight; i++)
+    {
+        for (int j = 0; j < imgWidth; j++)
+        {
+            Color colorTemp = getColor(i, j);
+            float newRGB = 0.65*colorTemp.r/2 + 0.57*colorTemp.g + 0.7*colorTemp.b;
+            setColor(Color(newRGB, newRGB, newRGB), i, j);
+        }
+    }
+}
+
+void imageMatrix::sepiaFilter()
+{
+    for (int i = 0; i < imgHeight; i++)
+    {
+        for (int j = 0; j < imgWidth; j++)
+        {
+            Color colorTemp = getColor(i, j);
+            float newR = 0.393 * colorTemp.r + 0.769 * colorTemp.g + 0.189 * colorTemp.b;
+            float newG = 0.349 * colorTemp.r + 0.686 * colorTemp.g + 0.168 * colorTemp.b;
+            float newB = 0.272 * colorTemp.r + 0.534 * colorTemp.g + 0.131 * colorTemp.b;
+            setColor(Color(newR, newG, newB), i, j);
+        }
+    }
+}
+
+void imageMatrix::grayScaleFilter()
+{
+    for (int i = 0; i < imgHeight; i++)
+    {
+        for (int j = 0; j < imgWidth; j++)
+        {
+            Color colorTemp = getColor(i, j);
+            float formula = 0.3 * colorTemp.r + 0.59 * colorTemp.g + 0.11 * colorTemp.b;
+            setColor(Color(formula, formula, formula), i, j);
+        }
+    }
+}
+void imageMatrix::negativeFilter()
+{
+    for (int i = 0; i < imgHeight; i++)
+    {
+        for (int j = 0; j < imgWidth; j++)
+        {
+            Color colorTemp = getColor(i, j);
+            setColor(Color(255 - colorTemp.r, 255 - colorTemp.g, 255 - colorTemp.b), i, j);
+        }
+    }
+}
+
+void imageMatrix::square(const Color &color, int x1, int y1, int x2, int y2, int lineWidth)
+{
+    int diferentialx = x2 - x1;
+    int diferentialy = y2 - y1;
+    int lenghtx = min(abs(diferentialx), abs(diferentialy));
     int lenghty = lenghtx;
     if (diferentialx < 0)
     {
-        lenghtx = lenghtx*-1;
+        lenghtx = lenghtx * -1;
     }
     if (diferentialy < 0)
     {
-        lenghty = lenghty*-1;
+        lenghty = lenghty * -1;
     }
-    line(color, y1,x1,y1,x1+lenghtx);
-    line(color, y1,x1,y1+lenghty,x1);
-    line(color, y1+lenghty,x1,y1+lenghty,x1+lenghtx);
-    line(color, y1,x1+lenghtx,y1+lenghty,x1+lenghtx);
-    
+    line(color, y1, x1, y1, x1 + lenghtx, lineWidth);
+    line(color, y1, x1, y1 + lenghty, x1, lineWidth);
+    line(color, y1 + lenghty, x1, y1 + lenghty, x1 + lenghtx, lineWidth);
+    line(color, y1, x1 + lenghtx, y1 + lenghty, x1 + lenghtx, lineWidth);
 }
-void imageMatrix::rhombus(const Color &color, int x1, int y1, int x2, int y2)
+void imageMatrix::rhombus(const Color &color, int x1, int y1, int x2, int y2, int lineWidth)
 {
-    int diferentialx = (x2-x1)/2;
-    int diferentialy = (y2-y1)/2;
-    line(color, y1,x1+diferentialx,y1+diferentialy,x2);
-    line(color, y1,x1+diferentialx,y1+diferentialy,x1);
-    line(color, y1+diferentialy,x1,y2,x1+diferentialx);
-    line(color, y1+diferentialy,x1,y2,x1+diferentialx);
-    line(color, y1+diferentialy,x2,y2,x1+diferentialx);
+    int diferentialx = (x2 - x1) / 2;
+    int diferentialy = (y2 - y1) / 2;
+    line(color, y1, x1 + diferentialx, y1 + diferentialy, x2, lineWidth);
+    line(color, y1, x1 + diferentialx, y1 + diferentialy, x1, lineWidth);
+    line(color, y1 + diferentialy, x1, y2, x1 + diferentialx, lineWidth);
+    line(color, y1 + diferentialy, x1, y2, x1 + diferentialx, lineWidth);
+    line(color, y1 + diferentialy, x2, y2, x1 + diferentialx, lineWidth);
 }
-void imageMatrix::triangleIso(const Color &color, int x1, int y1, int x2, int y2)
+void imageMatrix::triangleIso(const Color &color, int x1, int y1, int x2, int y2, int lineWidth)
 {
-    int diferentialx = (x2-x1)/2;
-    line(color, y1,x1+diferentialx,y2,x2);
-    line(color, y1,x1+diferentialx,y2,x1);
-    line(color, y2,x1,y2,x2);
+    int diferentialx = (x2 - x1) / 2;
+    line(color, y1, x1 + diferentialx, y2, x2, lineWidth);
+    line(color, y1, x1 + diferentialx, y2, x1, lineWidth);
+    line(color, y2, x1, y2, x2, lineWidth);
 }
-void imageMatrix::triangleRec(const Color &color, int x1, int y1, int x2, int y2)
+void imageMatrix::triangleRec(const Color &color, int x1, int y1, int x2, int y2, int lineWidth)
 {
-    line(color, y1,x1,y2,x2);
-    line(color, y1,x1,y2,x1);
-    line(color, y2,x1,y2,x2);
+    line(color, y1, x1, y2, x2, lineWidth);
+    line(color, y1, x1, y2, x1, lineWidth);
+    line(color, y2, x1, y2, x2, lineWidth);
 }
-void imageMatrix::triangleEsc(const Color &color, int x1, int y1, int x2, int y2, int x3, int y3)
+void imageMatrix::triangleEsc(const Color &color, int x1, int y1, int x2, int y2, int x3, int y3, int lineWidth)
 {
-    line(color, y1,x1,y2,x2);
-    line(color, y1,x1,y3,x3);
-    line(color, y2,x2,y3,x3);
+    line(color, y1, x1, y2, x2, lineWidth);
+    line(color, y1, x1, y3, x3, lineWidth);
+    line(color, y2, x2, y3, x3, lineWidth);
 }
-void imageMatrix::rectangle(const Color &color, int x1, int y1, int x2, int y2)
+void imageMatrix::rectangle(const Color &color, int x1, int y1, int x2, int y2, int lineWidth)
 {
-    line(color, y1,x1,y2,x1);
-    line(color, y1,x1,y1,x2);
-    line(color, y1,x2,y2,x2);
-    line(color, y2,x1,y2,x2);
+    line(color, y1,x1,y2,x1,lineWidth);
+    line(color, y1,x1,y1,x2,lineWidth);
+    line(color, y1,x2,y2,x2,lineWidth);
+    line(color, y2,x1,y2,x2,lineWidth);
 }
 void imageMatrix::elipse(const Color &color, int x1, int y1, int x2, int y2)
 {   
