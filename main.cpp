@@ -34,20 +34,31 @@ int main()
     // matrix->setColor(Color(0, 0, 0), 4, 2);
 
 
-    matrix->line(Color(0,0,0), 2,4,5,6);
-    matrix->line(Color(0,0,0), 40,20,10,20);
-    matrix->line(Color(0,0,0), 40,80,40,10);
-    matrix->line(Color(0,0,0), 80,60,40,22);
-    matrix->line(Color(0,0,0), 10,10,30,20);
-    // matrix->pencil(Color(14,74,239), 400,100,1);
-    // matrix->pencil(Color(14,74,239), 400,150,2);
-    // matrix->pencil(Color(14,74,239), 400,10,3);
+    matrix->line(Color(0,192,255), 2,4,5,6,2);
+    matrix->line(Color(0,0,0), 40,20,10,20, 2);
+    matrix->line(Color(0,0,0), 40,80,40,10, 1);
+    matrix->line(Color(0,0,0), 80,60,40,22, 2);
+    matrix->line(Color(0,0,0), 10,10,30,20, 1);
+    matrix->pencil(Color(14,74,139), 4,10,1);
+    matrix->pencil(Color(14,74,139), 4,11,1);
+    matrix->pencil(Color(14,74,139), 4,12,1);
+    matrix->pencil(Color(14,74,139), 4,13,1);
+    matrix->pencil(Color(14,74,139), 4,14,1);
+    matrix->pencil(Color(14,74,139), 4,15,1);
+    matrix->pencil(Color(14,74,139), 4,16,1);
+    matrix->pencil(Color(14,74,139), 4,17,1);
+    matrix->pencil(Color(14,74,139), 5,17,1);
+    matrix->pencil(Color(14,74,139), 6,17,1);
     
+    matrix->erase(4,10,2);
+    matrix->erase(20,20,1);
+    matrix->erase(2,4,2);
     // matrix->printMatrix();
 
-    // matrix->rotate();
-    // matrix->rotate();
-    // matrix->rotate();
+    matrix->rotate();
+    matrix->rotate();
+    matrix->rotate();
+    matrix->rotate();
 
     matrix->generatePixelArray();
 

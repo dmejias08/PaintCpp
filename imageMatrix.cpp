@@ -131,10 +131,6 @@ y así define el grosor  */
 {
     std::cout << "Estoy en pen" << std::endl;
 
-    // int slope = (jFinal - jInitial)/(iFinal - iFinal);
-    // int b = jFinal - slope*iFinal;
-
-    // j = mi + b
     for (int i = iInitial; i <= iFinal; i++)
     {
         for (int j = jInitial; j <= jFinal; j++)
@@ -144,7 +140,7 @@ y así define el grosor  */
     }
 }
 
-void imageMatrix::line(const Color &color, int y1, int x1, int y2, int x2)
+void imageMatrix::line(const Color &color, int y1, int x1, int y2, int x2, int lineWidth)
 /* Función matemática para generar line, note que "y" corresponde a i y  "x" corresponde a j*/
 {
 
@@ -158,7 +154,8 @@ void imageMatrix::line(const Color &color, int y1, int x1, int y2, int x2)
         }
         for (int i = y1; i <= y2; i++)
         {
-            setColor(color, i, x1);
+            // setColor(color, i, x1);
+            pencil(color,i, x1,lineWidth);
         }
     }
     else
@@ -179,7 +176,8 @@ void imageMatrix::line(const Color &color, int y1, int x1, int y2, int x2)
             int new_y = round(m * i + b);
             if (new_y == old_y)
             {
-                setColor(color, new_y, i);
+                // setColor(color, new_y, i);
+                pencil(color, new_y, i, lineWidth);
             }
             else
             {
@@ -187,14 +185,16 @@ void imageMatrix::line(const Color &color, int y1, int x1, int y2, int x2)
                 {
                     for (int j = old_y + 1; j <= new_y; j++)
                     {
-                        setColor(color, j, i);
+                        // setColor(color, j, i);
+                        pencil(color, j, i, lineWidth);
                     }
                 }
                 else
                 {
                     for (int j = old_y - 1; j >= new_y; j--)
                     {
-                        setColor(color, j, i);
+                        // setColor(color, j, i);
+                        pencil(color, i, j, lineWidth);
                     }
                 }
             }
