@@ -38,17 +38,20 @@ int main()
     matrix->triangleRec(Color(33, 222, 43), 150, 150, 190, 170, 2);
     matrix->rhombus(Color(0, 0, 0), 70, 70, 110, 150, 2);
 
+    matrix->circle(Color(0,0,0), 10,10,120,190);
+    
+
     matrix->erase(4, 10, 2);
     matrix->erase(20, 20, 1);   
     matrix->erase(2, 4, 2);
     // matrix->printMatrix();
-
+    matrix->paintFill(Color(255,255,255),Color(65,44,87),190,190);
     // matrix->rotate();
     // matrix->rotate();
     // matrix->rotate();
     // matrix->rotate();
 
-    matrix->bayerFilter();
+    //matrix->bayerFilter();
 
     matrix->generatePixelArray();
 
