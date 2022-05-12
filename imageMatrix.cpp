@@ -1,5 +1,5 @@
 #include "imageMatrix.h"
-#include <cstdlib>
+
 using namespace std;
 
 Color::Color()
@@ -107,8 +107,8 @@ void imageMatrix::setColor(const Color &color, int i, int j)
     pixelMatrix[i][j].r = color.r;
     pixelMatrix[i][j].g = color.g;
     pixelMatrix[i][j].b = color.b;
-    std::cout << "(" << i << "," << j << ")"
-              << " R " << pixelMatrix[i][j].r << " G " << pixelMatrix[i][j].g << " B " << pixelMatrix[i][j].b << std::endl;
+    // std::cout << "(" << i << "," << j << ")"
+    //           << " R " << pixelMatrix[i][j].r << " G " << pixelMatrix[i][j].g << " B " << pixelMatrix[i][j].b << std::endl;
 }
 
 void imageMatrix::pencil(const Color &color, int i, int j, int lineWidth)
@@ -318,4 +318,50 @@ void imageMatrix::rectangle(const Color &color, int x1, int y1, int x2, int y2)
     line(color, y1,x1,y1,x2);
     line(color, y1,x2,y2,x2);
     line(color, y2,x1,y2,x2);
+}
+void imageMatrix::elipse(const Color &color, int x1, int y1, int x2, int y2)
+{   
+    int x = min(x1,x2);
+    int y = min(y1,y2);
+    int diferentialx = abs(x2-x1);
+    int diferentialy = abs(y2-y1);
+    int h = x + diferentialx/2;
+    int k = y + diferentialy/2;
+    int a2 = diferentialx*diferentialx/4;
+    int b2 = diferentialy*diferentialy/4;
+    for (float paintx = (float)x; paintx <= x + diferentialx; paintx=paintx+0.001)
+    {
+        float painty1 = (float)sqrt((1-(float)((paintx-h)*(paintx-h))/a2)*b2)+k;
+        float painty2 = -1*(float)sqrt((1-(float)((paintx-h)*(paintx-h))/a2)*b2)+k;
+        setColor(color, painty1, paintx);
+        setColor(color, painty2, paintx);
+    }
+    
+        
+}
+void imageMatrix::circle(const Color &color, int x1, int y1, int x2, int y2)
+{
+    int diferentialx = x2-x1;
+    int diferentialy = y2-y1;
+    int lenght = min(abs(diferentialx),abs(diferentialy));
+    int x3 = min(x1,x2);
+    int y3 = min(y1,y2);
+    int x4 = x3 + lenght;
+    int y4 = y3 + lenght;
+    elipse(color,x3,y3,x4,y4);
+}
+void imageMatrix::paintFill(const Color &colorPicked, const Color &newColor, int x1, int y1)
+{
+    if (x1 < imgWidth && y1 < imgHeight && x1 >= 0 && y1 >= 0)
+    {
+        Color currentColor = getColor(y1,x1);
+        if (currentColor.b == colorPicked.b && currentColor.g == colorPicked.g && currentColor.r == colorPicked.r)
+        {
+            setColor(newColor, y1, x1);
+            paintFill(colorPicked, newColor,x1-1,y1);
+            paintFill(colorPicked, newColor,x1+1,y1);
+            paintFill(colorPicked, newColor,x1,y1-1);
+            paintFill(colorPicked, newColor,x1,y1+1);
+        }
+    }
 }

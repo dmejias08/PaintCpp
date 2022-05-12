@@ -6,6 +6,8 @@
 #include <cstdlib>
 #include <iostream>
 #include <cmath>
+#include <cstdlib>
+#include <algorithm>
 
 struct Color
 {
@@ -55,6 +57,9 @@ public:
     void triangleRec(const Color &color, int x1, int y1, int x2, int y2);
     void triangleEsc(const Color &color, int x1, int y1, int x2, int y2, int x3, int y3);
     void rectangle(const Color &color, int x1, int y1, int x2, int y2);
+    void circle(const Color &color, int x1, int y1, int x2, int y2);
+    void elipse(const Color &color, int x1, int y1, int x2, int y2);
+    void paintFill(const Color &colorPicked, const Color &newColor, int x1, int y1);
 };
 
 

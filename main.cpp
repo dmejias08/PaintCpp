@@ -42,14 +42,16 @@ int main()
     // matrix->pencil(Color(14,74,239), 400,100,1);
     // matrix->pencil(Color(14,74,239), 400,150,2);
     // matrix->pencil(Color(14,74,239), 400,10,3);
-    matrix->rectangle(Color(0,0,0), 10,10,50,60);
-    //matrix->rectangle(Color(0,0,0), 45,30,20,15);
-    matrix->square(Color(0,0,0), 190,190,10,10);
-    matrix->triangleIso(Color(0,0,0), 20,20,70,80);
-    matrix->triangleEsc(Color(0,0,0), 30,100,70,150,80,60);
-    matrix->triangleRec(Color(0,0,0), 150,150,190,170);
-    matrix->rhombus(Color(0,0,0), 70,70,110,150);
-    
+    // matrix->rectangle(Color(0,0,0), 10,10,50,60);
+    // matrix->rectangle(Color(0,0,0), 45,30,20,15);
+    // matrix->square(Color(0,0,0), 190,190,10,10);
+    // matrix->triangleIso(Color(0,0,0), 20,20,70,80);
+    // matrix->triangleEsc(Color(0,0,0), 30,100,70,150,190,60);
+    // matrix->triangleRec(Color(0,0,0), 150,150,190,170);
+    // matrix->rhombus(Color(0,0,0), 70,85,110,150);
+    //matrix->elipse(Color(0,0,0), 10,10,120,190);
+    matrix->circle(Color(0,0,0), 10,10,120,190);
+    matrix->paintFill(Color(255,255,255),Color(65,44,87),190,190);
     // matrix->printMatrix();
 
     // matrix->rotate();
