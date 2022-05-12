@@ -46,6 +46,13 @@ public:
     int getWidth();
     void grayScaleFilter();
     void negativeFilter();
+    void line(const Color &color, int x1, int y1, int x2, int y2);
+    void square(const Color &color, int x1, int y1, int x2, int y2);
+    void rhombus(const Color &color, int x1, int y1, int x2, int y2);
+    void triangleIso(const Color &color, int x1, int y1, int x2, int y2);
+    void triangleRec(const Color &color, int x1, int y1, int x2, int y2);
+    void triangleEsc(const Color &color, int x1, int y1, int x2, int y2, int x3, int y3);
+    void rectangle(const Color &color, int x1, int y1, int x2, int y2);
 };
 
 

@@ -1,4 +1,6 @@
 #include "imageMatrix.h"
+#include <cstdlib>
+using namespace std;
 
 Color::Color()
     : r(255), g(255), b(255)
@@ -239,4 +241,61 @@ int imageMatrix::getHeight()
 int imageMatrix::getWidth()
 {
     return imgWidth;
+}
+
+void imageMatrix::square(const Color &color, int x1, int y1, int x2, int y2)
+{
+    int diferentialx = x2-x1;
+    int diferentialy = y2-y1;
+    int lenghtx = min(abs(diferentialx),abs(diferentialy));
+    int lenghty = lenghtx;
+    if (diferentialx < 0)
+    {
+        lenghtx = lenghtx*-1;
+    }
+    if (diferentialy < 0)
+    {
+        lenghty = lenghty*-1;
+    }
+    line(color, y1,x1,y1,x1+lenghtx);
+    line(color, y1,x1,y1+lenghty,x1);
+    line(color, y1+lenghty,x1,y1+lenghty,x1+lenghtx);
+    line(color, y1,x1+lenghtx,y1+lenghty,x1+lenghtx);
+    
+}
+void imageMatrix::rhombus(const Color &color, int x1, int y1, int x2, int y2)
+{
+    int diferentialx = (x2-x1)/2;
+    int diferentialy = (y2-y1)/2;
+    line(color, y1,x1+diferentialx,y1+diferentialy,x2);
+    line(color, y1,x1+diferentialx,y1+diferentialy,x1);
+    line(color, y1+diferentialy,x1,y2,x1+diferentialx);
+    line(color, y1+diferentialy,x1,y2,x1+diferentialx);
+    line(color, y1+diferentialy,x2,y2,x1+diferentialx);
+}
+void imageMatrix::triangleIso(const Color &color, int x1, int y1, int x2, int y2)
+{
+    int diferentialx = (x2-x1)/2;
+    line(color, y1,x1+diferentialx,y2,x2);
+    line(color, y1,x1+diferentialx,y2,x1);
+    line(color, y2,x1,y2,x2);
+}
+void imageMatrix::triangleRec(const Color &color, int x1, int y1, int x2, int y2)
+{
+    line(color, y1,x1,y2,x2);
+    line(color, y1,x1,y2,x1);
+    line(color, y2,x1,y2,x2);
+}
+void imageMatrix::triangleEsc(const Color &color, int x1, int y1, int x2, int y2, int x3, int y3)
+{
+    line(color, y1,x1,y2,x2);
+    line(color, y1,x1,y3,x3);
+    line(color, y2,x2,y3,x3);
+}
+void imageMatrix::rectangle(const Color &color, int x1, int y1, int x2, int y2)
+{
+    line(color, y1,x1,y2,x1);
+    line(color, y1,x1,y1,x2);
+    line(color, y1,x2,y2,x2);
+    line(color, y2,x1,y2,x2);
 }
