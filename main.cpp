@@ -31,11 +31,11 @@ int main()
     // matrix->pencil(Color(14, 74, 139), 5, 17, 1);
     // matrix->pencil(Color(14, 74, 139), 6, 17, 1);
 
-    matrix->rectangle(Color(0, 0, 0), 10, 10, 50, 60, 2);
-    matrix->square(Color(0, 0, 0), 190, 190, 10, 10,2);
-    matrix->triangleIso(Color(0, 0, 0), 20, 20, 70, 80,2);
-    matrix->triangleEsc(Color(0, 0, 0), 30, 100, 70, 150, 80, 60, 2);
-    matrix->triangleRec(Color(0, 0, 0), 150, 150, 190, 170, 2);
+    matrix->rectangle(Color(229, 56, 19), 20, 20, 50, 60, 2);
+    matrix->square(Color(172, 236, 240), 190, 190, 10, 10,2);
+    matrix->triangleIso(Color(8, 147, 157), 20, 20, 70, 80,2);
+    matrix->triangleEsc(Color(233, 67, 201), 30, 100, 70, 150, 80, 60, 2);
+    matrix->triangleRec(Color(33, 222, 43), 150, 150, 190, 170, 2);
     matrix->rhombus(Color(0, 0, 0), 70, 70, 110, 150, 2);
 
     matrix->erase(4, 10, 2);
@@ -43,10 +43,12 @@ int main()
     matrix->erase(2, 4, 2);
     // matrix->printMatrix();
 
-    matrix->rotate();
-    matrix->rotate();
-    matrix->rotate();
-    matrix->rotate();
+    // matrix->rotate();
+    // matrix->rotate();
+    // matrix->rotate();
+    // matrix->rotate();
+
+    matrix->bayerFilter();
 
     matrix->generatePixelArray();
 
@@ -56,7 +58,7 @@ int main()
 
     int size = matrix->getPixelArraySize();
 
-    Bitmap Bitmap("hola", matrix->getWidth(), matrix->getHeight(), matrix->getPixelArray(), size);
+    Bitmap Bitmap("bayerFilter", matrix->getWidth(), matrix->getHeight(), matrix->getPixelArray(), size);
 
     return 0;
 }

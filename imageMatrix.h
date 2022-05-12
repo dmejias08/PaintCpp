@@ -38,12 +38,14 @@ public:
     void generateDefaultImage();
     void printMatrix();
     void erase(int i, int j, int eraserWidth);
-    Color getColor(int i, int j) const;
+    Color getColor(int i, int j);
     void setColor(const Color &color, int i, int j);
     void line(const Color &color, int x1, int y1, int x2, int y2, int lineWidth);
     void pencil(const Color &color, int i, int j, int lineWidth);
     int getHeight();
     int getWidth();
+    void bayerFilter();
+    void sepiaFilter();
     void grayScaleFilter();
     void negativeFilter();
     void square(const Color &color, int x1, int y1, int x2, int y2, int lineWidth);
