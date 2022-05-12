@@ -56,12 +56,9 @@ void imageMatrix::generatePixelArray()
         c += paddingBytes;
     }
 }
+
 int imageMatrix::getPixelArraySize()
 {
-    // for (int i = 0; i < pixelArraySize; i++)
-    // {
-    //     std::cout << i << " " << pixelArray[i] << std::endl;
-    // }
     int size = pixelArraySize + paddingBytes * imgHeight;
     return size;
 }
@@ -100,6 +97,7 @@ void imageMatrix::erase(int i, int j, int eraserWidth)
 Color imageMatrix::getColor(int i, int j) const
 {
     return pixelMatrix[i][j];
+ 
 }
 void imageMatrix::setColor(const Color &color, int i, int j)
 /*  Toma un posición de matriz de pixeles y asig    na los colores correspodientes */
@@ -127,26 +125,8 @@ Se deben elegir el grosor, van a ver tres tipos de grosor*/
         }
     }
 }
-void imageMatrix::pen(const Color &color, int iInitial, int jInitial, int iFinal, int jFinal, int lineWidth)
-/*Toma una posición inicial y una posción final y le cambia el color formando una linea. Note que llama a la función punto
-y así define el grosor  */
-{
-    std::cout << "Estoy en pen" << std::endl;
 
-    // int slope = (jFinal - jInitial)/(iFinal - iFinal);
-    // int b = jFinal - slope*iFinal;
-
-    // j = mi + b
-    for (int i = iInitial; i <= iFinal; i++)
-    {
-        for (int j = jInitial; j <= jFinal; j++)
-        {
-            pencil(color, i, j, lineWidth);
-        }
-    }
-}
-
-void imageMatrix::line(const Color &color, int y1, int x1, int y2, int x2)
+void imageMatrix::line(const Color &color, int y1, int x1, int y2, int x2, int lineWidth)
 /* Función matemática para generar line, note que "y" corresponde a i y  "x" corresponde a j*/
 {
 
@@ -160,14 +140,14 @@ void imageMatrix::line(const Color &color, int y1, int x1, int y2, int x2)
         }
         for (int i = y1; i <= y2; i++)
         {
-            setColor(color, i, x1);
+            pencil(color,i, x1,lineWidth);
         }
     }
     else
     {
 
         float m = (float)(y2 - y1) / (float)(x2 - x1);
-        printf("m: %f\n", m);
+        // printf("m: %f\n", m);
         float b = y1 - (m * x1);
         if (x2 < x1)
         {
@@ -181,7 +161,7 @@ void imageMatrix::line(const Color &color, int y1, int x1, int y2, int x2)
             int new_y = round(m * i + b);
             if (new_y == old_y)
             {
-                setColor(color, new_y, i);
+                pencil(color, new_y, i, lineWidth);
             }
             else
             {
@@ -189,14 +169,14 @@ void imageMatrix::line(const Color &color, int y1, int x1, int y2, int x2)
                 {
                     for (int j = old_y + 1; j <= new_y; j++)
                     {
-                        setColor(color, j, i);
+                        pencil(color, j, i, lineWidth);
                     }
                 }
                 else
                 {
                     for (int j = old_y - 1; j >= new_y; j--)
                     {
-                        setColor(color, j, i);
+                        pencil(color, i, j, lineWidth);
                     }
                 }
             }
