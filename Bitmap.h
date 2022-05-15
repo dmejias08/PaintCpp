@@ -15,14 +15,20 @@ class Bitmap
 {
 public:
     Bitmap(std::string imgName, int height, int width, unsigned char *pixelArray, int pixelArraySize);
+    Bitmap(std::string imgPath);
+    void read();
     void generateBitmapImage(std::string imgName, int pixelArraySize);
     unsigned char* createBitmapFileHeader();
     unsigned char* createBitmapInfoHeader();
     void fillFourBytes(unsigned char *array, int value, int init_byte);
+    int getHeight();
+    int getWidth();
+    unsigned char* getArray();
 private:
     unsigned char *bmpPixelArray;
     int height;
     int width;
     int paddingBytes;
+    std::string name;
 };
 #endif
