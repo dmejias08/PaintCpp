@@ -29,7 +29,9 @@ private:
 
 public:
     imageMatrix(int width, int height);
+    imageMatrix(unsigned char* arrayPixel, int width, int height);
     ~imageMatrix();
+    void generateMatrix(unsigned char* arrayPixel);
     void deleteMatrix();
     void createMatrix();
     void switchDimensions();

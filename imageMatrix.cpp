@@ -23,6 +23,13 @@ imageMatrix::imageMatrix(int width, int height)
     imgWidth = width;
     this->createMatrix();
 }
+imageMatrix::imageMatrix(unsigned char* arrayPixel, int height, int width)
+{
+    imgHeight = height;
+    imgWidth = width;
+    this->createMatrix();
+    this->generateMatrix(arrayPixel);
+}
 
 imageMatrix::~imageMatrix()
 {
@@ -31,8 +38,25 @@ imageMatrix::~imageMatrix()
         delete[] pixelMatrix[i];
     }
     delete[] pixelMatrix;
+
+    free(pixelArray);
 }
 
+void imageMatrix::generateMatrix(unsigned char* arrayPixel)
+{
+    int c = 0;
+    for (int i = imgHeight - 1; i >= 0; i--)
+    {
+        for (int j = 0; j < imgWidth; j++)
+        {
+            float r = arrayPixel[c];
+            float g = arrayPixel[c + 1];
+            float b = arrayPixel[c + 2];
+            setColor(Color(r,g,b), i, j);
+            c = c + 3;
+        }
+    }
+}
 void imageMatrix::generatePixelArray()
 /*Genera un array de cada color de cada pixel para que se pueda leer en bmpHandler*/
 {
