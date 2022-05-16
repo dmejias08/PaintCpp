@@ -22,6 +22,11 @@ set(PROJECT_SOURCES
         ventanaprincipal.h
         ventanaprincipal.cpp
         ventanaprincipal.ui
+        bitmap.cpp
+        bitmap.h
+        imageMatrix.cpp
+        imageMatrix.h
+        res.qrc
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

@@ -15,7 +15,12 @@ public:
     VentanaInicio(QWidget *parent = nullptr);
     ~VentanaInicio();
 
+private slots:
+    void on_pushButton_clicked();
+
 private:
     Ui::VentanaInicio *ui;
+    int obtenerAncho();
+    int obtenerAlto();
 };
 #endif // VENTANAINICIO_H

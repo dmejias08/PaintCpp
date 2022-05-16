@@ -1,0 +1,23 @@
+<RCC>
+    <qresource prefix="/images"/>
+    <qresource prefix="/">
+        <file>../../Downloads/iconogardar.png</file>
+        <file>../../Downloads/iconocolor.png</file>
+        <file>../../Downloads/iconolapiz.png</file>
+        <file>../../Downloads/iconolinea.png</file>
+        <file>../../Downloads/iconogrosor.png</file>
+        <file>../../Downloads/iconocuadrado.png</file>
+        <file>../../Downloads/iconotriangulo.png</file>
+        <file>../../Downloads/iconocolorfill.png</file>
+        <file>../../Downloads/iconocolorpicker.png</file>
+        <file>../../Downloads/iconosalir.png</file>
+        <file>../../Downloads/iconoabrir.png</file>
+        <file>../../Downloads/iconorehacer.png</file>
+        <file>../../Downloads/iconodeshacer.jpg</file>
+        <file>../../Downloads/iconofliphorizontal.png</file>
+        <file>../../Downloads/iconorotarderecha.png</file>
+        <file>../../Downloads/iconorotarizquierda.png</file>
+        <file>../../Downloads/iconoflipvertical.png</file>
+    </qresource>
+    <qresource prefix="/images" lang="c++"/>
+</RCC>
