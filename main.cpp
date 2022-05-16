@@ -68,12 +68,14 @@ int main()
 
 
 
-    Bitmap *importNewImage = new Bitmap("bayerFilter.bmp");
+    Bitmap *importNewImage = new Bitmap("out.bmp");
     imageMatrix *newImage = new imageMatrix(importNewImage->getArray(), importNewImage->getHeight(), importNewImage->getWidth());
     newImage->circle(Color(0,0,0), 20,20,120,190);
 
+    newImage->paintFill(Color(255,255,255),Color(65,44,87),190,190);
+
     newImage->generatePixelArray();
-    Bitmap *exportSecondImg = new Bitmap("copy", newImage->getWidth(), newImage->getHeight(), newImage->getPixelArray(), newImage->getPixelArraySize());
+    Bitmap *exportSecondImg = new Bitmap("penguin", newImage->getWidth(), newImage->getHeight(), newImage->getPixelArray(), newImage->getPixelArraySize());
 
 
 
