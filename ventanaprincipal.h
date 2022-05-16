@@ -1,5 +1,6 @@
 #ifndef VENTANAPRINCIPAL_H
-#define VENTANAPRINCIPAL_H
+//#define "ventanaprincipal.h"
+#include <iostream>
 
 #include <QMainWindow>
 

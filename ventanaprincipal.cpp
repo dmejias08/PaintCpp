@@ -1,7 +1,7 @@
 #include "ventanaprincipal.h"
 #include "ui_ventanaprincipal.h"
 #include <QColorDialog>
-#include <iostream>
+#include <ostream>
 
 VentanaPrincipal::VentanaPrincipal(QWidget *parent) :
     QMainWindow(parent),
@@ -55,7 +55,7 @@ void VentanaPrincipal::on_actionColor_triggered()
 
 void VentanaPrincipal::on_actionLapiz_triggered()
 {
-
+    std::cout<<"Se va a usar la compu"<<std::endl;
 }
 
 
