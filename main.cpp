@@ -45,7 +45,7 @@ int main()
     matrix->erase(20, 20, 1);   
     matrix->erase(2, 4, 2);
     // matrix->printMatrix();
-    matrix->paintFill(Color(255,255,255),Color(65,44,87),190,190);
+    matrix->paintFill(Color(255,255,255),Color(65,44,87),180,180);
     // matrix->rotate();
     // matrix->rotate();
     // matrix->rotate();
