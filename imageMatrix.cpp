@@ -375,7 +375,7 @@ void imageMatrix::rectangle(const Color &color, int x1, int y1, int x2, int y2, 
     line(color, y2,x1,y2,x2,lineWidth);
 }
 void imageMatrix::elipse(const Color &color, int x1, int y1, int x2, int y2)
-{   
+{
     int x = min(x1,x2);
     int y = min(y1,y2);
     int diferentialx = abs(x2-x1);
@@ -391,8 +391,8 @@ void imageMatrix::elipse(const Color &color, int x1, int y1, int x2, int y2)
         setColor(color, painty1, paintx);
         setColor(color, painty2, paintx);
     }
-    
-        
+
+
 }
 void imageMatrix::circle(const Color &color, int x1, int y1, int x2, int y2)
 {

@@ -1,3 +1,5 @@
+#include "imageMatrix.h"
+#include "qpainter.h"
 #ifndef VENTANAPRINCIPAL_H
 //#define "ventanaprincipal.h"
 #include <iostream>
@@ -20,6 +22,8 @@ public:
     int getAnchoLienzo();
     void setAnchoLienzo(int );
     void actualizarTamano();
+    void iniciarComponentes();
+    void actualizarLienzo();
 
 protected:
     void mousePressEvent(QMouseEvent*) override;
@@ -40,6 +44,12 @@ private slots:
 
     void on_actionRotar_a_la_derecha_triggered();
 
+    void on_actionLinea_triggered();
+
+    void on_actionGrosor_triggered();
+
+    void on_actionGuardar_Imagen_triggered();
+
 private:
     Ui::VentanaPrincipal *ui;
     int altoLienzo;
@@ -49,6 +59,10 @@ private:
     QPoint puntofinal;
     bool pincelactivo;
     bool cuadradoactivo;
+    QPixmap *elpixmap;
+    QPainter *elpainter;
+    imageMatrix *matrix;
+    int grosor;
     void rotar();
 };
 

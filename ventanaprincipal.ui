@@ -66,16 +66,6 @@
      <string>Alto</string>
     </property>
    </widget>
-   <widget class="QWidget" name="frameLienzo" native="true">
-    <property name="geometry">
-     <rect>
-      <x>80</x>
-      <y>140</y>
-      <width>120</width>
-      <height>80</height>
-     </rect>
-    </property>
-   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">

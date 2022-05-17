@@ -22,6 +22,7 @@ void VentanaInicio::on_pushButton_clicked()
     laventanaprincipal->setVisible(true);
     laventanaprincipal->setAltolienzo(this->obtenerAlto());
     laventanaprincipal->setAnchoLienzo(this->obtenerAncho());
+    laventanaprincipal->iniciarComponentes();
     laventanaprincipal->actualizarTamano();
     this->hide();
 }
