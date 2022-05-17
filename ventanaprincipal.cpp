@@ -2,6 +2,9 @@
 #include "ui_ventanaprincipal.h"
 #include <QColorDialog>
 #include <ostream>
+#include <QMouseEvent>
+#include <QPaintEvent>
+#include <QPainter>
 
 VentanaPrincipal::VentanaPrincipal(QWidget *parent) :
     QMainWindow(parent),
@@ -30,6 +33,50 @@ void VentanaPrincipal::actualizarTamano(){
 
 
 }
+void VentanaPrincipal::rotar(){
+    int altotemp = altoLienzo;
+    setAltolienzo(anchoLienzo);
+    setAnchoLienzo(altotemp);
+}
+
+void VentanaPrincipal::mousePressEvent(QMouseEvent *event){
+    if(0<=event->pos().x()&&event->pos().x()<=getAnchoLienzo()&&50<=event->pos().y()&&event->pos().y()<=getAltoLienzo()+50){
+        puntoinicio = event->pos();
+        std::cout<<"Se clickeo el boton en las coordenadas "<<puntoinicio.x()<<","<<puntoinicio.y()<<std::endl;
+    }
+    if(pincelactivo){
+        std::cout<<"Se va a dibujar un pixel en "<<puntoinicio.x()<<","<<puntoinicio.y()<<std::endl;;
+    }
+
+    }
+
+void VentanaPrincipal::mouseMoveEvent(QMouseEvent *event){
+    if(0<=event->pos().x()&&event->pos().x()<=getAnchoLienzo()&&50<=event->pos().y()&&event->pos().y()<=getAltoLienzo()+50&&pincelactivo){
+        puntofinal = event->pos();
+        std::cout<<"Se va a dibujar un pixel en "<<puntofinal.x()<<","<<puntofinal.y()<<std::endl;;
+        //std::cout<<"Se esta moviendo el boton en las coordenadas"<<puntofinal.x()<<","<<puntofinal.y()<<std::endl;
+    }
+    /*if(pincelactivo){
+        std::cout<<"Se va a dibujar un pixel en "<<puntofinal.x()<<","<<puntofinal.y()<<std::endl;;
+    }*/
+}
+
+void VentanaPrincipal::mouseReleaseEvent(QMouseEvent *event){
+    if(0<=event->pos().x()&&event->pos().x()<=getAnchoLienzo()&&50<=event->pos().y()&&event->pos().y()<=getAltoLienzo()+50){
+        puntofinal = event->pos();
+        std::cout<<"Se dejo de clickear el boton en las coordenadas"<<puntofinal.x()<<","<<puntofinal.y()<<std::endl;
+    }
+    if(cuadradoactivo){
+        std::cout<<"Se va a crear un cuadrado de "<<puntoinicio.x()<<","<<puntoinicio.y()<<" a "<<puntofinal.x()<<" , "<<puntofinal.y()<<std::endl;
+    }
+}
+
+void VentanaPrincipal::paintEvent(QPaintEvent *event){
+    QPainter pintor = QPainter(this);
+    QPen lapiz;
+    lapiz.setColor(QColor(0,0,0));
+    pintor.drawLine(puntoinicio,puntoinicio);
+}
 
 int VentanaPrincipal::getAltoLienzo(){
     return this->altoLienzo;
@@ -55,12 +102,15 @@ void VentanaPrincipal::on_actionColor_triggered()
 
 void VentanaPrincipal::on_actionLapiz_triggered()
 {
-    std::cout<<"Se va a usar la compu"<<std::endl;
+    pincelactivo = true;
+    std::cout<<"Se va a usar el lapiz"<<std::endl;
 }
 
 
 void VentanaPrincipal::on_actionCuadrado_triggered()
 {
+    pincelactivo = false;
+    cuadradoactivo = true;
     std::cout<<"Se va a hacer un cuadrado"<<std::endl;
 }
 
@@ -68,5 +118,19 @@ void VentanaPrincipal::on_actionCuadrado_triggered()
 void VentanaPrincipal::on_actionSalir_triggered()
 {
     this->close();
+}
+
+
+void VentanaPrincipal::on_actionRotar_a_la_izquierda_triggered()
+{
+    rotar();
+    actualizarTamano();
+}
+
+
+void VentanaPrincipal::on_actionRotar_a_la_derecha_triggered()
+{
+    rotar();
+    actualizarTamano();
 }
 
