@@ -140,7 +140,7 @@
   <action name="actionLapiz">
    <property name="icon">
     <iconset resource="res.qrc">
-     <normaloff>:/Downloads/iconolapiz.png</normaloff>:/Downloads/iconolapiz.png</iconset>
+     <normaloff>:/resources/iconolapiz.png</normaloff>:/resources/iconolapiz.png</iconset>
    </property>
    <property name="text">
     <string>Lapiz</string>
@@ -149,7 +149,7 @@
   <action name="actionColor">
    <property name="icon">
     <iconset resource="res.qrc">
-     <normaloff>:/Downloads/iconocolor.png</normaloff>:/Downloads/iconocolor.png</iconset>
+     <normaloff>:/resources/iconocolor.png</normaloff>:/resources/iconocolor.png</iconset>
    </property>
    <property name="text">
     <string>Color</string>
@@ -158,7 +158,7 @@
   <action name="actionCuadrado">
    <property name="icon">
     <iconset resource="res.qrc">
-     <normaloff>:/Downloads/iconocuadrado.png</normaloff>:/Downloads/iconocuadrado.png</iconset>
+     <normaloff>:/resources/iconocuadrado.png</normaloff>:/resources/iconocuadrado.png</iconset>
    </property>
    <property name="text">
     <string>Cuadrado</string>
@@ -167,7 +167,7 @@
   <action name="actionGrosor">
    <property name="icon">
     <iconset resource="res.qrc">
-     <normaloff>:/Downloads/iconogrosor.png</normaloff>:/Downloads/iconogrosor.png</iconset>
+     <normaloff>:/resources/iconogrosor.png</normaloff>:/resources/iconogrosor.png</iconset>
    </property>
    <property name="text">
     <string>Grosor</string>
@@ -176,7 +176,7 @@
   <action name="actionTriangulo">
    <property name="icon">
     <iconset resource="res.qrc">
-     <normaloff>:/Downloads/iconotriangulo.png</normaloff>:/Downloads/iconotriangulo.png</iconset>
+     <normaloff>:/resources/iconotriangulo.png</normaloff>:/resources/iconotriangulo.png</iconset>
    </property>
    <property name="text">
     <string>Triangulo</string>
@@ -185,7 +185,7 @@
   <action name="actionLinea">
    <property name="icon">
     <iconset resource="res.qrc">
-     <normaloff>:/Downloads/iconolinea.png</normaloff>:/Downloads/iconolinea.png</iconset>
+     <normaloff>:/resources/iconolinea.png</normaloff>:/resources/iconolinea.png</iconset>
    </property>
    <property name="text">
     <string>Linea</string>
@@ -194,7 +194,7 @@
   <action name="actionPickear_Color">
    <property name="icon">
     <iconset resource="res.qrc">
-     <normaloff>:/Downloads/iconocolorpicker.png</normaloff>:/Downloads/iconocolorpicker.png</iconset>
+     <normaloff>:/resources/iconocolorpicker.png</normaloff>:/resources/iconocolorpicker.png</iconset>
    </property>
    <property name="text">
     <string>Pickear Color</string>
@@ -203,7 +203,7 @@
   <action name="actionRellenar">
    <property name="icon">
     <iconset resource="res.qrc">
-     <normaloff>:/Downloads/iconocolorfill.png</normaloff>:/Downloads/iconocolorfill.png</iconset>
+     <normaloff>:/resources/iconocolorfill.png</normaloff>:/resources/iconocolorfill.png</iconset>
    </property>
    <property name="text">
     <string>Rellenar </string>
@@ -212,7 +212,7 @@
   <action name="actionFlip_Horizontal">
    <property name="icon">
     <iconset resource="res.qrc">
-     <normaloff>:/Downloads/iconofliphorizontal.png</normaloff>:/Downloads/iconofliphorizontal.png</iconset>
+     <normaloff>:/resources/iconofliphorizontal.png</normaloff>:/resources/iconofliphorizontal.png</iconset>
    </property>
    <property name="text">
     <string>Flip Horizontal</string>
@@ -221,7 +221,7 @@
   <action name="actionFlip_Vertical">
    <property name="icon">
     <iconset resource="res.qrc">
-     <normaloff>:/Downloads/iconoflipvertical.png</normaloff>:/Downloads/iconoflipvertical.png</iconset>
+     <normaloff>:/resources/iconoflipvertical.png</normaloff>:/resources/iconoflipvertical.png</iconset>
    </property>
    <property name="text">
     <string>Flip Vertical</string>
@@ -230,7 +230,7 @@
   <action name="actionRotar_a_la_izquierda">
    <property name="icon">
     <iconset resource="res.qrc">
-     <normaloff>:/Downloads/iconorotarizquierda.png</normaloff>:/Downloads/iconorotarizquierda.png</iconset>
+     <normaloff>:/resources/iconorotarizquierda.png</normaloff>:/resources/iconorotarizquierda.png</iconset>
    </property>
    <property name="text">
     <string>Rotar a la izquierda</string>
@@ -239,7 +239,7 @@
   <action name="actionRotar_a_la_derecha">
    <property name="icon">
     <iconset resource="res.qrc">
-     <normaloff>:/Downloads/iconorotarderecha.png</normaloff>:/Downloads/iconorotarderecha.png</iconset>
+     <normaloff>:/resources/iconorotarderecha.png</normaloff>:/resources/iconorotarderecha.png</iconset>
    </property>
    <property name="text">
     <string>Rotar a la derecha</string>
@@ -248,7 +248,7 @@
   <action name="actionDeshacer">
    <property name="icon">
     <iconset resource="res.qrc">
-     <normaloff>:/Downloads/iconodeshacer.jpg</normaloff>:/Downloads/iconodeshacer.jpg</iconset>
+     <normaloff>:/resources/iconodeshacer.jpg</normaloff>:/resources/iconodeshacer.jpg</iconset>
    </property>
    <property name="text">
     <string>Deshacer</string>
@@ -257,7 +257,7 @@
   <action name="actionRehacer">
    <property name="icon">
     <iconset resource="res.qrc">
-     <normaloff>:/Downloads/iconorehacer.png</normaloff>:/Downloads/iconorehacer.png</iconset>
+     <normaloff>:/resources/iconorehacer.png</normaloff>:/resources/iconorehacer.png</iconset>
    </property>
    <property name="text">
     <string>Rehacer</string>
@@ -266,7 +266,7 @@
   <action name="actionGuardar_Imagen">
    <property name="icon">
     <iconset resource="res.qrc">
-     <normaloff>:/Downloads/iconogardar.png</normaloff>:/Downloads/iconogardar.png</iconset>
+     <normaloff>:/resources/iconogardar.png</normaloff>:/resources/iconogardar.png</iconset>
    </property>
    <property name="text">
     <string>Guardar Imagen</string>
@@ -275,7 +275,7 @@
   <action name="actionCargar_Imagen">
    <property name="icon">
     <iconset resource="res.qrc">
-     <normaloff>:/Downloads/iconoabrir.png</normaloff>:/Downloads/iconoabrir.png</iconset>
+     <normaloff>:/resources/iconoabrir.png</normaloff>:/resources/iconoabrir.png</iconset>
    </property>
    <property name="text">
     <string>Cargar Imagen</string>
@@ -284,7 +284,7 @@
   <action name="actionSalir">
    <property name="icon">
     <iconset resource="res.qrc">
-     <normaloff>:/Downloads/iconosalir.png</normaloff>:/Downloads/iconosalir.png</iconset>
+     <normaloff>:/resources/iconosalir.png</normaloff>:/resources/iconosalir.png</iconset>
    </property>
    <property name="text">
     <string>Salir</string>
