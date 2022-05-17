@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>VentanaPrincipal</class>
+ <widget class="QMainWindow" name="VentanaPrincipal">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>326</width>
+    <height>385</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QLabel" name="lblAlto">
+    <property name="geometry">
+     <rect>
+      <x>220</x>
+      <y>30</y>
+      <width>49</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>lblAlto</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lblAncho">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>30</y>
+      <width>49</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>lblAncho</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>10</y>
+      <width>49</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Ancho</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_2">
+    <property name="geometry">
+     <rect>
+      <x>220</x>
+      <y>10</y>
+      <width>49</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Alto</string>
+    </property>
+   </widget>
+   <widget class="QWidget" name="frameLienzo" native="true">
+    <property name="geometry">
+     <rect>
+      <x>80</x>
+      <y>140</y>
+      <width>120</width>
+      <height>80</height>
+     </rect>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>326</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuPinceles">
+    <property name="title">
+     <string>Pinceles</string>
+    </property>
+    <addaction name="actionLapiz"/>
+    <addaction name="actionColor"/>
+    <addaction name="actionGrosor"/>
+   </widget>
+   <widget class="QMenu" name="menuFiguras">
+    <property name="title">
+     <string>Figuras</string>
+    </property>
+    <addaction name="actionCuadrado"/>
+    <addaction name="actionTriangulo"/>
+    <addaction name="actionLinea"/>
+   </widget>
+   <widget class="QMenu" name="menuAciones">
+    <property name="title">
+     <string>Aciones</string>
+    </property>
+    <addaction name="actionPickear_Color"/>
+    <addaction name="actionRellenar"/>
+    <addaction name="separator"/>
+    <addaction name="actionFlip_Horizontal"/>
+    <addaction name="actionFlip_Vertical"/>
+    <addaction name="separator"/>
+    <addaction name="actionRotar_a_la_izquierda"/>
+    <addaction name="actionRotar_a_la_derecha"/>
+   </widget>
+   <widget class="QMenu" name="menuControl">
+    <property name="title">
+     <string>Control</string>
+    </property>
+    <addaction name="actionDeshacer"/>
+    <addaction name="actionRehacer"/>
+   </widget>
+   <widget class="QMenu" name="menuArchivo">
+    <property name="title">
+     <string>Archivo</string>
+    </property>
+    <addaction name="actionGuardar_Imagen"/>
+    <addaction name="actionCargar_Imagen"/>
+    <addaction name="separator"/>
+    <addaction name="actionSalir"/>
+   </widget>
+   <addaction name="menuArchivo"/>
+   <addaction name="menuPinceles"/>
+   <addaction name="menuFiguras"/>
+   <addaction name="menuAciones"/>
+   <addaction name="menuControl"/>
+  </widget>
+  <action name="actionLapiz">
+   <property name="icon">
+    <iconset resource="res.qrc">
+     <normaloff>:/resources/iconolapiz.png</normaloff>:/resources/iconolapiz.png</iconset>
+   </property>
+   <property name="text">
+    <string>Lapiz</string>
+   </property>
+  </action>
+  <action name="actionColor">
+   <property name="icon">
+    <iconset resource="res.qrc">
+     <normaloff>:/resources/iconocolor.png</normaloff>:/resources/iconocolor.png</iconset>
+   </property>
+   <property name="text">
+    <string>Color</string>
+   </property>
+  </action>
+  <action name="actionCuadrado">
+   <property name="icon">
+    <iconset resource="res.qrc">
+     <normaloff>:/resources/iconocuadrado.png</normaloff>:/resources/iconocuadrado.png</iconset>
+   </property>
+   <property name="text">
+    <string>Cuadrado</string>
+   </property>
+  </action>
+  <action name="actionGrosor">
+   <property name="icon">
+    <iconset resource="res.qrc">
+     <normaloff>:/resources/iconogrosor.png</normaloff>:/resources/iconogrosor.png</iconset>
+   </property>
+   <property name="text">
+    <string>Grosor</string>
+   </property>
+  </action>
+  <action name="actionTriangulo">
+   <property name="icon">
+    <iconset resource="res.qrc">
+     <normaloff>:/resources/iconotriangulo.png</normaloff>:/resources/iconotriangulo.png</iconset>
+   </property>
+   <property name="text">
+    <string>Triangulo</string>
+   </property>
+  </action>
+  <action name="actionLinea">
+   <property name="icon">
+    <iconset resource="res.qrc">
+     <normaloff>:/resources/iconolinea.png</normaloff>:/resources/iconolinea.png</iconset>
+   </property>
+   <property name="text">
+    <string>Linea</string>
+   </property>
+  </action>
+  <action name="actionPickear_Color">
+   <property name="icon">
+    <iconset resource="res.qrc">
+     <normaloff>:/resources/iconocolorpicker.png</normaloff>:/resources/iconocolorpicker.png</iconset>
+   </property>
+   <property name="text">
+    <string>Pickear Color</string>
+   </property>
+  </action>
+  <action name="actionRellenar">
+   <property name="icon">
+    <iconset resource="res.qrc">
+     <normaloff>:/resources/iconocolorfill.png</normaloff>:/resources/iconocolorfill.png</iconset>
+   </property>
+   <property name="text">
+    <string>Rellenar </string>
+   </property>
+  </action>
+  <action name="actionFlip_Horizontal">
+   <property name="icon">
+    <iconset resource="res.qrc">
+     <normaloff>:/resources/iconofliphorizontal.png</normaloff>:/resources/iconofliphorizontal.png</iconset>
+   </property>
+   <property name="text">
+    <string>Flip Horizontal</string>
+   </property>
+  </action>
+  <action name="actionFlip_Vertical">
+   <property name="icon">
+    <iconset resource="res.qrc">
+     <normaloff>:/resources/iconoflipvertical.png</normaloff>:/resources/iconoflipvertical.png</iconset>
+   </property>
+   <property name="text">
+    <string>Flip Vertical</string>
+   </property>
+  </action>
+  <action name="actionRotar_a_la_izquierda">
+   <property name="icon">
+    <iconset resource="res.qrc">
+     <normaloff>:/resources/iconorotarizquierda.png</normaloff>:/resources/iconorotarizquierda.png</iconset>
+   </property>
+   <property name="text">
+    <string>Rotar a la izquierda</string>
+   </property>
+  </action>
+  <action name="actionRotar_a_la_derecha">
+   <property name="icon">
+    <iconset resource="res.qrc">
+     <normaloff>:/resources/iconorotarderecha.png</normaloff>:/resources/iconorotarderecha.png</iconset>
+   </property>
+   <property name="text">
+    <string>Rotar a la derecha</string>
+   </property>
+  </action>
+  <action name="actionDeshacer">
+   <property name="icon">
+    <iconset resource="res.qrc">
+     <normaloff>:/resources/iconodeshacer.jpg</normaloff>:/resources/iconodeshacer.jpg</iconset>
+   </property>
+   <property name="text">
+    <string>Deshacer</string>
+   </property>
+  </action>
+  <action name="actionRehacer">
+   <property name="icon">
+    <iconset resource="res.qrc">
+     <normaloff>:/resources/iconorehacer.png</normaloff>:/resources/iconorehacer.png</iconset>
+   </property>
+   <property name="text">
+    <string>Rehacer</string>
+   </property>
+  </action>
+  <action name="actionGuardar_Imagen">
+   <property name="icon">
+    <iconset resource="res.qrc">
+     <normaloff>:/resources/iconogardar.png</normaloff>:/resources/iconogardar.png</iconset>
+   </property>
+   <property name="text">
+    <string>Guardar Imagen</string>
+   </property>
+  </action>
+  <action name="actionCargar_Imagen">
+   <property name="icon">
+    <iconset resource="res.qrc">
+     <normaloff>:/resources/iconoabrir.png</normaloff>:/resources/iconoabrir.png</iconset>
+   </property>
+   <property name="text">
+    <string>Cargar Imagen</string>
+   </property>
+  </action>
+  <action name="actionSalir">
+   <property name="icon">
+    <iconset resource="res.qrc">
+     <normaloff>:/resources/iconosalir.png</normaloff>:/resources/iconosalir.png</iconset>
+   </property>
+   <property name="text">
+    <string>Salir</string>
+   </property>
+  </action>
+ </widget>
+ <resources>
+  <include location="res.qrc"/>
+ </resources>
+ <connections/>
+</ui>
