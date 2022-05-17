@@ -32,13 +32,15 @@ void VentanaPrincipal::iniciarComponentes(){
     this->matrix = new imageMatrix(getAnchoLienzo(),getAltoLienzo());
     matrix->generateDefaultImage();
     elcolor = QColor(Qt::white);
-    actualizarLienzo();
+    //actualizarLienzo();
     grosor = 2;
     codigoaccion = 0;
     nombreaccion = "";
+    dibujarcuadrado = false;
+    dibujarpixel = true;
 }
 
-void VentanaPrincipal::actualizarLienzo(){
+/*void VentanaPrincipal::actualizarLienzo(){
     for(int fila = 0;fila<=getAltoLienzo();fila++){
         for(int columna = 0; columna<=getAnchoLienzo(); columna++){
            // elcolor = QColor(matrix->getColor(fila,columna).r,matrix->getColor(fila,columna).g,matrix->getColor(fila,columna).b);
@@ -47,7 +49,22 @@ void VentanaPrincipal::actualizarLienzo(){
 
         }
     }
+}*/
+
+void VentanaPrincipal::updateCanvas(){
+    for (int i = 0; i < matrix->getHeight(); i++)
+    {
+        for (int j = 0; j < matrix->getWidth(); j++)
+        {
+            elpainter->setPen(QPen(QColor(matrix->getColor(i,j).r,matrix->getColor(i,j).g,matrix->getColor(i,j).b)));
+            elpainter->drawPoint(QPoint(i,j));
+            //Color colorTemp = getColor(i, j);
+            //float formula = 0.3 * colorTemp.r + 0.59 * colorTemp.g + 0.11 * colorTemp.b;
+            //setColor(Color(formula, formula, formula), i, j);
+        }
+    }
 }
+
 void VentanaPrincipal::actualizarTamano(){
     //Ajusta el tamaño de la ventana, en su posición "x" y "y", con el ancho del lienzo y
     //el alto del lienzo mas 50 pixeles donde se pondrán los botones de los controladores
@@ -62,32 +79,32 @@ void VentanaPrincipal::rotar(){
     setAltolienzo(anchoLienzo);
     setAnchoLienzo(altotemp);
 }
-
+/*
 void VentanaPrincipal::accionPintar(){
-    switch(codigoaccion){
-        case 1:
-            std::cout<<"Se usará el lapiz"<<std::endl;
-        case 2:
-            std::cout<<"Se hara un cuadrado"<<std::endl;
-            pintarCuadrado();
-        default:
-            std::cout<<"No se hara nada xd"<<std::endl;
-
-
+    if(dibujarcuadrado){
+        pintarCuadrado();
+    }
+    if else {
 
     }
-}
-/*
-void VentanaPrincipal::pintarCuadrado(){
+
+
+
+    }d::cout<<"La accion es "<<accion<<std::endl;
+    switch(accion)
+}*/
+
+/*void VentanaPrincipal::pintarCuadrado(){
+
     matrix->square(Color(elcolor.red(),elcolor.green(),elcolor.blue()),puntoinicio.x(),puntoinicio.y(),puntofinal.x(),puntofinal.y(),grosor);
-
-
-    QPen ellapiz = QPen(elcolor);
-    ellapiz.setWidth(grosor);
-    elpainter->setPen(ellapiz);
-    int diferentialx = puntofinal.x() - puntoinicio.x();
-    int diferentialy = puntofinal.y() - puntoinicio.y();
-    int lenghtx = min(abs(diferentialx), abs(diferentialy));
+    int y1=  puntoinicio.y();
+    int x1=  puntoinicio.x();
+    int y2=  puntofinal.y();
+    int x2=  puntofinal.y();
+    std::cout<<"Aqui esta el error"<<std::endl;
+    int diferentialx = x2 - x1;
+    int diferentialy = y2 - y1;
+    int lenghtx = fmin(abs(diferentialx), abs(diferentialy));
     int lenghty = lenghtx;
     if (diferentialx < 0)
     {
@@ -97,17 +114,23 @@ void VentanaPrincipal::pintarCuadrado(){
     {
         lenghty = lenghty * -1;
     }
-    line(color, y1, x1, y1, x1 + lenghtx, lineWidth);
-    line(color, y1, x1, y1 + lenghty, x1, lineWidth);
-    line(color, y1 + lenghty, x1, y1 + lenghty, x1 + lenghtx, lineWidth);
-    line(color, y1, x1 + lenghtx, y1 + lenghty, x1 + lenghtx, lineWidth);
+    QPen ellapiz = QPen(elcolor);
+    ellapiz.setWidth(grosor);
+    elpainter->setPen(ellapiz);
+    elpainter->drawLine( y1, x1, y1, x1 + lenghtx);
+    elpainter->drawLine(y1, x1, y1 + lenghty, x1);
+    elpainter->drawLine(y1 + lenghty, x1, y1 + lenghty, x1 + lenghtx);
+    elpainter->drawLine(y1, x1 + lenghtx, y1 + lenghty, x1 + lenghtx);
+    //updateCanvas();
+    update();
     elpainter->drawLine(puntoinicio.x(),puntoinicio.y(),puntofinal.x(),puntoinicio.y());
     elpainter->drawLine(puntoinicio.x(),puntoinicio.y(),puntoinicio.x(),puntofinal.y());
     elpainter->drawLine(puntoinicio.x(),puntofinal.y(),puntofinal.x(),puntofinal.y());
     elpainter->drawLine(puntofinal.x(),puntoinicio.y(),puntofinal.x(),puntofinal.y());
     update();
-}
-*/
+
+}*/
+
 void VentanaPrincipal::mousePressEvent(QMouseEvent *event){
     if(0<=event->pos().x()&&event->pos().x()<=getAnchoLienzo()&&0<=event->pos().y()&&event->pos().y()<=getAltoLienzo()){
         puntoinicio = QPoint(event->pos().x(),event->pos().y()-70);
@@ -135,11 +158,11 @@ void VentanaPrincipal::mouseMoveEvent(QMouseEvent *event){
 }
 
 void VentanaPrincipal::mouseReleaseEvent(QMouseEvent *event){
-    if(0<=event->pos().x()&&event->pos().x()<=getAnchoLienzo()&&0<=event->pos().y()&&event->pos().y()<=getAltoLienzo()){
+    /*if(0<=event->pos().x()&&event->pos().x()<=getAnchoLienzo()&&0<=event->pos().y()&&event->pos().y()<=getAltoLienzo()){
         puntofinal = QPoint(event->pos().x(),event->pos().y()-70);
         std::cout<<"Se dejo de clickear el boton en las coordenadas"<<puntofinal.x()<<","<<puntofinal.y()<<std::endl;
-    }
-   accionPintar();
+    }*/
+   //accionPintar();
 }
 
 void VentanaPrincipal::paintEvent(QPaintEvent *event){

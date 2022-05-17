@@ -66,10 +66,13 @@ private:
     imageMatrix *matrix;
     int grosor;
     int codigoaccion;
+    bool dibujarcuadrado;
+    bool dibujarpixel;
     QString nombreaccion;
     void rotar();
-    void accionPintar();
-    void pintarCuadrado();
+    //void accionPintar();
+    //void pintarCuadrado();
+    void updateCanvas();
 };
 
 #endif // VENTANAPRINCIPAL_H

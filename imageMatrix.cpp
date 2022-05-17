@@ -138,7 +138,7 @@ y en esa posición va a dibujar un punto del color seleccionado por el usuario, 
 forman el dibujo
 Se deben elegir el grosor, van a ver tres tipos de grosor*/
 {
-    std::cout << "Estoy en pencil" << std::endl;
+    // std::cout << "Estoy en pencil" << std::endl;
     int lineWidthLimit = lineWidth - 1;
     for (int m = i - lineWidthLimit; m <= i + lineWidthLimit; m++)
     {
