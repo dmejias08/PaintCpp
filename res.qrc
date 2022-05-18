@@ -31,5 +31,7 @@
         <file>resources/iconotrianguloisoceles.png</file>
         <file>resources/iconotriangulorectangulo.png</file>
         <file>resources/iconoborrarfigura.jpg</file>
+        <file>resources/iconozoomin.png</file>
+        <file>resources/iconozoomout.png</file>
     </qresource>
 </RCC>

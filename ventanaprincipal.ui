@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>326</width>
+    <width>349</width>
     <height>385</height>
    </rect>
   </property>
@@ -72,7 +72,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>326</width>
+     <width>349</width>
      <height>22</height>
     </rect>
    </property>
@@ -119,6 +119,9 @@
     <addaction name="actionSelect_Rectangulo"/>
     <addaction name="actionSelect_Libre"/>
     <addaction name="actionSelect_Magico"/>
+    <addaction name="separator"/>
+    <addaction name="actionZoom_in"/>
+    <addaction name="actionZoom_out"/>
    </widget>
    <widget class="QMenu" name="menuControl">
     <property name="title">
@@ -136,9 +139,19 @@
     <addaction name="separator"/>
     <addaction name="actionSalir"/>
    </widget>
+   <widget class="QMenu" name="menuFiltros">
+    <property name="title">
+     <string>Filtros</string>
+    </property>
+    <addaction name="actionSepia"/>
+    <addaction name="actionEscala_de_grises"/>
+    <addaction name="actionBayer"/>
+    <addaction name="actionNegativo"/>
+   </widget>
    <addaction name="menuArchivo"/>
    <addaction name="menuPinceles"/>
    <addaction name="menuFiguras"/>
+   <addaction name="menuFiltros"/>
    <addaction name="menuAciones"/>
    <addaction name="menuControl"/>
   </widget>
@@ -407,6 +420,44 @@
    </property>
    <property name="text">
     <string>Borrador Figura</string>
+   </property>
+  </action>
+  <action name="actionZoom_out">
+   <property name="icon">
+    <iconset resource="res.qrc">
+     <normaloff>:/resources/iconozoomout.png</normaloff>:/resources/iconozoomout.png</iconset>
+   </property>
+   <property name="text">
+    <string>Zoom out</string>
+   </property>
+  </action>
+  <action name="actionSepia">
+   <property name="text">
+    <string>Sepia</string>
+   </property>
+  </action>
+  <action name="actionEscala_de_grises">
+   <property name="text">
+    <string>Escala de grises</string>
+   </property>
+  </action>
+  <action name="actionBayer">
+   <property name="text">
+    <string>Bayer</string>
+   </property>
+  </action>
+  <action name="actionNegativo">
+   <property name="text">
+    <string>Negativo</string>
+   </property>
+  </action>
+  <action name="actionZoom_in">
+   <property name="icon">
+    <iconset resource="res.qrc">
+     <normaloff>:/resources/iconozoomin.png</normaloff>:/resources/iconozoomin.png</iconset>
+   </property>
+   <property name="text">
+    <string>Zoom in</string>
    </property>
   </action>
  </widget>

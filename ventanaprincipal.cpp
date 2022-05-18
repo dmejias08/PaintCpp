@@ -392,6 +392,28 @@ void VentanaPrincipal::on_actionElipse_triggered()
     instruction = ELIPSE;
 }
 
+void VentanaPrincipal::on_actionSepia_triggered()
+{
+
+}
+
+void VentanaPrincipal::on_actionEscala_de_grises_triggered()
+{
+
+}
+
+
+void VentanaPrincipal::on_actionBayer_triggered()
+{
+
+}
+
+
+void VentanaPrincipal::on_actionNegativo_triggered()
+{
+
+}
+
 void VentanaPrincipal::on_actionPickear_Color_triggered()
 {
     instruction = PICKER;
@@ -444,6 +466,16 @@ void VentanaPrincipal::on_actionSelect_Magico_triggered()
 
 }
 
+void VentanaPrincipal::on_actionZoom_in_triggered()
+{
+
+}
+
+void VentanaPrincipal::on_actionZoom_out_triggered()
+{
+
+}
+
 void VentanaPrincipal::on_actionDeshacer_triggered()
 {
 
@@ -453,3 +485,6 @@ void VentanaPrincipal::on_actionRehacer_triggered()
 {
 
 }
+
+
+

@@ -89,6 +89,18 @@ private slots:
 
     void on_actionBorrador_Figura_triggered();
 
+    void on_actionSepia_triggered();
+
+    void on_actionEscala_de_grises_triggered();
+
+    void on_actionBayer_triggered();
+
+    void on_actionNegativo_triggered();
+
+    void on_actionZoom_out_triggered();
+
+    void on_actionZoom_in_triggered();
+
 private:
     Ui::VentanaPrincipal *ui;
     int canvasHeight;
