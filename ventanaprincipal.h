@@ -18,13 +18,13 @@ class VentanaPrincipal : public QMainWindow
 public:
     explicit VentanaPrincipal(QWidget *parent = nullptr);
     ~VentanaPrincipal();
-    int getAltoLienzo();
-    void setAltolienzo(int );
-    int getAnchoLienzo();
-    void setAnchoLienzo(int );
-    void actualizarTamano();
-    void iniciarComponentes();
-    void actualizarLienzo();
+    int getCanvasHeight();
+    void setCanvasHeight(int );
+    int getCanvasWidth();
+    void setCanvasWidth(int );
+    void updateSize();
+    void startComponents();
+    void defaultCanvasColor();
 
 protected:
     void mousePressEvent(QMouseEvent*) override;
@@ -51,27 +51,77 @@ private slots:
 
     void on_actionGuardar_Imagen_triggered();
 
+    void on_actionPickear_Color_triggered();
+
+    void on_actionRellenar_triggered();
+
+    void on_actionFlip_Horizontal_triggered();
+
+    void on_actionFlip_Vertical_triggered();
+
+    void on_actionDeshacer_triggered();
+
+    void on_actionRehacer_triggered();
+
+    void on_actionCargar_Imagen_triggered();
+
+    void on_actionBorrador_triggered();
+
+    void on_actionSelect_Rectangulo_triggered();
+
+    void on_actionSelect_Libre_triggered();
+
+    void on_actionSelect_Magico_triggered();
+
+    void on_actionRectangulo_triggered();
+
+    void on_actionTriangulo_Escaleno_triggered();
+
+    void on_actionTriangulo_Isoceles_triggered();
+
+    void on_actionRombo_triggered();
+
+    void on_actionCirculo_triggered();
+
+    void on_actionElipse_triggered();
+
+    void on_actionTriangulo_Rectangulo_triggered();
+
+    void on_actionBorrador_Figura_triggered();
+
 private:
     Ui::VentanaPrincipal *ui;
-    int altoLienzo;
-    int anchoLienzo;
-    QColor elcolor;
-    QPoint puntoinicio;
-    QPoint puntofinal;
-    bool pincelactivo;
-    bool cuadradoactivo;
-    QPixmap *elpixmap;
-    QPainter *elpainter;
-    Bitmap *elbitmap;
+    int canvasHeight;
+    int canvasWidth;
+    QColor defaultColor;
+    QPoint startPoint;
+    QPoint firstPoint;
+    QPoint secondPoint;
+    QPoint thirdPoint;
+    QPoint endPoint;
+    QPixmap *canvasPixmap;
+    QPainter *painter;
+    Bitmap *canvasBitmap;
     imageMatrix *matrix;
-    int grosor;
-    int codigoaccion;
-    bool dibujarcuadrado;
-    bool dibujarpixel;
-    QString nombreaccion;
-    void rotar();
-    //void accionPintar();
-    //void pintarCuadrado();
+    int lineWidth;
+    int instruction;
+    int triangleCounter = 0;
+    QString stringAction;
+    void rotateRight();
+    void rotateLeft();
+    void actionButtonPressed();
+    void actionPointPressed();
+    void paintSquare();
+    void paintRectangle();
+    void paintTriangleESC();
+    void paintTriangleISO();
+    void paintTriangleREC();
+    void paintRhombus();
+    void paintCircle();
+    void paintElipse();
+    void paintLine();
+    void paintFill();
+    void pickColor();
     void updateCanvas();
 };
 

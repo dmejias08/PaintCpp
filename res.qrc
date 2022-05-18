@@ -19,5 +19,17 @@
         <file>resources/iconorotarizquierda.png</file>
         <file>resources/iconosalir.png</file>
         <file>resources/iconotriangulo.png</file>
+        <file>resources/iconoborrar.png</file>
+        <file>resources/iconocirculo.png</file>
+        <file>resources/iconoelipse.jpg</file>
+        <file>resources/iconorectangulo.png</file>
+        <file>resources/iconorombo.jpg</file>
+        <file>resources/iconotrianguloescaleno.png</file>
+        <file>resources/iconoseleccionmagica.png</file>
+        <file>resources/iconoseleccionlibre.jpg</file>
+        <file>resources/iconoseleccionrectangular.png</file>
+        <file>resources/iconotrianguloisoceles.png</file>
+        <file>resources/iconotriangulorectangulo.png</file>
+        <file>resources/iconoborrarfigura.jpg</file>
     </qresource>
 </RCC>

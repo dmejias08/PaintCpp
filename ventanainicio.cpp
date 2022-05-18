@@ -20,10 +20,10 @@ void VentanaInicio::on_pushButton_clicked()
     VentanaPrincipal *laventanaprincipal = new VentanaPrincipal(this);
     laventanaprincipal->isModal();
     laventanaprincipal->setVisible(true);
-    laventanaprincipal->setAltolienzo(this->obtenerAlto());
-    laventanaprincipal->setAnchoLienzo(this->obtenerAncho());
-    laventanaprincipal->iniciarComponentes();
-    laventanaprincipal->actualizarTamano();
+    laventanaprincipal->setCanvasHeight(this->obtenerAlto());
+    laventanaprincipal->setCanvasWidth(this->obtenerAncho());
+    laventanaprincipal->startComponents();
+    laventanaprincipal->updateSize();
     this->hide();
 }
 

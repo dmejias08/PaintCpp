@@ -230,6 +230,7 @@ void imageMatrix::rotate()
             this->pixelMatrix[i][j] = oldMatrix[j][imgHeight - i - 1];
         }
     }
+    delete[] oldMatrix;
 }
 
 void imageMatrix::deleteMatrix()
@@ -374,7 +375,7 @@ void imageMatrix::rectangle(const Color &color, int x1, int y1, int x2, int y2, 
     line(color, y1,x2,y2,x2,lineWidth);
     line(color, y2,x1,y2,x2,lineWidth);
 }
-void imageMatrix::elipse(const Color &color, int x1, int y1, int x2, int y2)
+void imageMatrix::elipse(const Color &color, int x1, int y1, int x2, int y2, int lineWidth)
 {
     int x = min(x1,x2);
     int y = min(y1,y2);
@@ -388,13 +389,13 @@ void imageMatrix::elipse(const Color &color, int x1, int y1, int x2, int y2)
     {
         float painty1 = (float)sqrt((1-(float)((paintx-h)*(paintx-h))/a2)*b2)+k;
         float painty2 = -1*(float)sqrt((1-(float)((paintx-h)*(paintx-h))/a2)*b2)+k;
-        setColor(color, painty1, paintx);
-        setColor(color, painty2, paintx);
+        pencil(color, painty1, paintx, lineWidth);
+        pencil(color, painty2, paintx, lineWidth);
     }
 
 
 }
-void imageMatrix::circle(const Color &color, int x1, int y1, int x2, int y2)
+void imageMatrix::circle(const Color &color, int x1, int y1, int x2, int y2, int lineWidth)
 {
     int diferentialx = x2-x1;
     int diferentialy = y2-y1;
@@ -403,7 +404,7 @@ void imageMatrix::circle(const Color &color, int x1, int y1, int x2, int y2)
     int y3 = min(y1,y2);
     int x4 = x3 + lenght;
     int y4 = y3 + lenght;
-    elipse(color,x3,y3,x4,y4);
+    elipse(color,x3,y3,x4,y4,lineWidth);
 }
 void imageMatrix::paintFill(const Color &colorPicked, const Color &newColor, int x1, int y1)
 {
@@ -419,4 +420,43 @@ void imageMatrix::paintFill(const Color &colorPicked, const Color &newColor, int
             paintFill(colorPicked, newColor,x1,y1+1);
         }
     }
+}
+
+void imageMatrix::flipHorizontal(){
+    Color **oldMatrix = new Color *[imgHeight];
+    for (int i = 0; i < imgHeight; i++)
+    {
+        oldMatrix[i] = new Color[imgWidth];
+        for (int j = 0; j < imgWidth; j++)
+        {
+            oldMatrix[i][j] = this->pixelMatrix[i][j];
+        }
+    }
+    for (int i = 0; i < imgHeight; i++)
+    {
+        for (int j = 0; j < imgWidth; j++)
+        {
+            this->pixelMatrix[i][j] = oldMatrix[i][imgWidth - j - 1];
+        }
+    }
+    delete[] oldMatrix;
+}
+void imageMatrix::flipVertical(){
+    Color **oldMatrix = new Color *[imgHeight];
+    for (int i = 0; i < imgHeight; i++)
+    {
+        oldMatrix[i] = new Color[imgWidth];
+        for (int j = 0; j < imgWidth; j++)
+        {
+            oldMatrix[i][j] = this->pixelMatrix[i][j];
+        }
+    }
+    for (int i = 0; i < imgHeight; i++)
+    {
+        for (int j = 0; j < imgWidth; j++)
+        {
+            this->pixelMatrix[i][j] = oldMatrix[imgHeight - i - 1][j];
+        }
+    }
+    delete[] oldMatrix;
 }
