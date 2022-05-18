@@ -4,7 +4,7 @@
 #include "Bitmap.h"
 //#include <QDesktopWidget>
 #include <QColorDialog>
-#include <QDialog>
+#include <QInputDialog>
 #include <ostream>
 #include <QMouseEvent>
 #include <QPaintEvent>
@@ -34,6 +34,8 @@ void VentanaPrincipal::iniciarComponentes(){
     elcolor = QColor(Qt::white);
     actualizarLienzo();
     grosor = 2;
+    codigoaccion = 0;
+    nombreaccion = "";
 }
 
 void VentanaPrincipal::actualizarLienzo(){
@@ -53,24 +55,62 @@ void VentanaPrincipal::actualizarTamano(){
     this->ui->lblAlto->setText(QString::number(this->getAltoLienzo()));
     this->ui->lblAncho->setText(QString::number(this->getAnchoLienzo()));
 
-    //Ubica el frame en el punto 0 en "x" y 50 en "y" ya que en la parte superior van a estar los
-    //controladores
-    //this->ui->frameLienzo->setGeometry(0,50,getAnchoLienzo(),getAltoLienzo());
-    //Se rellena el frame con un color para diferenciarlo
-    //this->ui->frameLienzo->setStyleSheet("background-color: white");
-
-
-
 }
+
 void VentanaPrincipal::rotar(){
     int altotemp = altoLienzo;
     setAltolienzo(anchoLienzo);
     setAnchoLienzo(altotemp);
 }
 
+void VentanaPrincipal::accionPintar(){
+    switch(codigoaccion){
+        case 1:
+            std::cout<<"Se usará el lapiz"<<std::endl;
+        case 2:
+            std::cout<<"Se hara un cuadrado"<<std::endl;
+            pintarCuadrado();
+        default:
+            std::cout<<"No se hara nada xd"<<std::endl;
+
+
+
+    }
+}
+/*
+void VentanaPrincipal::pintarCuadrado(){
+    matrix->square(Color(elcolor.red(),elcolor.green(),elcolor.blue()),puntoinicio.x(),puntoinicio.y(),puntofinal.x(),puntofinal.y(),grosor);
+
+
+    QPen ellapiz = QPen(elcolor);
+    ellapiz.setWidth(grosor);
+    elpainter->setPen(ellapiz);
+    int diferentialx = puntofinal.x() - puntoinicio.x();
+    int diferentialy = puntofinal.y() - puntoinicio.y();
+    int lenghtx = min(abs(diferentialx), abs(diferentialy));
+    int lenghty = lenghtx;
+    if (diferentialx < 0)
+    {
+        lenghtx = lenghtx * -1;
+    }
+    if (diferentialy < 0)
+    {
+        lenghty = lenghty * -1;
+    }
+    line(color, y1, x1, y1, x1 + lenghtx, lineWidth);
+    line(color, y1, x1, y1 + lenghty, x1, lineWidth);
+    line(color, y1 + lenghty, x1, y1 + lenghty, x1 + lenghtx, lineWidth);
+    line(color, y1, x1 + lenghtx, y1 + lenghty, x1 + lenghtx, lineWidth);
+    elpainter->drawLine(puntoinicio.x(),puntoinicio.y(),puntofinal.x(),puntoinicio.y());
+    elpainter->drawLine(puntoinicio.x(),puntoinicio.y(),puntoinicio.x(),puntofinal.y());
+    elpainter->drawLine(puntoinicio.x(),puntofinal.y(),puntofinal.x(),puntofinal.y());
+    elpainter->drawLine(puntofinal.x(),puntoinicio.y(),puntofinal.x(),puntofinal.y());
+    update();
+}
+*/
 void VentanaPrincipal::mousePressEvent(QMouseEvent *event){
     if(0<=event->pos().x()&&event->pos().x()<=getAnchoLienzo()&&0<=event->pos().y()&&event->pos().y()<=getAltoLienzo()){
-        puntoinicio = event->pos();
+        puntoinicio = QPoint(event->pos().x(),event->pos().y()-70);
         std::cout<<"Se clickeo el boton en las coordenadas "<<puntoinicio.x()<<","<<puntoinicio.y()<<std::endl;
     }
     if(pincelactivo){
@@ -80,12 +120,13 @@ void VentanaPrincipal::mousePressEvent(QMouseEvent *event){
     }
 
 void VentanaPrincipal::mouseMoveEvent(QMouseEvent *event){
-    if(0<=event->pos().x()&&event->pos().x()<=getAnchoLienzo()&&50<=event->pos().y()&&event->pos().y()<=getAltoLienzo()&&pincelactivo){
-        puntofinal = event->pos();
+    if(0<=event->pos().x()&&event->pos().x()<=getAnchoLienzo()&&50<=event->pos().y()&&event->pos().y()<=getAltoLienzo()&&codigoaccion==1){
+        puntofinal = QPoint(event->pos().x(),event->pos().y()-70);
         std::cout<<"Se va a dibujar un pixel en "<<puntofinal.x()<<","<<puntofinal.y()<<std::endl;;        
-        elpainter->setPen(QPen(elcolor));
-        elpainter->drawPoint(puntofinal.x(),puntofinal.y()-70);
-
+        QPen ellapiz(elcolor);
+        ellapiz.setWidth(grosor);
+        elpainter->setPen(ellapiz);
+        elpainter->drawPoint(puntofinal.x(),puntofinal.y());
         matrix->pencil(Color(elcolor.red(),elcolor.green(),elcolor.blue()),puntofinal.y(),puntofinal.x(),grosor);
         update();
         event->accept();
@@ -95,13 +136,10 @@ void VentanaPrincipal::mouseMoveEvent(QMouseEvent *event){
 
 void VentanaPrincipal::mouseReleaseEvent(QMouseEvent *event){
     if(0<=event->pos().x()&&event->pos().x()<=getAnchoLienzo()&&0<=event->pos().y()&&event->pos().y()<=getAltoLienzo()){
-        puntofinal = event->pos();
+        puntofinal = QPoint(event->pos().x(),event->pos().y()-70);
         std::cout<<"Se dejo de clickear el boton en las coordenadas"<<puntofinal.x()<<","<<puntofinal.y()<<std::endl;
     }
-    if(cuadradoactivo){
-        std::cout<<"Se va a crear un cuadrado de "<<puntoinicio.x()<<","<<puntoinicio.y()<<" a "<<puntofinal.x()<<" , "<<puntofinal.y()<<std::endl;
-        matrix->square(Color(elcolor.red(),elcolor.green(),elcolor.blue()),puntoinicio.x(),puntoinicio.y(),puntofinal.x(),puntofinal.y(),4);
-    }
+   accionPintar();
 }
 
 void VentanaPrincipal::paintEvent(QPaintEvent *event){
@@ -134,16 +172,19 @@ void VentanaPrincipal::on_actionColor_triggered()
 
 void VentanaPrincipal::on_actionLapiz_triggered()
 {
-    pincelactivo = true;
+    codigoaccion = 1;
     std::cout<<"Se va a usar el lapiz"<<std::endl;
+    nombreaccion = "lapiz";
+    this->ui->label->setText(nombreaccion);
 }
 
 
 void VentanaPrincipal::on_actionCuadrado_triggered()
 {
-    pincelactivo = false;
-    cuadradoactivo = true;
+    codigoaccion = 2;
     std::cout<<"Se va a hacer un cuadrado"<<std::endl;
+    nombreaccion = "cuadrado";
+    this->ui->label->setText(nombreaccion);
 }
 
 
@@ -175,15 +216,16 @@ void VentanaPrincipal::on_actionLinea_triggered()
 
 void VentanaPrincipal::on_actionGrosor_triggered()
 {
-
+    grosor = QInputDialog::getInt(this,"grosor","Ingrese el grosor deseado",5,1,50);
 }
 
 
 void VentanaPrincipal::on_actionGuardar_Imagen_triggered()
 {
+    QString elnombre = QInputDialog::getText(this,"Nombre del bmp","Ingrese un nombre para el bmp");
     matrix->generatePixelArray();
     int size = matrix->getPixelArraySize();
-    Bitmap *xport = new Bitmap("prueba",matrix->getWidth(),matrix->getHeight(), matrix->getPixelArray(), size);
+    elbitmap = new Bitmap(elnombre.toStdString(),matrix->getWidth(),matrix->getHeight(), matrix->getPixelArray(), size);
 
 }
 

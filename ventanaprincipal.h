@@ -1,5 +1,6 @@
 #include "imageMatrix.h"
 #include "qpainter.h"
+#include "Bitmap.h"
 #ifndef VENTANAPRINCIPAL_H
 //#define "ventanaprincipal.h"
 #include <iostream>
@@ -61,9 +62,14 @@ private:
     bool cuadradoactivo;
     QPixmap *elpixmap;
     QPainter *elpainter;
+    Bitmap *elbitmap;
     imageMatrix *matrix;
     int grosor;
+    int codigoaccion;
+    QString nombreaccion;
     void rotar();
+    void accionPintar();
+    void pintarCuadrado();
 };
 
 #endif // VENTANAPRINCIPAL_H
