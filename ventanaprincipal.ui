@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>326</width>
+    <width>349</width>
     <height>385</height>
    </rect>
   </property>
@@ -66,23 +66,13 @@
      <string>Alto</string>
     </property>
    </widget>
-   <widget class="QWidget" name="frameLienzo" native="true">
-    <property name="geometry">
-     <rect>
-      <x>80</x>
-      <y>140</y>
-      <width>120</width>
-      <height>80</height>
-     </rect>
-    </property>
-   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>326</width>
+     <width>349</width>
      <height>22</height>
     </rect>
    </property>
@@ -93,14 +83,25 @@
     <addaction name="actionLapiz"/>
     <addaction name="actionColor"/>
     <addaction name="actionGrosor"/>
+    <addaction name="separator"/>
+    <addaction name="actionBorrador"/>
+    <addaction name="actionBorrador_Figura"/>
    </widget>
    <widget class="QMenu" name="menuFiguras">
     <property name="title">
      <string>Figuras</string>
     </property>
     <addaction name="actionCuadrado"/>
-    <addaction name="actionTriangulo"/>
+    <addaction name="actionRectangulo"/>
+    <addaction name="actionRombo"/>
     <addaction name="actionLinea"/>
+    <addaction name="separator"/>
+    <addaction name="actionTriangulo_Escaleno"/>
+    <addaction name="actionTriangulo_Isoceles"/>
+    <addaction name="actionTriangulo_Rectangulo"/>
+    <addaction name="separator"/>
+    <addaction name="actionCirculo"/>
+    <addaction name="actionElipse"/>
    </widget>
    <widget class="QMenu" name="menuAciones">
     <property name="title">
@@ -114,6 +115,13 @@
     <addaction name="separator"/>
     <addaction name="actionRotar_a_la_izquierda"/>
     <addaction name="actionRotar_a_la_derecha"/>
+    <addaction name="separator"/>
+    <addaction name="actionSelect_Rectangulo"/>
+    <addaction name="actionSelect_Libre"/>
+    <addaction name="actionSelect_Magico"/>
+    <addaction name="separator"/>
+    <addaction name="actionZoom_in"/>
+    <addaction name="actionZoom_out"/>
    </widget>
    <widget class="QMenu" name="menuControl">
     <property name="title">
@@ -131,9 +139,19 @@
     <addaction name="separator"/>
     <addaction name="actionSalir"/>
    </widget>
+   <widget class="QMenu" name="menuFiltros">
+    <property name="title">
+     <string>Filtros</string>
+    </property>
+    <addaction name="actionSepia"/>
+    <addaction name="actionEscala_de_grises"/>
+    <addaction name="actionBayer"/>
+    <addaction name="actionNegativo"/>
+   </widget>
    <addaction name="menuArchivo"/>
    <addaction name="menuPinceles"/>
    <addaction name="menuFiguras"/>
+   <addaction name="menuFiltros"/>
    <addaction name="menuAciones"/>
    <addaction name="menuControl"/>
   </widget>
@@ -171,15 +189,6 @@
    </property>
    <property name="text">
     <string>Grosor</string>
-   </property>
-  </action>
-  <action name="actionTriangulo">
-   <property name="icon">
-    <iconset resource="res.qrc">
-     <normaloff>:/resources/iconotriangulo.png</normaloff>:/resources/iconotriangulo.png</iconset>
-   </property>
-   <property name="text">
-    <string>Triangulo</string>
    </property>
   </action>
   <action name="actionLinea">
@@ -253,6 +262,9 @@
    <property name="text">
     <string>Deshacer</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+Z</string>
+   </property>
   </action>
   <action name="actionRehacer">
    <property name="icon">
@@ -261,6 +273,9 @@
    </property>
    <property name="text">
     <string>Rehacer</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Y</string>
    </property>
   </action>
   <action name="actionGuardar_Imagen">
@@ -271,6 +286,9 @@
    <property name="text">
     <string>Guardar Imagen</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
+   </property>
   </action>
   <action name="actionCargar_Imagen">
    <property name="icon">
@@ -280,6 +298,9 @@
    <property name="text">
     <string>Cargar Imagen</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+L</string>
+   </property>
   </action>
   <action name="actionSalir">
    <property name="icon">
@@ -288,6 +309,155 @@
    </property>
    <property name="text">
     <string>Salir</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+E</string>
+   </property>
+  </action>
+  <action name="actionBorrador">
+   <property name="icon">
+    <iconset resource="res.qrc">
+     <normaloff>:/resources/iconoborrar.png</normaloff>:/resources/iconoborrar.png</iconset>
+   </property>
+   <property name="text">
+    <string>Borrador Trazo</string>
+   </property>
+  </action>
+  <action name="actionSelect_Rectangulo">
+   <property name="icon">
+    <iconset resource="res.qrc">
+     <normaloff>:/resources/iconoseleccionrectangular.png</normaloff>:/resources/iconoseleccionrectangular.png</iconset>
+   </property>
+   <property name="text">
+    <string>Select Rectangulo</string>
+   </property>
+  </action>
+  <action name="actionSelect_Libre">
+   <property name="icon">
+    <iconset resource="res.qrc">
+     <normaloff>:/resources/iconoseleccionlibre.jpg</normaloff>:/resources/iconoseleccionlibre.jpg</iconset>
+   </property>
+   <property name="text">
+    <string>Select Libre</string>
+   </property>
+  </action>
+  <action name="actionSelect_Magico">
+   <property name="icon">
+    <iconset resource="res.qrc">
+     <normaloff>:/resources/iconoseleccionmagica.png</normaloff>:/resources/iconoseleccionmagica.png</iconset>
+   </property>
+   <property name="text">
+    <string>Select Magico</string>
+   </property>
+  </action>
+  <action name="actionRectangulo">
+   <property name="icon">
+    <iconset resource="res.qrc">
+     <normaloff>:/resources/iconorectangulo.png</normaloff>:/resources/iconorectangulo.png</iconset>
+   </property>
+   <property name="text">
+    <string>Rectangulo</string>
+   </property>
+  </action>
+  <action name="actionTriangulo_Escaleno">
+   <property name="icon">
+    <iconset resource="res.qrc">
+     <normaloff>:/resources/iconotrianguloescaleno.png</normaloff>:/resources/iconotrianguloescaleno.png</iconset>
+   </property>
+   <property name="text">
+    <string>Triangulo Escaleno</string>
+   </property>
+  </action>
+  <action name="actionTriangulo_Isoceles">
+   <property name="icon">
+    <iconset resource="res.qrc">
+     <normaloff>:/resources/iconotrianguloisoceles.png</normaloff>:/resources/iconotrianguloisoceles.png</iconset>
+   </property>
+   <property name="text">
+    <string>Triangulo Isoceles</string>
+   </property>
+  </action>
+  <action name="actionRombo">
+   <property name="icon">
+    <iconset resource="res.qrc">
+     <normaloff>:/resources/iconorombo.jpg</normaloff>:/resources/iconorombo.jpg</iconset>
+   </property>
+   <property name="text">
+    <string>Rombo</string>
+   </property>
+  </action>
+  <action name="actionCirculo">
+   <property name="icon">
+    <iconset resource="res.qrc">
+     <normaloff>:/resources/iconocirculo.png</normaloff>:/resources/iconocirculo.png</iconset>
+   </property>
+   <property name="text">
+    <string>Circulo</string>
+   </property>
+  </action>
+  <action name="actionElipse">
+   <property name="icon">
+    <iconset resource="res.qrc">
+     <normaloff>:/resources/iconoelipse.jpg</normaloff>:/resources/iconoelipse.jpg</iconset>
+   </property>
+   <property name="text">
+    <string>Elipse</string>
+   </property>
+  </action>
+  <action name="actionTriangulo_Rectangulo">
+   <property name="icon">
+    <iconset resource="res.qrc">
+     <normaloff>:/resources/iconotriangulorectangulo.png</normaloff>:/resources/iconotriangulorectangulo.png</iconset>
+   </property>
+   <property name="text">
+    <string>Triangulo Rectangulo</string>
+   </property>
+  </action>
+  <action name="actionBorrador_Figura">
+   <property name="icon">
+    <iconset resource="res.qrc">
+     <normaloff>:/resources/iconoborrarfigura.jpg</normaloff>:/resources/iconoborrarfigura.jpg</iconset>
+   </property>
+   <property name="text">
+    <string>Borrador Figura</string>
+   </property>
+  </action>
+  <action name="actionZoom_out">
+   <property name="icon">
+    <iconset resource="res.qrc">
+     <normaloff>:/resources/iconozoomout.png</normaloff>:/resources/iconozoomout.png</iconset>
+   </property>
+   <property name="text">
+    <string>Zoom out</string>
+   </property>
+  </action>
+  <action name="actionSepia">
+   <property name="text">
+    <string>Sepia</string>
+   </property>
+  </action>
+  <action name="actionEscala_de_grises">
+   <property name="text">
+    <string>Escala de grises</string>
+   </property>
+  </action>
+  <action name="actionBayer">
+   <property name="text">
+    <string>Bayer</string>
+   </property>
+  </action>
+  <action name="actionNegativo">
+   <property name="text">
+    <string>Negativo</string>
+   </property>
+  </action>
+  <action name="actionZoom_in">
+   <property name="icon">
+    <iconset resource="res.qrc">
+     <normaloff>:/resources/iconozoomin.png</normaloff>:/resources/iconozoomin.png</iconset>
+   </property>
+   <property name="text">
+    <string>Zoom in</string>
    </property>
   </action>
  </widget>
