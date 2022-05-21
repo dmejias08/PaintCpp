@@ -43,7 +43,7 @@ int main()
     // matrix->triangleEsc(Color(233, 67, 201), 30, 100, 70, 150, 80, 60, 2);
     // matrix->triangleRec(Color(33, 222, 43), 150, 150, 190, 170, 2);
     // matrix->rhombus(Color(0, 0, 0), 70, 70, 110, 150, 2);
-    matrix->circle(Color(0,0,0), 10,10,120,190);
+    matrix->circle(Color(0,0,0), 10,10,120,190,1);
     
 
     /*Probando funciones de filtros, borrador, rotaciones entre otras*/
@@ -70,14 +70,15 @@ int main()
 
     Bitmap *importNewImage = new Bitmap("out.bmp");
     imageMatrix *newImage = new imageMatrix(importNewImage->getArray(), importNewImage->getHeight(), importNewImage->getWidth());
-    newImage->circle(Color(0,0,0), 20,20,120,190);
-
+    newImage->circle(Color(0,0,0), 20,20,120,190,1);
     newImage->paintFill(Color(255,255,255),Color(65,44,87),190,190);
-
+    newImage->zoomIn();
     newImage->generatePixelArray();
     Bitmap *exportSecondImg = new Bitmap("penguin", newImage->getWidth(), newImage->getHeight(), newImage->getPixelArray(), newImage->getPixelArraySize());
 
-
+    newImage->zoomOut();
+    newImage->generatePixelArray();
+    Bitmap *exportThirdImg = new Bitmap("penguin2", newImage->getWidth(), newImage->getHeight(), newImage->getPixelArray(), newImage->getPixelArraySize());
 
 
     
