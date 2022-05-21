@@ -54,13 +54,15 @@ public:
     void triangleRec(const Color &color, int x1, int y1, int x2, int y2, int lineWidth);
     void triangleEsc(const Color &color, int x1, int y1, int x2, int y2, int x3, int y3, int lineWidth);
     void rectangle(const Color &color, int x1, int y1, int x2, int y2, int lineWidth);
-    void circle(const Color &color, int x1, int y1, int x2, int y2);
-    void elipse(const Color &color, int x1, int y1, int x2, int y2);
+    void circle(const Color &color, int x1, int y1, int x2, int y2, int lineWidth);
+    void elipse(const Color &color, int x1, int y1, int x2, int y2, int lineWidth);
     void paintFill(const Color &colorPicked, const Color &newColor, int x1, int y1);
     void bayerFilter();
     void sepiaFilter();
     void grayScaleFilter();
     void negativeFilter();
+    void flipVertical();
+    void flipHorizontal();
 
 };
 

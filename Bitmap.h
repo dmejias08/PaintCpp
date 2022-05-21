@@ -1,3 +1,4 @@
+
 #ifndef Bitmap_h
 #define Bitmap_h
 
