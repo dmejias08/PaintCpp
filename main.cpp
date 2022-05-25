@@ -1,6 +1,7 @@
 #include "ventanainicio.h"
 
 #include <QApplication>
+#include "imageMatrix.h"
 
 int main(int argc, char *argv[])
 {

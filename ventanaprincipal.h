@@ -97,20 +97,27 @@ private slots:
 
     void on_actionNegativo_triggered();
 
-    void on_actionZoom_out_triggered();
+    void on_horizontalSlider_sliderReleased();
 
-    void on_actionZoom_in_triggered();
+    void on_horizontalSlider_valueChanged(int value);
 
 private:
     Ui::VentanaPrincipal *ui;
     int canvasHeight;
     int canvasWidth;
+    int sizeFactor = 1;
+    int memoryFlag = 0;
+    bool selectON = false;
+    bool selectOFF = false;
     QColor defaultColor;
+    QColor afterEraser;
     QPoint startPoint;
     QPoint firstPoint;
     QPoint secondPoint;
     QPoint thirdPoint;
     QPoint endPoint;
+    QPoint lastPoint;
+    QPoint selectPoint;
     QPixmap *canvasPixmap;
     QPainter *painter;
     Bitmap *canvasBitmap;
@@ -123,16 +130,22 @@ private:
     void rotateLeft();
     void actionButtonPressed();
     void actionPointPressed();
-    void paintSquare();
-    void paintRectangle();
-    void paintTriangleESC();
-    void paintTriangleISO();
-    void paintTriangleREC();
-    void paintRhombus();
-    void paintCircle();
-    void paintElipse();
-    void paintLine();
-    void paintFill();
+    void paintPencil(QColor colorToUse);
+    void paintSquare(QColor colorToUse);
+    void paintRectangle(QColor colorToUse);
+    void paintTriangleESC(QColor colorToUse);
+    void paintTriangleISO(QColor colorToUse);
+    void paintTriangleREC(QColor colorToUse);
+    void paintRhombus(QColor colorToUse);
+    void paintCircle(QColor colorToUse);
+    void paintElipse(QColor colorToUse);
+    void paintLine(QColor colorToUse);
+    void paintFill(QColor colorToUse, int x1, int y1);
+    void zoomIn(int sizeFactor);
+    void selectRectangle(int x1, int y1, int x2, int y2);
+    void selectFree();
+    void loadFromFile();
+    void loadToFile();
     void pickColor();
     void updateCanvas();
     void bayerFilter();

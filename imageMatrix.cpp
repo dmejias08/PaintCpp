@@ -125,11 +125,13 @@ Color imageMatrix::getColor(int i, int j)
 void imageMatrix::setColor(const Color &color, int i, int j)
 /*  Toma un posición de matriz de pixeles y asig    na los colores correspodientes */
 {
-    pixelMatrix[i][j].r = color.r;
-    pixelMatrix[i][j].g = color.g;
-    pixelMatrix[i][j].b = color.b;
-    // std::cout << "(" << i << "," << j << ")"
-    //           << " R " << pixelMatrix[i][j].r << " G " << pixelMatrix[i][j].g << " B " << pixelMatrix[i][j].b << std::endl;
+    if(i >= 0 && i < imgHeight && j >= 0 & j < imgWidth){
+        pixelMatrix[i][j].r = color.r;
+        pixelMatrix[i][j].g = color.g;
+        pixelMatrix[i][j].b = color.b;
+        // std::cout << "(" << i << "," << j << ")"
+        //           << " R " << pixelMatrix[i][j].r << " G " << pixelMatrix[i][j].g << " B " << pixelMatrix[i][j].b << std::endl;
+    }
 }
 
 void imageMatrix::pencil(const Color &color, int i, int j, int lineWidth)
@@ -170,7 +172,6 @@ void imageMatrix::line(const Color &color, int y1, int x1, int y2, int x2, int l
     {
 
         float m = (float)(y2 - y1) / (float)(x2 - x1);
-        // printf("m: %f\n", m);
         float b = y1 - (m * x1);
         if (x2 < x1)
         {
@@ -199,7 +200,6 @@ void imageMatrix::line(const Color &color, int y1, int x1, int y2, int x2, int l
                 {
                     for (int j = old_y - 1; j >= new_y; j--)
                     {
-                        // pencil(color, i, j, lineWidth);
                         pencil(color, j, i, lineWidth);
                     }
                 }
@@ -276,6 +276,9 @@ void imageMatrix::bayerFilter()
         {
             Color colorTemp = getColor(i, j);
             float newRGB = 0.65*colorTemp.r/2 + 0.57*colorTemp.g + 0.7*colorTemp.b;
+            while (newRGB > 255){
+                newRGB = newRGB - 255;
+            }
             setColor(Color(newRGB, newRGB, newRGB), i, j);
         }
     }
@@ -291,6 +294,15 @@ void imageMatrix::sepiaFilter()
             float newR = 0.393 * colorTemp.r + 0.769 * colorTemp.g + 0.189 * colorTemp.b;
             float newG = 0.349 * colorTemp.r + 0.686 * colorTemp.g + 0.168 * colorTemp.b;
             float newB = 0.272 * colorTemp.r + 0.534 * colorTemp.g + 0.131 * colorTemp.b;
+            while (newR > 255){
+                newR = newR - 255;
+            }
+            while (newG > 255){
+                newG = newG - 255;
+            }
+            while (newB > 255){
+                newB = newB - 255;
+            }
             setColor(Color(newR, newG, newB), i, j);
         }
     }
@@ -304,6 +316,9 @@ void imageMatrix::grayScaleFilter()
         {
             Color colorTemp = getColor(i, j);
             float formula = 0.3 * colorTemp.r + 0.59 * colorTemp.g + 0.11 * colorTemp.b;
+            while (formula > 255){
+                formula = formula - 255;
+            }
             setColor(Color(formula, formula, formula), i, j);
         }
     }
@@ -408,18 +423,31 @@ void imageMatrix::circle(const Color &color, int x1, int y1, int x2, int y2, int
 }
 void imageMatrix::paintFill(const Color &colorPicked, const Color &newColor, int x1, int y1)
 {
-    if (x1 < imgWidth && y1 < imgHeight && x1 >= 0 && y1 >= 0)
+    if (colorPicked.r != newColor.r && colorPicked.g != newColor.g && colorPicked.b != newColor.b){
+        paintFillAux(colorPicked, newColor,x1,y1);
+    }
+}
+
+void imageMatrix::paintFillAux(const Color &colorPicked, const Color &newColor, int x1, int y1)
+{
+    memoryFlag++;
+    if (x1 < imgWidth && y1 < imgHeight && x1 >= 0 && y1 >= 0 && memoryFlag < 350*350)
     {
         Color currentColor = getColor(y1,x1);
         if (currentColor.b == colorPicked.b && currentColor.g == colorPicked.g && currentColor.r == colorPicked.r)
         {
             setColor(newColor, y1, x1);
-            paintFill(colorPicked, newColor,x1-1,y1);
-            paintFill(colorPicked, newColor,x1+1,y1);
-            paintFill(colorPicked, newColor,x1,y1-1);
-            paintFill(colorPicked, newColor,x1,y1+1);
+            paintFillAux(colorPicked, newColor,x1-1,y1);
+            paintFillAux(colorPicked, newColor,x1+1,y1);
+            paintFillAux(colorPicked, newColor,x1,y1-1);
+            paintFillAux(colorPicked, newColor,x1,y1+1);
         }
     }
+}
+
+void imageMatrix::setMemoryFlag(int value)
+{
+    memoryFlag = value;
 }
 
 void imageMatrix::flipHorizontal(){
