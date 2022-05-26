@@ -27,20 +27,16 @@ using namespace std;
 #define LINE            9
 #define RHOMBUS         10
 #define PAINTFILL       11
-#define MAGICSEL        12
-#define RECSEL          13
-#define FREESEL         14
-#define PICKER          15
-#define BAYERFILTER     16
-#define SEPIAFILTER     17
-#define NEGATIVE        18
-#define GRAY            19
-#define TRACEERASER     20
-#define FIGUREERASER    21
-#define ZOOMIN          22
-#define SELECTREC       23
-#define SELECTFREE      24
-#define SELECTMAGIC     25
+#define PICKER          12
+#define BAYERFILTER     13
+#define SEPIAFILTER     14
+#define NEGATIVE        15
+#define GRAY            16
+#define TRACEERASER     17
+#define FIGUREERASER    18
+#define ZOOMIN          19
+#define SELECTREC       20
+#define SELECTMAGIC     21
 
 #define MAXIMUMSMOOTHLINE 8
 #define INFORMATIONHEIGHT 70
@@ -58,14 +54,13 @@ VentanaPrincipal::~VentanaPrincipal()
 }
 
 void VentanaPrincipal::startComponents(){
+
     canvasPixmap = new QPixmap(getCanvasWidth(),getCanvasHeight());
     this->matrix = new imageMatrix(getCanvasWidth(),getCanvasHeight());
     matrix->generateDefaultImage();
-    defaultColor = QColor(Qt::black);
     defaultCanvasColor();
     lineWidth = 2;
     instruction = 0;
-    stringAction = "";
     updateSize();
 
 }
@@ -98,10 +93,14 @@ void VentanaPrincipal::updateCanvas(){
 void VentanaPrincipal::updateSize(){
     //Ajusta el tamaño de la ventana, en su posición "x" y "y", con el ancho del lienzo y
     //el alto del lienzo mas 70 pixeles donde se pondrán los botones de los controladores
-    this->setGeometry(this->geometry().x(),this->geometry().y(),this->getCanvasWidth(),this->getCanvasHeight()+INFORMATIONHEIGHT);
+    if(getCanvasWidth()<400){
+        this->setGeometry(this->geometry().x(),this->geometry().y(),400,getCanvasHeight()+INFORMATIONHEIGHT);
+    }else{
+        this->setGeometry(this->geometry().x(),this->geometry().y(),this->getCanvasWidth(),this->getCanvasHeight()+INFORMATIONHEIGHT);
+    }
     this->ui->lblAlto->setText(QString::number(this->getCanvasHeight()));
     this->ui->lblAncho->setText(QString::number(this->getCanvasWidth()));
-    this->ui->horizontalSlider->setGeometry(getCanvasWidth()-this->ui->horizontalSlider->width(),
+    this->ui->horizontalSlider->setGeometry(230,
                                             INFORMATIONHEIGHT/2-this->ui->horizontalSlider->height(),
                                             this->ui->horizontalSlider->width(),this->ui->horizontalSlider->height());
 
@@ -176,14 +175,19 @@ void VentanaPrincipal::zoomIn(int sizeFactor){
 }
 
 void VentanaPrincipal::actionPointPressed(){
-    unselectMagic();
     switch (instruction) {
     case PAINTFILL:
         paintFill(defaultColor, startPoint.x(), startPoint.y());
         loadToFile();
         break;
     case ZOOMIN:
-        zoomIn(sizeFactor);
+        if(sizeFactor >= 2){
+            zoomIn(sizeFactor);
+            instruction = ZOOMIN;
+        } else {
+            updateCanvas();
+            update();
+        }
         break;
     case FIGUREERASER:
         paintFill(QColor(Qt::white), startPoint.x(), startPoint.y());
@@ -191,6 +195,7 @@ void VentanaPrincipal::actionPointPressed(){
         break;
     case SELECTMAGIC:
         selectOFF = false;
+        unselectFlag = true;
         if (selectON){
             paintFill(QColor(255-matrix->getColor(selectPoint.y(),selectPoint.x()).r,255-matrix->getColor(selectPoint.y(),selectPoint.x()).g,255-matrix->getColor(selectPoint.y(),selectPoint.x()).b), selectPoint.x(),selectPoint.y());
         }
@@ -336,10 +341,6 @@ void VentanaPrincipal::pickColor(){
     defaultColor.setBlue(temp.b);
 }
 
-void VentanaPrincipal::selectFree(){
-
-}
-
 void VentanaPrincipal::selectRectangle(int x1, int y1, int x2, int y2){
     painter = new QPainter(canvasPixmap);
     int xMinBound = min(abs(x1),abs(x2));
@@ -362,6 +363,8 @@ void VentanaPrincipal::mousePressEvent(QMouseEvent *event){
     updateCanvas();
     update();
     if(0 <= event->pos().x() && event->pos().x() < getCanvasWidth() && INFORMATIONHEIGHT < event->pos().y() && event->pos().y() < getCanvasHeight()+INFORMATIONHEIGHT){
+        selectOFF = true;
+        unselectMagic(instruction);
         startPoint = QPoint(event->pos().x(),event->pos().y()-INFORMATIONHEIGHT);
         lastPoint = startPoint;
         actionPointPressed();
@@ -370,14 +373,12 @@ void VentanaPrincipal::mousePressEvent(QMouseEvent *event){
 
 void VentanaPrincipal::mouseMoveEvent(QMouseEvent *event){
     painter = new QPainter(canvasPixmap);
-    if(0 <= event->pos().x() && event->pos().x() < getCanvasWidth() && INFORMATIONHEIGHT < event->pos().y() && event->pos().y() < getCanvasHeight()+INFORMATIONHEIGHT && (instruction == PENCIL || instruction == TRACEERASER || instruction == SELECTFREE)){
+    if(0 <= event->pos().x() && event->pos().x() < getCanvasWidth() && INFORMATIONHEIGHT < event->pos().y() && event->pos().y() < getCanvasHeight()+INFORMATIONHEIGHT && (instruction == PENCIL || instruction == TRACEERASER)){
         endPoint = QPoint(event->pos().x(),event->pos().y()-INFORMATIONHEIGHT);
         if(instruction == PENCIL){
             paintPencil(defaultColor);
         } else if (instruction == TRACEERASER) {
             paintPencil(QColor(Qt::white));
-        } else {
-            selectFree();
         }
         lastPoint = endPoint;
         update();
@@ -437,7 +438,7 @@ void VentanaPrincipal::on_actionGuardar_Imagen_triggered()
 }
 
 void VentanaPrincipal::on_actionCargar_Imagen_triggered()
-{    loadToFile();
+{   loadToFile();
     QString filename = QFileDialog::getOpenFileName(this,"Abrir bmp","C://","Bmp file (*.bmp)");
     canvasBitmap = new Bitmap(filename.toStdString());
     canvasHeight = canvasBitmap->getHeight();
@@ -451,11 +452,12 @@ void VentanaPrincipal::on_actionCargar_Imagen_triggered()
     update();
 }
 
-void VentanaPrincipal::unselectMagic(){
-    if (instruction != SELECTMAGIC && selectOFF){
+void VentanaPrincipal::unselectMagic(int definedInstruction){
+    if (definedInstruction != SELECTMAGIC && selectOFF && unselectFlag){
         paintFill(QColor(255-matrix->getColor(selectPoint.y(),selectPoint.x()).r,255-matrix->getColor(selectPoint.y(),selectPoint.x()).g,255-matrix->getColor(selectPoint.y(),selectPoint.x()).b), selectPoint.x(),selectPoint.y());
         selectON = false;
         selectOFF = false;
+        unselectFlag = false;
     }
 }
 
@@ -464,7 +466,6 @@ void VentanaPrincipal::loadFromFile()
     string line;
     int i = 0;
     ifstream matrixToLoad ("autosave/slot"+to_string(autoSavedCursor)+".txt");
-    cout<<"Boutta open: "<<autoSavedCursor<<endl;
     while (getline (matrixToLoad, line)) {
         int j = 0;
         while (j < matrix->getWidth()){
@@ -499,9 +500,9 @@ void VentanaPrincipal::loadFromFile()
 void VentanaPrincipal::loadToFile()
 {
     autoSavedCursor++;
-    /*if (autoSavedCursor == 0){
+    if (autoSavedCursor > 20){
         autoSavedCursor = 1;
-    }*/
+    }
     ofstream matrixToSave ("autosave/slot"+to_string(autoSavedCursor)+".txt", ios::out | ios::trunc);
     for (int i = 0; i < matrix->getHeight(); i++)
     {
@@ -512,17 +513,12 @@ void VentanaPrincipal::loadToFile()
         matrixToSave << "\n";
     }
     matrixToSave.close();
-    cout<<autoSavedCursor<<endl;
     autoSavedFlag++;
-    //autoSavedCursor++;
-    if (autoSavedCursor > 20){
-        autoSavedCursor = 1;
-    }
 }
 
 void VentanaPrincipal::on_actionSalir_triggered()
 {
-    unselectMagic();
+    unselectMagic(instruction);
     this->close();
 }
 
@@ -599,7 +595,7 @@ void VentanaPrincipal::on_actionElipse_triggered()
 
 void VentanaPrincipal::on_actionSepia_triggered()
 {
-    unselectMagic();
+    unselectMagic(instruction);
     matrix->sepiaFilter();
     updateCanvas();
     update();
@@ -608,7 +604,7 @@ void VentanaPrincipal::on_actionSepia_triggered()
 
 void VentanaPrincipal::on_actionEscala_de_grises_triggered()
 {
-    unselectMagic();
+    unselectMagic(instruction);
     matrix->grayScaleFilter();
     updateCanvas();
     update();
@@ -618,7 +614,7 @@ void VentanaPrincipal::on_actionEscala_de_grises_triggered()
 
 void VentanaPrincipal::on_actionBayer_triggered()
 {
-    unselectMagic();
+    unselectMagic(instruction);
     matrix->bayerFilter();
     updateCanvas();
     update();
@@ -628,7 +624,7 @@ void VentanaPrincipal::on_actionBayer_triggered()
 
 void VentanaPrincipal::on_actionNegativo_triggered()
 {
-    unselectMagic();
+    unselectMagic(instruction);
     matrix->negativeFilter();
     updateCanvas();
     update();
@@ -647,7 +643,7 @@ void VentanaPrincipal::on_actionRellenar_triggered()
 
 void VentanaPrincipal::on_actionFlip_Horizontal_triggered()
 {
-    unselectMagic();
+    unselectMagic(instruction);
     matrix->flipHorizontal();
     updateCanvas();
     update();
@@ -657,7 +653,7 @@ void VentanaPrincipal::on_actionFlip_Horizontal_triggered()
 
 void VentanaPrincipal::on_actionFlip_Vertical_triggered()
 {
-    unselectMagic();
+    unselectMagic(instruction);
     matrix->flipVertical();
     updateCanvas();
     update();
@@ -666,7 +662,7 @@ void VentanaPrincipal::on_actionFlip_Vertical_triggered()
 
 void VentanaPrincipal::on_actionRotar_a_la_izquierda_triggered()
 {
-    unselectMagic();
+    unselectMagic(instruction);
     rotateLeft();
     updateSize();
     updateCanvas();
@@ -676,6 +672,7 @@ void VentanaPrincipal::on_actionRotar_a_la_izquierda_triggered()
 
 void VentanaPrincipal::on_actionRotar_a_la_derecha_triggered()
 {
+    unselectMagic(instruction);
     rotateRight();
     updateSize();
     updateCanvas();
@@ -688,21 +685,16 @@ void VentanaPrincipal::on_actionSelect_Rectangulo_triggered()
     instruction = SELECTREC;
 }
 
-void VentanaPrincipal::on_actionSelect_Libre_triggered()
-{
-    instruction = SELECTFREE;
-}
-
 void VentanaPrincipal::on_actionSelect_Magico_triggered()
 {
     instruction = SELECTMAGIC;
+    unselectFlag = true;
 }
 
 
 void VentanaPrincipal::on_actionDeshacer_triggered()
 {
     if (autoSavedFlag != 0 && abs(autoSavedMoves) < autoSavedFlag){
-        cout<<autoSavedFlag<<" "<<autoSavedMoves<<" "<<endl;
         autoSavedCursor--;
         autoSavedMoves--;
         if (autoSavedCursor < 0){
