@@ -107,6 +107,9 @@ private:
     int canvasWidth;
     int sizeFactor = 1;
     int memoryFlag = 0;
+    int autoSavedCursor = 0;
+    int autoSavedFlag = 0;
+    int autoSavedMoves = 0;
     bool selectON = false;
     bool selectOFF = false;
     QColor defaultColor;
@@ -148,10 +151,7 @@ private:
     void loadToFile();
     void pickColor();
     void updateCanvas();
-    void bayerFilter();
-    void sepiaFilter();
-    void negative();
-    void gray();
+    void unselectMagic();
 
 };
 

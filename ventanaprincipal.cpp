@@ -9,6 +9,10 @@
 #include <QMouseEvent>
 #include <QPaintEvent>
 #include <QPainter>
+#include <fstream>
+#include <iostream>
+#include <string>
+#include <cstring>
 
 using namespace std;
 
@@ -75,6 +79,7 @@ void VentanaPrincipal::defaultCanvasColor(){
         }
     }
     painter->end();
+    loadToFile();
 }
 
 void VentanaPrincipal::updateCanvas(){
@@ -112,6 +117,7 @@ void VentanaPrincipal::rotateRight(){
     canvasPixmap = new QPixmap(getCanvasWidth(),getCanvasHeight());
     updateCanvas();
     updateSize();
+    loadToFile();
 }
 
 void VentanaPrincipal::rotateLeft(){
@@ -122,6 +128,7 @@ void VentanaPrincipal::rotateLeft(){
     canvasPixmap = new QPixmap(getCanvasWidth(),getCanvasHeight());
     updateCanvas();
     updateSize();
+    loadToFile();
 }
 
 void VentanaPrincipal::zoomIn(int sizeFactor){
@@ -169,21 +176,18 @@ void VentanaPrincipal::zoomIn(int sizeFactor){
 }
 
 void VentanaPrincipal::actionPointPressed(){
-    if (instruction != SELECTMAGIC && selectOFF){
-        paintFill(QColor(255-matrix->getColor(selectPoint.y(),selectPoint.x()).r,255-matrix->getColor(selectPoint.y(),selectPoint.x()).g,255-matrix->getColor(selectPoint.y(),selectPoint.x()).b), selectPoint.x(),selectPoint.y());
-        selectON = false;
-        selectOFF = false;
-    }
-
+    unselectMagic();
     switch (instruction) {
     case PAINTFILL:
         paintFill(defaultColor, startPoint.x(), startPoint.y());
+        loadToFile();
         break;
     case ZOOMIN:
         zoomIn(sizeFactor);
         break;
     case FIGUREERASER:
         paintFill(QColor(Qt::white), startPoint.x(), startPoint.y());
+        loadToFile();
         break;
     case SELECTMAGIC:
         selectOFF = false;
@@ -199,6 +203,7 @@ void VentanaPrincipal::actionPointPressed(){
         break;
     case ESC:
         paintTriangleESC(defaultColor);
+        break;
     default:
         break;
     }
@@ -208,42 +213,42 @@ void VentanaPrincipal::actionButtonPressed(){
     switch (instruction) {
     case SQUARE:
         paintSquare(defaultColor);
+        loadToFile();
         break;
     case RECTANGLE:
         paintRectangle(defaultColor);
+        loadToFile();
         break;
     case ISO:
         paintTriangleISO(defaultColor);
+        loadToFile();
         break;
     case REC:
         paintTriangleREC(defaultColor);
+        loadToFile();
         break;
     case LINE:
         paintLine(defaultColor);
+        loadToFile();
         break;
     case CIRCLE:
         paintCircle(defaultColor);
+        loadToFile();
         break;
     case ELIPSE:
         paintElipse(defaultColor);
+        loadToFile();
         break;
     case RHOMBUS:
         paintRhombus(defaultColor);
-        break;
-    case BAYERFILTER:
-        bayerFilter();
-        break;
-    case SEPIAFILTER:
-        sepiaFilter();
-        break;
-    case NEGATIVE:
-        negative();
-        break;
-    case GRAY:
-        gray();
+        loadToFile();
         break;
     case SELECTREC:
         selectRectangle(startPoint.x(),startPoint.y(),endPoint.x(),endPoint.y());
+        loadToFile();
+        break;
+    case PENCIL:
+        loadToFile();
         break;
     default:
         break;
@@ -276,6 +281,7 @@ void VentanaPrincipal::paintTriangleESC(QColor colorToUse){
         triangleCounter = 0;
         updateCanvas();
         update();
+        loadToFile();
     }
 
 }
@@ -349,29 +355,6 @@ void VentanaPrincipal::selectRectangle(int x1, int y1, int x2, int y2){
         }
     }
     painter->end();
-    update();
-}
-
-void VentanaPrincipal::bayerFilter(){
-    matrix->bayerFilter();
-    updateCanvas();
-    update();
-}
-void VentanaPrincipal::sepiaFilter(){
-    matrix->sepiaFilter();
-    updateCanvas();
-    update();
-
-}
-void VentanaPrincipal::negative(){
-    matrix->negativeFilter();
-    updateCanvas();
-    update();
-
-}
-void VentanaPrincipal::gray(){
-    matrix->grayScaleFilter();
-    updateCanvas();
     update();
 }
 
@@ -454,7 +437,7 @@ void VentanaPrincipal::on_actionGuardar_Imagen_triggered()
 }
 
 void VentanaPrincipal::on_actionCargar_Imagen_triggered()
-{
+{    loadToFile();
     QString filename = QFileDialog::getOpenFileName(this,"Abrir bmp","C://","Bmp file (*.bmp)");
     canvasBitmap = new Bitmap(filename.toStdString());
     canvasHeight = canvasBitmap->getHeight();
@@ -468,8 +451,78 @@ void VentanaPrincipal::on_actionCargar_Imagen_triggered()
     update();
 }
 
+void VentanaPrincipal::unselectMagic(){
+    if (instruction != SELECTMAGIC && selectOFF){
+        paintFill(QColor(255-matrix->getColor(selectPoint.y(),selectPoint.x()).r,255-matrix->getColor(selectPoint.y(),selectPoint.x()).g,255-matrix->getColor(selectPoint.y(),selectPoint.x()).b), selectPoint.x(),selectPoint.y());
+        selectON = false;
+        selectOFF = false;
+    }
+}
+
+void VentanaPrincipal::loadFromFile()
+{
+    string line;
+    int i = 0;
+    ifstream matrixToLoad ("autosave/slot"+to_string(autoSavedCursor)+".txt");
+    cout<<"Boutta open: "<<autoSavedCursor<<endl;
+    while (getline (matrixToLoad, line)) {
+        int j = 0;
+        while (j < matrix->getWidth()){
+            string substringRed;
+            string substringGreen;
+            string substringBlue;
+            int colorCounter = 1;
+            while (line.length()>1) {
+                if (colorCounter == 1){
+                    substringRed = line.substr(0, line.find("/"));
+                    colorCounter++;
+                } else if (colorCounter == 2){
+                    substringGreen = line.substr(0, line.find("/"));
+                    colorCounter++;
+                } else if (colorCounter == 3){
+                    substringBlue = line.substr(0, line.find("/"));
+                    int red = stoi(substringRed);
+                    int green = stoi(substringGreen);
+                    int blue = stoi(substringBlue);
+                    matrix->setColor(Color(red,green,blue),i,j);
+                    colorCounter = 1;
+                    j++;
+                }
+                line = line.substr(line.find("/") + 1);
+            }
+        }
+        i++;
+    }
+    matrixToLoad.close();
+}
+
+void VentanaPrincipal::loadToFile()
+{
+    autoSavedCursor++;
+    /*if (autoSavedCursor == 0){
+        autoSavedCursor = 1;
+    }*/
+    ofstream matrixToSave ("autosave/slot"+to_string(autoSavedCursor)+".txt", ios::out | ios::trunc);
+    for (int i = 0; i < matrix->getHeight(); i++)
+    {
+        for (int j = 0; j < matrix->getWidth(); j++)
+        {
+            matrixToSave << to_string((int)matrix->getColor(i,j).r)+"/"+to_string((int)matrix->getColor(i,j).g)+"/"+to_string((int)matrix->getColor(i,j).b)+"/";
+        }
+        matrixToSave << "\n";
+    }
+    matrixToSave.close();
+    cout<<autoSavedCursor<<endl;
+    autoSavedFlag++;
+    //autoSavedCursor++;
+    if (autoSavedCursor > 20){
+        autoSavedCursor = 1;
+    }
+}
+
 void VentanaPrincipal::on_actionSalir_triggered()
 {
+    unselectMagic();
     this->close();
 }
 
@@ -546,32 +599,40 @@ void VentanaPrincipal::on_actionElipse_triggered()
 
 void VentanaPrincipal::on_actionSepia_triggered()
 {
+    unselectMagic();
     matrix->sepiaFilter();
     updateCanvas();
     update();
+    loadToFile();
 }
 
 void VentanaPrincipal::on_actionEscala_de_grises_triggered()
 {
+    unselectMagic();
     matrix->grayScaleFilter();
     updateCanvas();
     update();
+    loadToFile();
 }
 
 
 void VentanaPrincipal::on_actionBayer_triggered()
 {
+    unselectMagic();
     matrix->bayerFilter();
     updateCanvas();
     update();
+    loadToFile();
 }
 
 
 void VentanaPrincipal::on_actionNegativo_triggered()
 {
+    unselectMagic();
     matrix->negativeFilter();
     updateCanvas();
     update();
+    loadToFile();
 }
 
 void VentanaPrincipal::on_actionPickear_Color_triggered()
@@ -586,29 +647,40 @@ void VentanaPrincipal::on_actionRellenar_triggered()
 
 void VentanaPrincipal::on_actionFlip_Horizontal_triggered()
 {
+    unselectMagic();
     matrix->flipHorizontal();
     updateCanvas();
     update();
+    loadToFile();
 
 }
 
 void VentanaPrincipal::on_actionFlip_Vertical_triggered()
 {
+    unselectMagic();
     matrix->flipVertical();
     updateCanvas();
     update();
+    loadToFile();
 }
 
 void VentanaPrincipal::on_actionRotar_a_la_izquierda_triggered()
 {
+    unselectMagic();
     rotateLeft();
     updateSize();
+    updateCanvas();
+    update();
+    loadToFile();
 }
 
 void VentanaPrincipal::on_actionRotar_a_la_derecha_triggered()
 {
     rotateRight();
     updateSize();
+    updateCanvas();
+    update();
+    loadToFile();
 }
 
 void VentanaPrincipal::on_actionSelect_Rectangulo_triggered()
@@ -629,18 +701,42 @@ void VentanaPrincipal::on_actionSelect_Magico_triggered()
 
 void VentanaPrincipal::on_actionDeshacer_triggered()
 {
-
+    if (autoSavedFlag != 0 && abs(autoSavedMoves) < autoSavedFlag){
+        cout<<autoSavedFlag<<" "<<autoSavedMoves<<" "<<endl;
+        autoSavedCursor--;
+        autoSavedMoves--;
+        if (autoSavedCursor < 0){
+            autoSavedCursor = 20;
+        }
+        loadFromFile();
+    }
+    updateCanvas();
+    update();
 }
 
 void VentanaPrincipal::on_actionRehacer_triggered()
 {
-
+    if (autoSavedFlag != 0 && autoSavedMoves < 0){
+        autoSavedCursor++;
+        autoSavedMoves++;
+        if (autoSavedCursor > 20){
+            autoSavedCursor = 1;
+        }
+        loadFromFile();
+    }
+    updateCanvas();
+    update();
 }
 
 void VentanaPrincipal::on_horizontalSlider_sliderReleased()
 {
-    zoomIn(sizeFactor);
-    instruction = ZOOMIN;
+    if(sizeFactor >= 2){
+        zoomIn(sizeFactor);
+        instruction = ZOOMIN;
+    } else {
+        updateCanvas();
+        update();
+    }
 }
 
 void VentanaPrincipal::on_horizontalSlider_valueChanged(int value)
