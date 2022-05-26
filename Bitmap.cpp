@@ -1,7 +1,15 @@
 #include "Bitmap.h"
 
 using namespace std;
-
+/**
+ * @brief Construct a new Bitmap:: Bitmap object
+ * 
+ * @param imgName images name to save the file
+ * @param width contains the width dimension 
+ * @param height contains the height dimension 
+ * @param pixelArray matrix information convert into an array 
+ * @param pixelArraySize array size 
+ */
 Bitmap::Bitmap(std::string imgName, int width, int height, unsigned char *pixelArray, int pixelArraySize)
 {
     this->height = height;
@@ -10,12 +18,20 @@ Bitmap::Bitmap(std::string imgName, int width, int height, unsigned char *pixelA
 
     generateBitmapImage(imgName, pixelArraySize);
 }
-
+/**
+ * @brief Construct a new Bitmap:: Bitmap object
+ * 
+ * @param imgPath image name that it is uploaded
+ */
 Bitmap::Bitmap(std::string imgPath)
 {
     this->name = imgPath;
     read();
 }
+/**
+ * @brief Read bmp file form disk 
+ * 
+ */
 void Bitmap::read()
 {
     std::ifstream f;
@@ -63,14 +79,15 @@ void Bitmap::read()
         f.ignore(paddingBytes);
     }
 
-    // for (int i = 0; i < pixelArraySize; i++)
-    // {
-    //     std::cout<<"Array["<<i<<"]"<<bmpPixelArray[i]<<std::endl;
-    // }
-
     f.close();
     std::cout << "File imported read " << std::endl;
 }
+/**
+ * @brief Gemerate the bmp file out of a array information 
+ * 
+ * @param imgName name assign to bmp file 
+ * @param pixelArraySize array's size 
+ */
 void Bitmap::generateBitmapImage(std::string imgName, int pixelArraySize)
 {
     std::string fileName = imgName + ".bmp";
@@ -87,6 +104,11 @@ void Bitmap::generateBitmapImage(std::string imgName, int pixelArraySize)
     cout << "Bitmap Image created succesfully!" << endl;
 }
 
+/**
+ * @brief It creates the file header fro bmp file 
+ * 
+ * @return unsigned char* this char contains the file header information 
+ */
 unsigned char *Bitmap::createBitmapFileHeader()
 {
     int fileSize = FILE_HEADER_SIZE + INFO_HEADER_SIZE + (width * height * (BITS_PER_PIXEL / 8));
@@ -102,7 +124,11 @@ unsigned char *Bitmap::createBitmapFileHeader()
 
     return fileHeader;
 }
-
+/**
+ * @brief It created the file information header
+ * 
+ * @return unsigned char* this char contains the file information header information 
+ */
 unsigned char *Bitmap::createBitmapInfoHeader()
 {
     int imageSize = height * width * (BITS_PER_PIXEL / 8);
@@ -127,7 +153,13 @@ unsigned char *Bitmap::createBitmapInfoHeader()
 
     return infoHeader;
 }
-
+/**
+ * @brief It fills bytes for bmp file 
+ * 
+ * @param array 
+ * @param value 
+ * @param initByte 
+ */
 void Bitmap::fillFourBytes(unsigned char *array, int value, int initByte)
 {
     for (int i = initByte; i < initByte + 4; i++)

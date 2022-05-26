@@ -14,7 +14,12 @@ Color::Color(float r, float g, float b)
 Color::~Color()
 {
 }
-
+/**
+ * @brief Construct a new image Matrix::image Matrix object
+ * 
+ * @param width image dimension 
+ * @param height image dimension
+ */
 imageMatrix::imageMatrix(int width, int height)
 /*El contructor genera la matriz relacionada a la imagen de la instancia de clase*/
 {
@@ -23,6 +28,13 @@ imageMatrix::imageMatrix(int width, int height)
     imgWidth = width;
     this->createMatrix();
 }
+/**
+ * @brief Construct a new image Matrix::image Matrix object
+ * 
+ * @param arrayPixel contains the array to convert it into a matrix 
+ * @param height image dimension
+ * @param width image dimension
+ */
 imageMatrix::imageMatrix(unsigned char* arrayPixel, int height, int width)
 {
     imgHeight = height;
@@ -30,7 +42,10 @@ imageMatrix::imageMatrix(unsigned char* arrayPixel, int height, int width)
     this->createMatrix();
     this->generateMatrix(arrayPixel);
 }
-
+/**
+ * @brief Destroy the image Matrix::image Matrix object
+ * 
+ */
 imageMatrix::~imageMatrix()
 {
     for (int i = 0; i < imgHeight; i++)
@@ -41,7 +56,11 @@ imageMatrix::~imageMatrix()
 
     free(pixelArray);
 }
-
+/**
+ * @brief Generate matrix out of an array 
+ * 
+ * @param arrayPixel contains matrix's information 
+ */
 void imageMatrix::generateMatrix(unsigned char* arrayPixel)
 {
     int c = 0;
@@ -57,8 +76,11 @@ void imageMatrix::generateMatrix(unsigned char* arrayPixel)
         }
     }
 }
+/**
+ * @brief Genera un array de cada color de cada pixel para que se pueda leer en bmpHandler 
+ * 
+ */
 void imageMatrix::generatePixelArray()
-/*Genera un array de cada color de cada pixel para que se pueda leer en bmpHandler*/
 {
     pixelArraySize = imgHeight * imgWidth * (BITS_PER_PIXEL / 8);
     paddingBytes = (4 - (imgWidth * BITS_PER_PIXEL / 8) % 4) % 4;
@@ -79,7 +101,6 @@ void imageMatrix::generatePixelArray()
         c += paddingBytes;
     }
 }
-
 int imageMatrix::getPixelArraySize()
 {
     int size = pixelArraySize + paddingBytes * imgHeight;
@@ -100,8 +121,11 @@ void imageMatrix::printMatrix()
         }
     }
 }
+/**
+ * @brief This method generate a default i  mage, it creates a "blank pice of white paper
+ * 
+ */
 void imageMatrix::generateDefaultImage()
-/*This method generate a default i  mage, it creates a "blank pice of white paper*/
 {
     for (int i = 0; i < imgHeight; i++)
     {
@@ -111,18 +135,30 @@ void imageMatrix::generateDefaultImage()
         }
     }
 }
-
+/**
+ * @brief This methods paints a white pixel
+ * 
+ * @param i position
+ * @param j position
+ * @param eraserWidth contains the erase's width 
+ */
 void imageMatrix::erase(int i, int j, int eraserWidth)
-/*El método para borrar lo que va hacer es dibujar en blanco usando el metodo pencil*/
 {
     pencil(Color(), i, j, eraserWidth);
 }
+
 Color imageMatrix::getColor(int i, int j)
 {
     return pixelMatrix[i][j];
 }
+/**
+ * @brief Set a color to a specific pixel according to its position 
+ * 
+ * @param color RGB color
+ * @param i position
+ * @param j position
+ */
 void imageMatrix::setColor(const Color &color, int i, int j)
-/*  Toma un posición de matriz de pixeles y asig    na los colores correspodientes */
 {
     if(i >= 0 && i < imgHeight && j >= 0 & j < imgWidth){
         pixelMatrix[i][j].r = color.r;
@@ -130,12 +166,15 @@ void imageMatrix::setColor(const Color &color, int i, int j)
         pixelMatrix[i][j].b = color.b;
     }
 }
-
+/**
+ * @brief It draws a line by painting pixels in a row
+ * 
+ * @param color RGB color to assign the point  
+ * @param i position
+ * @param j position
+ * @param lineWidth line's width 
+ */
 void imageMatrix::pencil(const Color &color, int i, int j, int lineWidth)
-/*Esta función cumple de función de lápiz. Va a escucha un evento de mouse que toma las coordenadas del pixiel
-y en esa posición va a dibujar un punto del color seleccionado por el usuario, tome en cuenta que un conjunto de puntos
-forman el dibujo
-Se deben elegir el grosor, van a ver tres tipos de grosor*/
 {
     int lineWidthLimit = lineWidth - 1;
     for (int m = i - lineWidthLimit; m <= i + lineWidthLimit; m++)
@@ -146,9 +185,17 @@ Se deben elegir el grosor, van a ver tres tipos de grosor*/
         }
     }
 }
-
+/**
+ * @brief It draws a line according to an initial and final point 
+ * 
+ * @param color RGB color to assing the lin e
+ * @param y1 position (i)
+ * @param x1 position (j)
+ * @param y2 position (i)
+ * @param x2 position (j)
+ * @param lineWidth 
+ */
 void imageMatrix::line(const Color &color, int y1, int x1, int y2, int x2, int lineWidth)
-/* Función matemática para generar line, note que "y" corresponde a i y  "x" corresponde a j*/
 {
 
     if (x2 - x1 == 0)
@@ -204,7 +251,10 @@ void imageMatrix::line(const Color &color, int y1, int x1, int y2, int x2, int l
         }
     }
 }
-
+/**
+ * @brief It rotates the original matrix
+ * 
+ */
 void imageMatrix::rotate()
 {
     Color **oldMatrix = new Color *[imgHeight];
@@ -228,7 +278,10 @@ void imageMatrix::rotate()
     }
     delete[] oldMatrix;
 }
-
+/**
+ * @brief Deletes matrix pointers 
+ * 
+ */
 void imageMatrix::deleteMatrix()
 {
     for (int i = 0; i < imgHeight; i++)
@@ -237,7 +290,10 @@ void imageMatrix::deleteMatrix()
     }
     delete[] pixelMatrix;
 }
-
+/**
+ * @brief Creates a new poninter for matrix 
+ * 
+ */
 void imageMatrix::createMatrix()
 {
     this->pixelMatrix = new Color *[imgHeight];
@@ -246,7 +302,10 @@ void imageMatrix::createMatrix()
         this->pixelMatrix[i] = new Color[imgWidth];
     }
 }
-
+/**
+ * @brief It switch temporary matrix's dimensions 
+ * 
+ */
 void imageMatrix::switchDimensions()
 {
     int temp = imgWidth;
@@ -263,7 +322,10 @@ int imageMatrix::getWidth()
 {
     return imgWidth;
 }
-
+/**
+ * @brief It changes the RGB colors in all of matrix's pixels. It would change it in a certain pattern
+ * 
+ */
 void imageMatrix::bayerFilter()
 {
     for (int i = 0; i < imgHeight; i++)
@@ -279,7 +341,10 @@ void imageMatrix::bayerFilter()
         }
     }
 }
-
+/**
+ * @brief  It changes the RGB colors in all of matrix's pixels. It would change it in a certain pattern
+ * 
+ */
 void imageMatrix::sepiaFilter()
 {
     for (int i = 0; i < imgHeight; i++)
@@ -303,7 +368,10 @@ void imageMatrix::sepiaFilter()
         }
     }
 }
-
+/**
+ * @brief  It changes the RGB colors in all of matrix's pixels. It would change it in a certain pattern
+ * 
+ */
 void imageMatrix::grayScaleFilter()
 {
     for (int i = 0; i < imgHeight; i++)
@@ -319,6 +387,10 @@ void imageMatrix::grayScaleFilter()
         }
     }
 }
+/**
+ * @brief  It changes the RGB colors in all of matrix's pixels. It would change it in a certain pattern
+ * 
+ */
 void imageMatrix::negativeFilter()
 {
     for (int i = 0; i < imgHeight; i++)
@@ -330,7 +402,16 @@ void imageMatrix::negativeFilter()
         }
     }
 }
-
+/**
+ * @brief It creates a square by unifying four lines 
+ * 
+ * @param color RGB color 
+ * @param x1 position(j)
+ * @param y1 position(i)
+ * @param x2 position(j)
+ * @param y2 position(i)
+ * @param lineWidth line's width 
+ */
 void imageMatrix::square(const Color &color, int x1, int y1, int x2, int y2, int lineWidth)
 {
     int diferentialx = x2 - x1;
@@ -350,6 +431,16 @@ void imageMatrix::square(const Color &color, int x1, int y1, int x2, int y2, int
     line(color, y1 + lenghty, x1, y1 + lenghty, x1 + lenghtx, lineWidth);
     line(color, y1, x1 + lenghtx, y1 + lenghty, x1 + lenghtx, lineWidth);
 }
+/**
+ * @brief it creates a rhombus my unifying five lines depending on the positions 
+ * 
+ * @param color RGB color 
+ * @param x1 position(j)
+ * @param y1 position(i)
+ * @param x2 position(j)
+ * @param y2 position(i)
+ * @param lineWidth line's width 
+ */
 void imageMatrix::rhombus(const Color &color, int x1, int y1, int x2, int y2, int lineWidth)
 {
     int diferentialx = (x2 - x1) / 2;
@@ -360,6 +451,16 @@ void imageMatrix::rhombus(const Color &color, int x1, int y1, int x2, int y2, in
     line(color, y1 + diferentialy, x1, y2, x1 + diferentialx, lineWidth);
     line(color, y1 + diferentialy, x2, y2, x1 + diferentialx, lineWidth);
 }
+/**
+ * @brief It creates a figure unifying three lines depending on the positions 
+ * 
+ * @param color RGB color 
+ * @param x1 position(j)
+ * @param y1 position(i)
+ * @param x2 position(j)
+ * @param y2 position(i)
+ * @param lineWidth line's width
+ */
 void imageMatrix::triangleIso(const Color &color, int x1, int y1, int x2, int y2, int lineWidth)
 {
     int diferentialx = (x2 - x1) / 2;
@@ -367,18 +468,48 @@ void imageMatrix::triangleIso(const Color &color, int x1, int y1, int x2, int y2
     line(color, y1, x1 + diferentialx, y2, x1, lineWidth);
     line(color, y2, x1, y2, x2, lineWidth);
 }
+/**
+ * @brief It creates a figure unifying three lines depending on the positions 
+ * 
+ * @param color RGB color 
+ * @param x1 position(j)
+ * @param y1 position(i)
+ * @param x2 position(j)
+ * @param y2 position(i)
+ * @param lineWidth line's width
+ */
 void imageMatrix::triangleRec(const Color &color, int x1, int y1, int x2, int y2, int lineWidth)
 {
     line(color, y1, x1, y2, x2, lineWidth);
     line(color, y1, x1, y2, x1, lineWidth);
     line(color, y2, x1, y2, x2, lineWidth);
 }
+/**
+ * @brief It creates a figure unifying three lines depending on the positions 
+ * 
+ * @param color RGB color 
+ * @param x1 position(j)
+ * @param y1 position(i)
+ * @param x2 position(j)
+ * @param y2 position(i)
+ * @param lineWidth line's width
+ */
 void imageMatrix::triangleEsc(const Color &color, int x1, int y1, int x2, int y2, int x3, int y3, int lineWidth)
 {
     line(color, y1, x1, y2, x2, lineWidth);
     line(color, y1, x1, y3, x3, lineWidth);
     line(color, y2, x2, y3, x3, lineWidth);
 }
+/**
+ * @brief It creates a figure unifying  four lines depending on the positions 
+ * 
+ * @param color RGB color 
+ * @param x1 position(j)
+ * @param y1 position(i)
+ * @param x2 position(j)
+ * @param y2 position(i)
+ * @param lineWidth line's width
+ */
 void imageMatrix::rectangle(const Color &color, int x1, int y1, int x2, int y2, int lineWidth)
 {
     line(color, y1,x1,y2,x1,lineWidth);
@@ -386,6 +517,16 @@ void imageMatrix::rectangle(const Color &color, int x1, int y1, int x2, int y2, 
     line(color, y1,x2,y2,x2,lineWidth);
     line(color, y2,x1,y2,x2,lineWidth);
 }
+/**
+ * @brief It creates an elipse by using a mathematic formula and paints each pixel using the pencil method 
+ * 
+ * @param color RGB color 
+ * @param x1 position(j)
+ * @param y1 position(i)
+ * @param x2 position(j)
+ * @param y2 position(i)
+ * @param lineWidth line's width
+ */
 void imageMatrix::elipse(const Color &color, int x1, int y1, int x2, int y2, int lineWidth)
 {
     int x = min(x1,x2);
@@ -403,9 +544,17 @@ void imageMatrix::elipse(const Color &color, int x1, int y1, int x2, int y2, int
         pencil(color, painty1, paintx, lineWidth);
         pencil(color, painty2, paintx, lineWidth);
     }
-
-
 }
+/**
+ * @brief It creates an circle by using a mathematic formula 
+ * 
+ * @param color RGB color 
+ * @param x1 position(j)
+ * @param y1 position(i)
+ * @param x2 position(j)
+ * @param y2 position(i)
+ * @param lineWidth line's width
+ */
 void imageMatrix::circle(const Color &color, int x1, int y1, int x2, int y2, int lineWidth)
 {
     int diferentialx = x2-x1;
@@ -417,13 +566,28 @@ void imageMatrix::circle(const Color &color, int x1, int y1, int x2, int y2, int
     int y4 = y3 + lenght;
     elipse(color,x3,y3,x4,y4,lineWidth);
 }
+/**
+ * @brief PaintFill paints an area of pixels that are surrounded by a different color
+ * 
+ * @param colorPicked Contains the RBG color that is going to be replace 
+ * @param newColor RBG color that would be painted 
+ * @param x1 position(j)
+ * @param y1 position(i)
+ */
 void imageMatrix::paintFill(const Color &colorPicked, const Color &newColor, int x1, int y1)
 {
     if (colorPicked.r != newColor.r && colorPicked.g != newColor.g && colorPicked.b != newColor.b){
         paintFillAux(colorPicked, newColor,x1,y1);
     }
 }
-
+/**
+ * @brief Auxiliar method for paintFill method 
+ * 
+ * @param colorPicked Contains the RBG color that is going to be replace 
+ * @param newColor RBG color that would be painted 
+ * @param x1 position(j)
+ * @param y1 position(i)
+ */
 void imageMatrix::paintFillAux(const Color &colorPicked, const Color &newColor, int x1, int y1)
 {
     memoryFlag++;
@@ -445,7 +609,10 @@ void imageMatrix::setMemoryFlag(int value)
 {
     memoryFlag = value;
 }
-
+/**
+ * @brief It reflects the image horizontally
+ * 
+ */
 void imageMatrix::flipHorizontal(){
     Color **oldMatrix = new Color *[imgHeight];
     for (int i = 0; i < imgHeight; i++)
@@ -465,6 +632,10 @@ void imageMatrix::flipHorizontal(){
     }
     delete[] oldMatrix;
 }
+/**
+ * @brief it reflects the image vertically 
+ * 
+ */
 void imageMatrix::flipVertical(){
     Color **oldMatrix = new Color *[imgHeight];
     for (int i = 0; i < imgHeight; i++)
