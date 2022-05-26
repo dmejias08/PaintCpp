@@ -125,11 +125,13 @@ Color imageMatrix::getColor(int i, int j)
 void imageMatrix::setColor(const Color &color, int i, int j)
 /*  Toma un posición de matriz de pixeles y asig    na los colores correspodientes */
 {
-    pixelMatrix[i][j].r = color.r;
-    pixelMatrix[i][j].g = color.g;
-    pixelMatrix[i][j].b = color.b;
-    // std::cout << "(" << i << "," << j << ")"
-    //           << " R " << pixelMatrix[i][j].r << " G " << pixelMatrix[i][j].g << " B " << pixelMatrix[i][j].b << std::endl;
+    if(i >= 0 && i < imgHeight && j >= 0 & j < imgWidth){
+        pixelMatrix[i][j].r = color.r;
+        pixelMatrix[i][j].g = color.g;
+        pixelMatrix[i][j].b = color.b;
+        // std::cout << "(" << i << "," << j << ")"
+        //           << " R " << pixelMatrix[i][j].r << " G " << pixelMatrix[i][j].g << " B " << pixelMatrix[i][j].b << std::endl;
+    }
 }
 
 void imageMatrix::pencil(const Color &color, int i, int j, int lineWidth)
@@ -138,7 +140,7 @@ y en esa posición va a dibujar un punto del color seleccionado por el usuario, 
 forman el dibujo
 Se deben elegir el grosor, van a ver tres tipos de grosor*/
 {
-    std::cout << "Estoy en pencil" << std::endl;
+    // std::cout << "Estoy en pencil" << std::endl;
     int lineWidthLimit = lineWidth - 1;
     for (int m = i - lineWidthLimit; m <= i + lineWidthLimit; m++)
     {
@@ -170,7 +172,6 @@ void imageMatrix::line(const Color &color, int y1, int x1, int y2, int x2, int l
     {
 
         float m = (float)(y2 - y1) / (float)(x2 - x1);
-        // printf("m: %f\n", m);
         float b = y1 - (m * x1);
         if (x2 < x1)
         {
@@ -199,7 +200,6 @@ void imageMatrix::line(const Color &color, int y1, int x1, int y2, int x2, int l
                 {
                     for (int j = old_y - 1; j >= new_y; j--)
                     {
-                        // pencil(color, i, j, lineWidth);
                         pencil(color, j, i, lineWidth);
                     }
                 }
@@ -230,6 +230,7 @@ void imageMatrix::rotate()
             this->pixelMatrix[i][j] = oldMatrix[j][imgHeight - i - 1];
         }
     }
+    delete[] oldMatrix;
 }
 
 void imageMatrix::deleteMatrix()
@@ -275,6 +276,9 @@ void imageMatrix::bayerFilter()
         {
             Color colorTemp = getColor(i, j);
             float newRGB = 0.65*colorTemp.r/2 + 0.57*colorTemp.g + 0.7*colorTemp.b;
+            while (newRGB > 255){
+                newRGB = newRGB - 255;
+            }
             setColor(Color(newRGB, newRGB, newRGB), i, j);
         }
     }
@@ -290,6 +294,15 @@ void imageMatrix::sepiaFilter()
             float newR = 0.393 * colorTemp.r + 0.769 * colorTemp.g + 0.189 * colorTemp.b;
             float newG = 0.349 * colorTemp.r + 0.686 * colorTemp.g + 0.168 * colorTemp.b;
             float newB = 0.272 * colorTemp.r + 0.534 * colorTemp.g + 0.131 * colorTemp.b;
+            while (newR > 255){
+                newR = newR - 255;
+            }
+            while (newG > 255){
+                newG = newG - 255;
+            }
+            while (newB > 255){
+                newB = newB - 255;
+            }
             setColor(Color(newR, newG, newB), i, j);
         }
     }
@@ -303,6 +316,9 @@ void imageMatrix::grayScaleFilter()
         {
             Color colorTemp = getColor(i, j);
             float formula = 0.3 * colorTemp.r + 0.59 * colorTemp.g + 0.11 * colorTemp.b;
+            while (formula > 255){
+                formula = formula - 255;
+            }
             setColor(Color(formula, formula, formula), i, j);
         }
     }
@@ -374,8 +390,8 @@ void imageMatrix::rectangle(const Color &color, int x1, int y1, int x2, int y2, 
     line(color, y1,x2,y2,x2,lineWidth);
     line(color, y2,x1,y2,x2,lineWidth);
 }
-void imageMatrix::elipse(const Color &color, int x1, int y1, int x2, int y2)
-{   
+void imageMatrix::elipse(const Color &color, int x1, int y1, int x2, int y2, int lineWidth)
+{
     int x = min(x1,x2);
     int y = min(y1,y2);
     int diferentialx = abs(x2-x1);
@@ -388,13 +404,13 @@ void imageMatrix::elipse(const Color &color, int x1, int y1, int x2, int y2)
     {
         float painty1 = (float)sqrt((1-(float)((paintx-h)*(paintx-h))/a2)*b2)+k;
         float painty2 = -1*(float)sqrt((1-(float)((paintx-h)*(paintx-h))/a2)*b2)+k;
-        setColor(color, painty1, paintx);
-        setColor(color, painty2, paintx);
+        pencil(color, painty1, paintx, lineWidth);
+        pencil(color, painty2, paintx, lineWidth);
     }
-    
-        
+
+
 }
-void imageMatrix::circle(const Color &color, int x1, int y1, int x2, int y2)
+void imageMatrix::circle(const Color &color, int x1, int y1, int x2, int y2, int lineWidth)
 {
     int diferentialx = x2-x1;
     int diferentialy = y2-y1;
@@ -403,20 +419,72 @@ void imageMatrix::circle(const Color &color, int x1, int y1, int x2, int y2)
     int y3 = min(y1,y2);
     int x4 = x3 + lenght;
     int y4 = y3 + lenght;
-    elipse(color,x3,y3,x4,y4);
+    elipse(color,x3,y3,x4,y4,lineWidth);
 }
 void imageMatrix::paintFill(const Color &colorPicked, const Color &newColor, int x1, int y1)
 {
-    if (x1 < imgWidth && y1 < imgHeight && x1 >= 0 && y1 >= 0)
+    if (colorPicked.r != newColor.r && colorPicked.g != newColor.g && colorPicked.b != newColor.b){
+        paintFillAux(colorPicked, newColor,x1,y1);
+    }
+}
+
+void imageMatrix::paintFillAux(const Color &colorPicked, const Color &newColor, int x1, int y1)
+{
+    memoryFlag++;
+    if (x1 < imgWidth && y1 < imgHeight && x1 >= 0 && y1 >= 0 && memoryFlag < 350*350)
     {
         Color currentColor = getColor(y1,x1);
         if (currentColor.b == colorPicked.b && currentColor.g == colorPicked.g && currentColor.r == colorPicked.r)
         {
             setColor(newColor, y1, x1);
-            paintFill(colorPicked, newColor,x1-1,y1);
-            paintFill(colorPicked, newColor,x1+1,y1);
-            paintFill(colorPicked, newColor,x1,y1-1);
-            paintFill(colorPicked, newColor,x1,y1+1);
+            paintFillAux(colorPicked, newColor,x1-1,y1);
+            paintFillAux(colorPicked, newColor,x1+1,y1);
+            paintFillAux(colorPicked, newColor,x1,y1-1);
+            paintFillAux(colorPicked, newColor,x1,y1+1);
         }
     }
+}
+
+void imageMatrix::setMemoryFlag(int value)
+{
+    memoryFlag = value;
+}
+
+void imageMatrix::flipHorizontal(){
+    Color **oldMatrix = new Color *[imgHeight];
+    for (int i = 0; i < imgHeight; i++)
+    {
+        oldMatrix[i] = new Color[imgWidth];
+        for (int j = 0; j < imgWidth; j++)
+        {
+            oldMatrix[i][j] = this->pixelMatrix[i][j];
+        }
+    }
+    for (int i = 0; i < imgHeight; i++)
+    {
+        for (int j = 0; j < imgWidth; j++)
+        {
+            this->pixelMatrix[i][j] = oldMatrix[i][imgWidth - j - 1];
+        }
+    }
+    delete[] oldMatrix;
+}
+void imageMatrix::flipVertical(){
+    Color **oldMatrix = new Color *[imgHeight];
+    for (int i = 0; i < imgHeight; i++)
+    {
+        oldMatrix[i] = new Color[imgWidth];
+        for (int j = 0; j < imgWidth; j++)
+        {
+            oldMatrix[i][j] = this->pixelMatrix[i][j];
+        }
+    }
+    for (int i = 0; i < imgHeight; i++)
+    {
+        for (int j = 0; j < imgWidth; j++)
+        {
+            this->pixelMatrix[i][j] = oldMatrix[imgHeight - i - 1][j];
+        }
+    }
+    delete[] oldMatrix;
 }

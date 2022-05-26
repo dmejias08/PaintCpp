@@ -26,6 +26,7 @@ private:
     int imgHeight;
     Color **pixelMatrix;
     unsigned char* pixelArray;
+    int memoryFlag = 0;
 
 public:
     imageMatrix(int width, int height);
@@ -44,6 +45,7 @@ public:
     void erase(int i, int j, int eraserWidth);
     Color getColor(int i, int j);
     void setColor(const Color &color, int i, int j);
+    void setMemoryFlag(int value);
     void pencil(const Color &color, int i, int j, int lineWidth);
     int getHeight();
     int getWidth();
@@ -54,13 +56,17 @@ public:
     void triangleRec(const Color &color, int x1, int y1, int x2, int y2, int lineWidth);
     void triangleEsc(const Color &color, int x1, int y1, int x2, int y2, int x3, int y3, int lineWidth);
     void rectangle(const Color &color, int x1, int y1, int x2, int y2, int lineWidth);
-    void circle(const Color &color, int x1, int y1, int x2, int y2);
-    void elipse(const Color &color, int x1, int y1, int x2, int y2);
+    void circle(const Color &color, int x1, int y1, int x2, int y2, int lineWidth);
+    void elipse(const Color &color, int x1, int y1, int x2, int y2, int lineWidth);
     void paintFill(const Color &colorPicked, const Color &newColor, int x1, int y1);
+    void paintFillAux(const Color &colorPicked, const Color &newColor, int x1, int y1);
+    bool selectFillMethod(const Color &colorPicked, int x1, int y1);
     void bayerFilter();
     void sepiaFilter();
     void grayScaleFilter();
     void negativeFilter();
+    void flipVertical();
+    void flipHorizontal();
 
 };
 
