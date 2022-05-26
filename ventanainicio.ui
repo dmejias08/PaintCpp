@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>289</width>
-    <height>295</height>
+    <width>330</width>
+    <height>289</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,7 +17,7 @@
    <widget class="QPushButton" name="pushButton">
     <property name="geometry">
      <rect>
-      <x>100</x>
+      <x>130</x>
       <y>230</y>
       <width>75</width>
       <height>24</height>
@@ -30,7 +30,7 @@
    <widget class="QLineEdit" name="txtAlto">
     <property name="geometry">
      <rect>
-      <x>130</x>
+      <x>110</x>
       <y>160</y>
       <width>113</width>
       <height>22</height>
@@ -40,7 +40,7 @@
    <widget class="QLineEdit" name="txtAncho">
     <property name="geometry">
      <rect>
-      <x>130</x>
+      <x>110</x>
       <y>100</y>
       <width>113</width>
       <height>22</height>
@@ -65,8 +65,8 @@
      <rect>
       <x>40</x>
       <y>100</y>
-      <width>49</width>
-      <height>16</height>
+      <width>41</width>
+      <height>20</height>
      </rect>
     </property>
     <property name="text">
@@ -84,6 +84,32 @@
     </property>
     <property name="text">
      <string>Alto</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_4">
+    <property name="geometry">
+     <rect>
+      <x>230</x>
+      <y>100</y>
+      <width>91</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>.max 1280px</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_5">
+    <property name="geometry">
+     <rect>
+      <x>230</x>
+      <y>160</y>
+      <width>91</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>.max 1280px</string>
     </property>
    </widget>
   </widget>

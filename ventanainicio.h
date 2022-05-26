@@ -22,5 +22,7 @@ private:
     Ui::VentanaInicio *ui;
     int obtenerAncho();
     int obtenerAlto();
+    bool validarEntrada();
+    bool validarTamanoEntrada();
 };
 #endif // VENTANAINICIO_H

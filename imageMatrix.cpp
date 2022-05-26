@@ -74,7 +74,6 @@ void imageMatrix::generatePixelArray()
             pixelArray[c] = pixelMatrix[i][j].b;
             pixelArray[c + 1] = pixelMatrix[i][j].g;
             pixelArray[c + 2] = pixelMatrix[i][j].r;
-            // std::cout << "Generate pixelArray " << c << pixelArray[c] << " " << pixelArray[c + 1] << " " << pixelArray[c + 2] << std::endl;
             c = c + 3;
         }
         c += paddingBytes;
@@ -129,8 +128,6 @@ void imageMatrix::setColor(const Color &color, int i, int j)
         pixelMatrix[i][j].r = color.r;
         pixelMatrix[i][j].g = color.g;
         pixelMatrix[i][j].b = color.b;
-        // std::cout << "(" << i << "," << j << ")"
-        //           << " R " << pixelMatrix[i][j].r << " G " << pixelMatrix[i][j].g << " B " << pixelMatrix[i][j].b << std::endl;
     }
 }
 
@@ -140,7 +137,6 @@ y en esa posición va a dibujar un punto del color seleccionado por el usuario, 
 forman el dibujo
 Se deben elegir el grosor, van a ver tres tipos de grosor*/
 {
-    // std::cout << "Estoy en pencil" << std::endl;
     int lineWidthLimit = lineWidth - 1;
     for (int m = i - lineWidthLimit; m <= i + lineWidthLimit; m++)
     {

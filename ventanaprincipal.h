@@ -69,8 +69,6 @@ private slots:
 
     void on_actionSelect_Rectangulo_triggered();
 
-    void on_actionSelect_Libre_triggered();
-
     void on_actionSelect_Magico_triggered();
 
     void on_actionRectangulo_triggered();
@@ -112,6 +110,7 @@ private:
     int autoSavedMoves = 0;
     bool selectON = false;
     bool selectOFF = false;
+    bool unselectFlag = false;
     QColor defaultColor;
     QColor afterEraser;
     QPoint startPoint;
@@ -146,12 +145,11 @@ private:
     void paintFill(QColor colorToUse, int x1, int y1);
     void zoomIn(int sizeFactor);
     void selectRectangle(int x1, int y1, int x2, int y2);
-    void selectFree();
     void loadFromFile();
     void loadToFile();
     void pickColor();
     void updateCanvas();
-    void unselectMagic();
+    void unselectMagic(int definedInstruction);
 
 };
 
